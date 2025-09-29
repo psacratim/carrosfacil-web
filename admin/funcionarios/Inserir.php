@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <title>Carros Fácil - Painel</title>
+
+  <!-- BOOTSTRAP CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+  <!-- BOOTSTRAP ICONS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+  <!-- CUSTOMIZAÇÃO DO TEMPLATE -->
+  <link rel="stylesheet" href="../../assets/css/dashboard.css">
+  <link rel="stylesheet" href="../../assets/css/styles.css">
+
+  <!-- FAVICON -->
+  <link rel="shortcut icon" href="../../assets/img/favicon.ico" type="image/x-icon">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="../../custom/css/style.css">
+</head>
+
+<body>
+
+  <?php
+  #Início TOPO
+  include('../Topo.php');
+  #Final TOPO
+  ?>
+
+  <div class="container-fluid">
+    <div class="row">
+      <?php
+      #Início MENU
+      include('../Navegacao.php');
+      #Final MENU
+      ?>
+
+      <main class="ml-auto col-lg-10 px-md-4">
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+          <h1 class="h2">Painel Administrativo</h1>
+          <h2 class="h3">Olá, USUÁRIO!</h2>
+        </div>
+
+        <div class="container mt-5">
+          <div class="card">
+            <div class="card-header d-flex justify-content-between">
+              <h4 class="m-0">Novo Funcionário</h4>
+
+              <a href="Index.php" class="btn btn-primary btn-sm"><i class="bi bi-arrow-left-short"></i> Voltar</a>
+            </div>
+
+            <div class="card-body">
+              <form action="" method="post">
+                <div class="form-row">
+
+                  <div class="col-12 mb-3 text-center">
+                    <label for="foto-perfil">Foto de Perfil</label>
+
+                    <div>
+                      <img id="foto-img" src="../../assets/img/placeholder-funcionario.png" alt="" class="rounded-3">
+                    </div>
+
+                    <input type="file" name="foto-perfil" id="foto-perfil" class="form-control mt-3 mx-auto w-50" accept="image/png, image/jpeg">
+                  </div>
+
+                  <fieldset class="form-group">
+                    <h3>Dados Pessoais</h3>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <label for="nome"><strong class="text-danger">*</strong> Nome:</label>
+                        <input type="text" name="nome" id="nome" class="form-control" maxlength="60" required>
+                      </div>
+                      <div class="col-md-6">
+                        <label for="nome-social">Nome Social</label>
+                        <input type="text" name="nome-social" id="nome-social" class="form-control" maxlength="60">
+                      </div>
+                      <div class="col-lg-3 col-md-3 mt-3">
+                        <label for="cpf"><strong class="text-danger">*</strong> CPF</label>
+                        <input type="text" name="cpf" id="cpf" class="form-control" maxlength="14" required>
+                      </div>
+                      <div class="col-lg-3 col-md-3 mt-3">
+                        <label for="rg">RG</label>
+                        <input type="text" name="rg" id="rg" class="form-control" maxlength="12">
+                      </div>
+                      <div class="col-lg-3 col-md-3 mt-3">
+                        <label for="sexo"><strong class="text-danger">*</strong> Sexo</label>
+                        <select name="sexo" id="sexo" class="form-control" required>
+                          <option value="N">Não Informado</option>
+                          <option value="M">Masculino</option>
+                          <option value="F">Feminino</option>
+                        </select>
+                      </div>
+                      <div class="col-lg-3 col-md-3 mt-3">
+                        <label for="estado-civil"><strong class="text-danger">*</strong> Estado Civil</label>
+                        <select name="estado-civil" id="estado-civil" class="form-control" required>
+                          <option value="Solteiro">Solteiro(a)</option>
+                          <option value="Casado">Casado(a)</option>
+                          <option value="Separado">Separado(a)</option>
+                          <option value="Divorciado">Divorciado(a)</option>
+                          <option value="Viuvo">Viúvo(a)</option>
+                        </select>
+                      </div>
+                      <div class="col-lg-3 col-md-3 mt-3">
+                        <label for="data-nascimento"><strong class="text-danger">*</strong> Data Nascimento</label>
+                        <input type="date" name="data-nascimento" id="data-nascimento" class="form-control">
+                      </div>
+                      <div class="col-lg-3 col-md-3 mt-3">
+                        <label for="cargo">Cargo</label>
+                        <select name="cargo" id="cargo" class="form-control">
+                          <option value="gerente">Gerente</option>
+                          <option value="vendedor">Vendedor</option>
+                          <option value="estoquista">Estoquista</option>
+                          <option value="estoquista">Técnido de Informática</option>
+                        </select>
+                      </div>
+                      <div class="col-lg-3 col-md-3 mt-3">
+                        <label for="salario">Salario</label>
+                        <input type="text" name="salario" id="salario" class="form-control" maxlength="13">
+                      </div>
+                      <div class="col-lg-3 col-md-3 mt-3">
+                        <label for="status">Status</label>
+                        <select name="status" id="status" class="form-control" disabled>
+                          <option value="1">Ativo</option>
+                          <option value="0">Inativo</option>
+                        </select>
+                      </div>
+                    </div>
+                  </fieldset>
+
+                  <fieldset class="form-group col-lg-12 mt-3">
+                    <h3>Dados de acesso</h3>
+                    <div class="row">
+                      <div class="col-md-4 mt-3">
+                        <label for="usuario"><strong class="text-danger">*</strong> Usuário</label>
+                        <input type="text" name="usuario" id="usuario" class="form-control" maxlength="20" required>
+                      </div>
+
+                      <div class="col-md-4 mt-3">
+                        <label for="senha"><strong class="text-danger">*</strong> Senha</label>
+                        <input type="password" name="senha" id="senha" class="form-control" maxlength="26" required>
+                      </div>
+
+                      <div class="col-md-4 mt-3">
+                        <label for="tipo-acesso"><strong class="text-danger">*</strong> Tipo de acesso</label>
+                        <select name="tipo-acesso" id="tipo-acesso" class="form-control" required>
+                          <option value="Administrativo">Administrador</option>
+                          <option value="Normal">Normal</option>
+                        </select>
+                      </div>
+                    </div>
+                  </fieldset>
+
+
+                  <fieldset class="form-group col-lg-12 mt-3">
+                    <h3>Dados de contato</h3>
+                    <div class="row">
+                      <div class="col-lg-2 col-md-4 mt-3">
+                        <label for="telefone-recado"><strong class="text-danger">*</strong> Telefone Recado</label>
+                        <input type="text" name="telefone-recado" id="telefone-recado" class="form-control" minlength="15" maxlength="15" required>
+                      </div>
+
+                      <div class="col-lg-2 col-md-4 mt-3">
+                        <label for="telefone-celular">Telefone Celular</label>
+                        <input type="text" name="telefone-celular" id="telefone-celular" class="form-control" minlength="15" maxlength="15">
+                      </div>
+
+                      <div class="col-lg-2 col-md-4 mt-3">
+                        <label for="telefone-residencial">Telefone Residencial</label>
+                        <input type="text" name="telefone-residencial" id="telefone-residencial" class="form-control" minlength="15" maxlength="15">
+                      </div>
+
+                      <div class="col-lg-6 mt-3">
+                        <label for="email">Email</label>
+                        <input type="email" name="email" id="email" class="form-control" maxlength="100">
+                      </div>
+                    </div>
+                  </fieldset>
+
+                  
+
+                  <fieldset class="form-group col-lg-12 mt-3">
+                    <h3>Dados do endereço</h3>
+                    <div class="row">
+                      <div class="col-lg-2 col-md-3 mt-3">
+                        <label for="cep">CEP</label>
+                        <input type="text" name="cep" id="cep" class="form-control" maxlength="10">
+                      </div>
+
+                      <div class="col-lg-4 col-md-7 mt-3">
+                        <label for="endereco"><strong class="text-danger">*</strong> Endereço</label>
+                        <input type="text" name="endereco" id="endereco" class="form-control" maxlength="60" required>
+                      </div>
+
+                      <div class="col-lg-2 col-md-2 mt-3">
+                        <label for="numero-endereco"><strong class="text-danger">*</strong> Número</label>
+                        <input type="number" name="numero-endereco" id="numero-endereco" class="form-control" min="1" max="99999" required>
+                      </div>
+
+                      <div class="col-lg-4 col-md-6 mt-3">
+                        <label for="bairro"><strong class="text-danger">*</strong> Bairro</label>
+                        <input type="text" name="bairro" id="bairro" class="form-control" maxlength="32" required>
+                      </div>
+
+                      <div class="col-lg-5 col-md-6 mt-3">
+                        <label for="cidade"><strong class="text-danger">*</strong> Cidade</label>
+                        <input type="text" name="cidade" id="cidade" class="form-control" maxlength="50" required>
+                      </div>
+
+                      <div class="col-lg-2 col-md-6 mt-3">
+                        <label for="estado"><strong class="text-danger">*</strong> Estado</label>
+
+                        <select name="estado" id="estado" class="form-control" required>
+                          <option value="AC">Acre</option>
+                          <option value="AL">Alagoas</option>
+                          <option value="AP">Amapá</option>
+                          <option value="AM">Amazonas</option>
+                          <option value="BA">Bahia</option>
+                          <option value="CE">Ceará</option>
+                          <option value="DF">Distrito Federal</option>
+                          <option value="ES">Espírito Santo</option>
+                          <option value="GO">Goiás</option>
+                          <option value="MA">Maranhão</option>
+                          <option value="MT">Mato Grosso</option>
+                          <option value="MS">Mato Grosso do Sul</option>
+                          <option value="MG">Minas Gerais</option>
+                          <option value="PA">Pará</option>
+                          <option value="PB">Paraíba</option>
+                          <option value="PR">Paraná</option>
+                          <option value="PE">Pernambuco</option>
+                          <option value="PI">Piauí</option>
+                          <option value="RJ">Rio de Janeiro</option>
+                          <option value="RN">Rio Grande do Norte</option>
+                          <option value="RS">Rio Grande do Sul</option>
+                          <option value="RO">Rondônia</option>
+                          <option value="RR">Roraima</option>
+                          <option value="SC">Santa Catarina</option>
+                          <option value="SP" selected>São Paulo</option>
+                          <option value="SE">Sergipe</option>
+                          <option value="TO">Tocantins</option>
+                        </select>
+                      </div>
+
+                      <div class="col-lg-5 col-md-6 mt-3">
+                        <label for="complemento">Complemento</label>
+                        <input type="text" name="complemento" id="complemento" class="form-control" maxlength="200">
+                        </input>
+                      </div>
+                    </div>
+                  </fieldset>
+
+
+                  <input type="submit" value="Cadastrar" class="btn btn-primary mt-3">
+                </div>
+              </form>
+            </div>
+
+          </div>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- BOOTSTRAP JS -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+  <script src="../../assets/js/jquery.mask.js"></script>
+
+  <!-- CUSTOM SCRITPS -->
+  <script>
+    $(document).ready(function() {
+      $('#cep').mask('00000-000')
+      $('#telefone-recado').mask('(00) 00000-0000')
+      $('#telefone-celular').mask('(00) 00000-0000')
+      $('#telefone-residencial').mask('(00) 0000-0000')
+
+      $('#cpf').mask('000.000.000-00', {reverse: true})
+      $('#rg').mask('00.000.000-0', {reverse: true})
+      $('#salario').mask("#.##0,00", {reverse: true})
+
+      $('#cep').on('input propertychange', async function(){
+        let currentValue = $(this).val().replace("-", "")
+        let currentLength = currentValue.length
+        let maxLength = $(this).attr('maxlength') - 1
+
+        console.log(currentLength + " : "+maxLength)
+        if (currentLength == maxLength) {
+          const response = await fetch('https://viacep.com.br/ws/'+currentValue+'/json/');
+          const data = await response.json();
+          
+          $("#endereco").val(data.logradouro);
+          $("#bairro").val(data.bairro);
+          $("#cidade").val(data.localidade);
+          $("#complemento").val(data.complemento);
+          $("#estado").val(data.uf.toUpperCase());
+        }
+      })
+
+      $('#foto-perfil').change(function(e) {
+          let file = this.files[0]; // ou $(this)[0].files[0]
+          if (file) {
+              let reader = new FileReader();
+              reader.onload = function(event) {
+                  $("#foto-img").attr("src", event.target.result);
+              };
+              reader.readAsDataURL(file);
+          }
+      });
+    })
+  </script>
+  
+</body>
+
+</html>
