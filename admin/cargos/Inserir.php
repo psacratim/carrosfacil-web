@@ -40,10 +40,9 @@
       ?>
 
       <main class="ml-auto col-lg-10 px-md-4">
-        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-          <h1 class="h2">Painel Administrativo</h1>
-          <h2 class="h3">Olá, USUÁRIO!</h2>
-        </div>
+        <?php
+          include('../LoggedUser.php');
+        ?>
 
         <div class="container mt-5">
           <div class="card">
@@ -54,7 +53,7 @@
             </div>
             
             <div class="card-body">
-              <form action="" method="post">
+              <form action="acoes.php" method="post">
                 <div class="form-row">
                   <div class="col-6">
                     <label for="nome-cargo"><strong class="text-danger">*</strong> Nome do Cargo:</label>
@@ -73,6 +72,7 @@
                     <label for="observacao">Observação</label>
                     <textarea name="observacao" id="observacao" placeholder="Ex: Vendedores externos visitam os clientes em suas casas para vender." maxlength="250" class="form-control"></textarea>
 
+                    <input type="hidden" name="cadastrar" value="cadastrar_cargo">
                     <input type="submit" value="Cadastrar" class="btn btn-primary mt-3">
                   </div>
                 </div>

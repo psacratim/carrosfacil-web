@@ -1,3 +1,6 @@
+<?php 
+  require_once("../../conexao/conecta.php")
+?>
 <!doctype html>
 <html lang="pt-br">
 <head>
@@ -40,10 +43,11 @@
       ?>
 
       <main class="ml-auto col-lg-10 px-md-4">
-        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-          <h1 class="h2">Painel Administrativo</h1>
-          <h2 class="h3">Olá, USUÁRIO!</h2>
-        </div>
+        <?php
+          include('../LoggedUser.php');
+        ?>
+
+
 
         <div class="container mt-5">
           <div class="card">
@@ -53,95 +57,100 @@
               <a href="inserir.php" class="btn btn-primary btn-sm"><i class="bi bi-plus"></i> Adicionar</a>
             </div>
 
-            <div class="card-body">
-              <div class="row">
-                <div class="col-2">
-                  <form action="">
-                    <select name="status" id="status" class="form-control">
-                      <option value="">Status</option>
-                      <option value="1">Ativo</option>
-                      <option value="0">Inativo</option>
-                    </select>
-                  </form>
-                </div>
+            <?php 
+              $sql = "SELECT * FROM cargo";
+              $query = mysqli_query($conexao, $sql);
 
-                <!-- CAMPO DE BUSCA -->
-                <div class="col-4">
-                  <form action="">
-                    <input type="search" name="pesquisa" id="pesquisa" class="form-control"  placeholder="Pesquisa o nome do cargo...">
-                  </form>
+              # O número de linhas retornado é > 0 ? Se sim, teve resultados.
+              if (mysqli_num_rows($query) > 0) { #Estranho, mas a gente vai fechar essa chave após o HTML, usando php novamente.
+            ?>
+
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-2">
+                    <form class="filter-container" action="">
+                      <select name="status" id="status" class="form-control">
+                        <option value="">Status</option>
+                        <option value="1">Ativo</option>
+                        <option value="0">Inativo</option>
+                      </select>
+                    </form>
+                  </div>
+
+                  <!-- CAMPO DE BUSCA -->
+                  <div class="col-4">
+                    <form action="">
+                      <input type="search" name="pesquisa" id="pesquisa" class="form-control"  placeholder="Pesquisa o nome do cargo...">
+                    </form>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div class="card-body p-0">
-              <table class="table m-0">
-                <thead>
-                  <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Cargo</th>
-                    <th scope="col">Observação</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Data Cadastro</th>
-                    <th scope="col">Ações</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>1</td>
-                    <td>Gerente</td>
-                    <td>Nenhuma</td>
-                    <td><span class="badge badge-pill badge-success">Ativo</span></td>
-                    <td>18/09/2025</td>
-                    <td>
-                      <a href="#" class="btn btn-outline-success btn-sm" title="Editar">
-                        <i class="bi bi-pencil-square"></i>
-                      </a>
-                      <a href="#" class="btn btn-outline-danger btn-sm" title="Excluir">
-                        <i class="bi bi-trash3"></i>
-                      </a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>2</td>
-                    <td>Vendedor</td>
-                    <td>Nenhuma</td>
-                    <td><span class="badge badge-pill badge-danger">Inativo</span></td>
-                    <td>18/09/2025</td>
-                    <td>
-                      <a href="#" class="btn btn-outline-success btn-sm" title="Editar">
-                        <i class="bi bi-pencil-square"></i>
-                      </a>
-                      <a href="#" class="btn btn-outline-danger btn-sm" title="Excluir">
-                        <i class="bi bi-trash3"></i>
-                      </a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>3</td>
-                    <td>Estoquista</td>
-                    <td>Esse cargo não deve ser usado no momento!</td>
-                    <td><span class="badge badge-pill badge-success">Ativo</span></td>
-                    <td>18/09/2025</td>
-                    <td>
-                      <a href="#" class="btn btn-outline-success btn-sm" title="Editar">
-                        <i class="bi bi-pencil-square"></i>
-                      </a>
-                      <a href="#" class="btn btn-outline-danger btn-sm" title="Excluir">
-                        <i class="bi bi-trash3"></i>
-                      </a>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
+              <div class="card-body p-0">
+                <table class="table m-0">
+                  <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Cargo</th>
+                      <th scope="col">Observação</th>
+                      <th scope="col">Status</th>
+                      <th scope="col">Data Cadastro</th>
+                      <th scope="col">Ações</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <?php foreach ($query as $cargo) { ?>
+                      <tr>
+                        <td>
+                          <?php echo($cargo['id']) ?>
+                        </td>
+                        <td>
+                          <?php echo($cargo['nome']); ?>
+                        </td>
+                        <td>
+                          <?php echo($cargo['observacao']); ?>
+                        </td>
+                        <td>
+                          <?php 
+                            if ($cargo['status'] == 0){
+                              echo '<span class="badge badge-pill badge-danger">Inativo</span>';
+                            } else {
+                              echo '<span class="badge badge-pill badge-success">Ativo</span>';
+                            }
+                          ?>
+                        </td>
+                        <td>
+                          <?php echo(date('d/m/Y', strtotime($cargo['data_cadastro']))); ?>
+                        </td>
+                        <td>
+                          <a href="editar.php?id_cargo=<?php echo($cargo['id']) ?>" class="btn btn-outline-success btn-sm" title="Editar">
+                            <i class="bi bi-pencil-square"></i>
+                          </a>
+                          <a href="excluir.php?id_cargo=<?php echo($cargo['id']) ?>" class="btn btn-outline-danger btn-sm" title="Excluir">
+                            <i class="bi bi-trash3"></i>
+                          </a>
+                        </td>
+                      </tr>
+                    <?php } ?>
+                  </tbody>
+                </table>
+              </div>
+            
+            <?php 
+              } else {
+                echo "<h5>Nenhum cargo foi encontrado.</h5>";
+              }
+            ?>
           </div>
         </div>
 
       </main>
     </div>
   </div>
+
+  <?php 
+    mysqli_close($conexao)
+  ?>
 
   <!-- BOOTSTRAP JS -->
   <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>

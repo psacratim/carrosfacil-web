@@ -49,7 +49,7 @@
         <div class="container mt-5">
           <div class="card">
             <div class="card-header d-flex justify-content-between">
-              <h4 class="m-0">Novo Funcionário</h4>
+              <h4 class="m-0">Novo Veiculo</h4>
 
               <a href="Index.php" class="btn btn-primary btn-sm"><i class="bi bi-arrow-left-short"></i> Voltar</a>
             </div>
@@ -58,7 +58,7 @@
               <form action="" method="post">
                 <div class="form-row">
 
-                  <div class="col-12 mb-3 text-center">
+                  <!-- <div class="col-12 mb-3 text-center">
                     <label for="foto-perfil">Foto de Perfil</label>
 
                     <div>
@@ -66,7 +66,7 @@
                     </div>
 
                     <input type="file" name="foto-perfil" id="foto-perfil" class="form-control mt-3 mx-auto w-50" accept="image/png, image/jpeg">
-                  </div>
+                  </div> -->
 
                   <fieldset class="form-group">
                     <h3>Dados Pessoais</h3>
@@ -280,7 +280,7 @@
       $('#telefone-celular').mask('(00) 00000-0000')
       $('#telefone-residencial').mask('(00) 0000-0000')
 
-      $('#cpf').mask('000.000.000-00', {reverse: true, placeholder: '___.___.___-__'})
+      $('#cpf').mask('000.000.000-00', {reverse: true})
       $('#rg').mask('00.000.000-0', {reverse: true})
       $('#salario').mask("#.##0,00", {reverse: true})
 
