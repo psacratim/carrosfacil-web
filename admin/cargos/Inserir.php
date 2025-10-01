@@ -1,3 +1,11 @@
+<?php 
+    // STARTING SESSION
+    if (!isset($_SESSION)){
+        session_start();
+    }
+
+?>
+
 <!doctype html>
 <html lang="pt-br">
 <head>
@@ -42,6 +50,7 @@
       <main class="ml-auto col-lg-10 px-md-4">
         <?php
           include('../LoggedUser.php');
+          include('../Mensagem.php');
         ?>
 
         <div class="container mt-5">

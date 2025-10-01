@@ -138,7 +138,9 @@
             
             <?php 
               } else {
-                echo "<h5>Nenhum cargo foi encontrado.</h5>";
+                echo '<div class="alert alert-danger mb-0 rounded-0 rounded-bottom-5" role="alert">
+                Nenhum cargo foi encontrado!
+                </div>';
               }
             ?>
           </div>
