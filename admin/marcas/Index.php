@@ -1,3 +1,12 @@
+<?php 
+    // STARTING SESSION
+    if (!isset($_SESSION)){
+        session_start();
+    }
+
+  require_once("../../conexao/conecta.php")
+?>
+
 <!doctype html>
 <html lang="pt-br">
 <head>
@@ -42,6 +51,7 @@
       <main class="ml-auto col-lg-10 px-md-4">
         <?php
           include('../LoggedUser.php');
+          include('../Mensagem.php');
         ?>
 
         <div class="container mt-5">
@@ -63,107 +73,108 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
                   <div class="modal-body">
-                    <div class="row">
-                      <div class="col-12 mb-3">
-                        <label for="nome"><strong class="text-danger">*</strong> Nome da marca:</label>
-                        <input type="text" name="nome" id="nome" class="form-control" maxlength="60" required>
+                    <form action="acoes.php" method="post">
+                      <div class="form-group">
+                          <label for="nome"><strong class="text-danger">*</strong> Nome da marca:</label>
+                          <input type="text" name="nome" id="nome" class="form-control" maxlength="80" required>
                       </div>
-                      
-                      <div class="col-12">
-                        <label for="status"><strong class="text-danger">*</strong> Status:</label>
-                        <select name="status" id="status" class="form-control" disabled>
-                          <option value="1">Ativo</option>
-                          <option value="0">Inativo</option>
-                        </select>
+                      <div class="form-group">
+                          <label for="observacao"><strong class="text-danger">*</strong> Observação:</label>
+                          <textarea type="text" name="observacao" id="observacao" class="form-control" maxlength="250" required> </textarea>
                       </div>
-                    </div>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary">Cadastrar</button>
+                      <div class="form-group">
+                          <label for="status"><strong class="text-danger">*</strong> Status:</label>
+                          <select name="status" id="status" class="form-control" disabled>
+                            <option value="1">Ativo</option>
+                            <option value="0">Inativo</option>
+                          </select>
+                      </div>
+
+                      <!-- Submit button -->
+                      <input type="hidden" name="cadastrar" value="cadastrar_marca">
+                      <input type="submit" class="btn btn-primary btn-block" value="Cadastrar">
+                    </form>
+                    <button class="btn btn-danger btn-block mt-2" data-bs-dismiss="modal">Cancelar</button>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div class="card-body">
-              <div class="row">
-                <!-- CAMPO DE BUSCA -->
-                <div class="col-4">
-                  <form action="">
-                    <input type="search" name="pesquisa" id="pesquisa" class="form-control"  placeholder="Nome da marca">
-                  </form>
-                </div>
+            <?php 
+              $sql = "SELECT * FROM marca";
+              $query = mysqli_query($conexao, $sql);
 
-                <div class="col-2">
-                  <form action="">
-                    <select name="status" id="status" class="form-control">
-                      <option value="">Status</option>
-                      <option value="1">Ativo</option>
-                      <option value="0">Inativo</option>
-                    </select>
+              # O número de linhas retornado é > 0 ? Se sim, teve resultados.
+              if (mysqli_num_rows($query) > 0) { #Estranho, mas a gente vai fechar essa chave após o HTML, usando php novamente.
+            ?>
+              <div class="card-body">
+                <div class="row">
+                  <!-- CAMPO DE BUSCA -->
+                  <div class="col-4">
+                    <form action="">
+                      <input type="search" name="pesquisa" id="pesquisa" class="form-control"  placeholder="Nome da marca">
+                    </form>
+                  </div>
+
+                  <div class="col-2">
+                    <form action="">
+                      <select name="status" id="status" class="form-control">
+                        <option value="">Status</option>
+                        <option value="1">Ativo</option>
+                        <option value="0">Inativo</option>
+                      </select>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div class="card-body p-0">
-              <table class="table m-0">
-                <thead>
-                  <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Nome</th>
-                    <th scope="col">Data Cadastro</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Ações</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>1</td>
-                    <td>BMW</td>
-                    <td>29/09/2025</td>
-                    <td><span class="badge badge-pill badge-success">Ativo</span></td>
-                    <td>
-                      <a href="#" class="btn btn-outline-success btn-sm" title="Editar">
-                        <i class="bi bi-pencil-square"></i>
-                      </a>
-                      <a href="#" class="btn btn-outline-danger btn-sm" title="Excluir">
-                        <i class="bi bi-trash3"></i>
-                      </a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>2</td>
-                    <td>Ferrari</td>
-                    <td>29/09/2025</td>
-                    <td><span class="badge badge-pill badge-success">Ativo</span></td>
-                    <td>
-                      <a href="#" class="btn btn-outline-success btn-sm" title="Editar">
-                        <i class="bi bi-pencil-square"></i>
-                      </a>
-                      <a href="#" class="btn btn-outline-danger btn-sm" title="Excluir">
-                        <i class="bi bi-trash3"></i>
-                      </a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>3</td>
-                    <td>Fiat</td>
-                    <td>29/09/2025</td>
-                    <td><span class="badge badge-pill badge-danger">Inativo</span></td>
-                    <td>
-                      <a href="#" class="btn btn-outline-success btn-sm" title="Editar">
-                        <i class="bi bi-pencil-square"></i>
-                      </a>
-                      <a href="#" class="btn btn-outline-danger btn-sm" title="Excluir">
-                        <i class="bi bi-trash3"></i>
-                      </a>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
+              <div class="card-body p-0">
+                <table class="table m-0">
+                  <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Nome</th>
+                      <th scope="col">Observação</th>
+                      <th scope="col">Data Cadastro</th>
+                      <th scope="col">Status</th>
+                      <th scope="col">Ações</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <?php foreach ($query as $marca) { ?>
+                      <tr>
+                        <td><?php echo $marca['id'] ?></td>
+                        <td><?php echo $marca['nome'] ?></td>
+                        <td><?php echo $marca['observacao'] ?></td>
+                        <td><?php echo date('d/m/Y', strtotime($marca['data_cadastro'])) ?></td>
+                        <td>
+                          <?php 
+                            if ($marca['status'] == 0){
+                              echo '<span class="badge badge-pill badge-danger">Inativo</span>';
+                            } else {
+                              echo '<span class="badge badge-pill badge-success">Ativo</span>';
+                            }
+                          ?>
+                        </td>
+                        <td>
+                          <a href="#" class="btn btn-outline-success btn-sm" title="Editar">
+                            <i class="bi bi-pencil-square"></i>
+                          </a>
+                          <a href="#" class="btn btn-outline-danger btn-sm" title="Excluir">
+                            <i class="bi bi-trash3"></i>
+                          </a>
+                        </td>
+                      </tr>
+                    <?php } ?>
+                  </tbody>
+                </table>
+              </div>
+            <?php 
+            } else {
+              echo '<div class="alert alert-danger mb-0 rounded-0 rounded-bottom-5" role="alert">
+                Nenhuma marca foi encontrado!
+              </div>';
+            } 
+            ?>
           </div>
         </div>
 
