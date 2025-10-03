@@ -1,3 +1,12 @@
+<?php 
+    // STARTING SESSION
+    if (!isset($_SESSION)){
+        session_start();
+    }
+
+  require_once("../../conexao/conecta.php")
+?>
+
 <!doctype html>
 <html lang="pt-br">
 
@@ -112,10 +121,14 @@
                       <div class="col-lg-3 col-md-3 mt-3">
                         <label for="cargo">Cargo</label>
                         <select name="cargo" id="cargo" class="form-control">
-                          <option value="gerente">Gerente</option>
-                          <option value="vendedor">Vendedor</option>
-                          <option value="estoquista">Estoquista</option>
-                          <option value="estoquista">Técnido de Informática</option>
+                          <option value="">- Selecione -</option>
+                          <?php 
+                            $sql = 'SELECT id, nome FROM cargo WHERE status = 1;';
+                            $query = mysqli_execute_query($conexao, $sql);
+                            foreach ($query as $cargo) {
+                              echo '<option value="'. $cargo['id'] .'">'. $cargo['nome'] .'</option>';
+                            }
+                          ?>
                         </select>
                       </div>
                       <div class="col-lg-3 col-md-3 mt-3">
@@ -254,6 +267,7 @@
                   </fieldset>
 
 
+                  <input type="hidden" value="cadastrar_funcionario" class="btn btn-primary mt-3">
                   <input type="submit" value="Cadastrar" class="btn btn-primary mt-3">
                 </div>
               </form>

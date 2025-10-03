@@ -1,3 +1,12 @@
+<?php 
+    // STARTING SESSION
+    if (!isset($_SESSION)){
+        session_start();
+    }
+
+  require_once("../../conexao/conecta.php")
+?>
+
 <!doctype html>
 <html lang="pt-br">
 <head>
@@ -42,6 +51,7 @@
       <main class="ml-auto col-lg-10 px-md-4">
         <?php
           include('../LoggedUser.php');
+          include('../Mensagem.php');
         ?>
         <div class="container mt-5">
           <div class="card">
@@ -51,142 +61,121 @@
               <a href="inserir.php" class="btn btn-primary btn-sm"><i class="bi bi-plus"></i> Adicionar</a>
             </div>
 
-            <div class="card-body">
-              <div class="row">
-                <!-- CAMPO DE BUSCA -->
-                <div class="col-4">
-                  <form action="">
-                    <input type="search" name="pesquisa" id="pesquisa" class="form-control"  placeholder="Nome do funcionário">
-                  </form>
-                </div>
+            <?php 
+              $sql = "
+                SELECT id, nome, id_cargo, cpf, salario, sexo, data_nascimento, tipo_acesso, telefone_celular, email, data_cadastro, status
+                FROM
+                funcionario;
+              ";
 
-                <div class="col-2">
-                  <form action="">
-                    <select name="status" id="status" class="form-control">
-                      <option value="">Status</option>
-                      <option value="1">Ativo</option>
-                      <option value="0">Inativo</option>
-                    </select>
-                </div>
-                <div class="col-2">
-                  <form action="">
-                    <select name="sexo" id="sexo" class="form-control">
-                      <option value="T">Sexo</option>
-                      <option value="N">Não Informado</option>
-                      <option value="M">Masculino</option>
-                      <option value="F">Feminino</option>
-                    </select>
-                </div>
-                <div class="col-2">
-                  <form action="">
-                    <select name="tipo-acesso" id="tipo-acesso" class="form-control">
-                      <option value="">Tipo de acesso</option>
-                      <option value="administrador">Administrador</option>
-                      <option value="normal">Normal</option>
-                    </select>
-                </div>
-                <div class="col-2">
-                  <form action="">
-                    <select name="cargo" id="cargo" class="form-control">
-                      <option value="">Cargo</option>
-                      <option value="gerente">Gerente</option>
-                      <option value="vendedor">Vendedor</option>
-                      <option value="estoquista">Estoquista</option>
-                    </select>
+              $query = mysqli_query($conexao, $sql);
+              if (mysqli_num_rows($query) > 0) {
+            ?>
+
+              <div class="card-body">
+                <div class="row">
+                  <!-- CAMPO DE BUSCA -->
+                  <div class="col-4">
+                    <form action="">
+                      <input type="search" name="pesquisa" id="pesquisa" class="form-control"  placeholder="Nome do funcionário">
+                    </form>
+                  </div>
+
+                  <div class="col-2">
+                    <form action="">
+                      <select name="status" id="status" class="form-control">
+                        <option value="">Status</option>
+                        <option value="1">Ativo</option>
+                        <option value="0">Inativo</option>
+                      </select>
+                  </div>
+                  <div class="col-2">
+                    <form action="">
+                      <select name="sexo" id="sexo" class="form-control">
+                        <option value="T">Sexo</option>
+                        <option value="N">Não Informado</option>
+                        <option value="M">Masculino</option>
+                        <option value="F">Feminino</option>
+                      </select>
+                  </div>
+                  <div class="col-2">
+                    <form action="">
+                      <select name="tipo-acesso" id="tipo-acesso" class="form-control">
+                        <option value="">Tipo de acesso</option>
+                        <option value="administrador">Administrador</option>
+                        <option value="normal">Normal</option>
+                      </select>
+                  </div>
+                  <div class="col-2">
+                    <form action="">
+                      <select name="cargo" id="cargo" class="form-control">
+                        <option value="">Cargo</option>
+                        <option value="gerente">Gerente</option>
+                        <option value="vendedor">Vendedor</option>
+                        <option value="estoquista">Estoquista</option>
+                      </select>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div class="card-body p-0">
-              <table class="table m-0">
-                <thead>
-                  <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Nome</th>
-                    <th scope="col">Cargo</th>
-                    <th scope="col">CPF</th>
-                    <th scope="col">Salário</th>
-                    <th scope="col">Sexo</th>
-                    <th scope="col">Data Nascimento</th>
-                    <th scope="col">Tipo Acesso</th>
-                    <th scope="col">Celular</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Data Cadastro</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Ações</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>1</td>
-                    <td>João Silva</td>
-                    <td>Analista</td>
-                    <td>123.456.789-00</td>
-                    <td>R$ 4.500,00</td>
-                    <td>M</td>
-                    <td>15/03/1990</td>
-                    <td>Administrador</td>
-                    <td>(11) 91234-5678</td>
-                    <td>joao.silva@email.com</td>
-                    <td>10/09/2024</td>
-                    <td><span class="badge badge-pill badge-success">Ativo</span></td>
-                    <td>
-                      <a href="#" class="btn btn-outline-success btn-sm" title="Editar">
-                        <i class="bi bi-pencil-square"></i>
-                      </a>
-                      <a href="#" class="btn btn-outline-danger btn-sm" title="Excluir">
-                        <i class="bi bi-trash3"></i>
-                      </a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>1</td>
-                    <td>João Silva</td>
-                    <td>Analista</td>
-                    <td>123.456.789-00</td>
-                    <td>R$ 4.500,00</td>
-                    <td>M</td>
-                    <td>15/03/1990</td>
-                    <td>Administrador</td>
-                    <td>(11) 91234-5678</td>
-                    <td>joao.silva@email.com</td>
-                    <td>10/09/2024</td>
-                    <td><span class="badge badge-pill badge-success">Ativo</span></td>
-                    <td>
-                      <a href="#" class="btn btn-outline-success btn-sm" title="Editar">
-                        <i class="bi bi-pencil-square"></i>
-                      </a>
-                      <a href="#" class="btn btn-outline-danger btn-sm" title="Excluir">
-                        <i class="bi bi-trash3"></i>
-                      </a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>1</td>
-                    <td>João Silva</td>
-                    <td>Analista</td>
-                    <td>123.456.789-00</td>
-                    <td>R$ 4.500,00</td>
-                    <td>M</td>
-                    <td>15/03/1990</td>
-                    <td>Administrador</td>
-                    <td>(11) 91234-5678</td>
-                    <td>joao.silva@email.com</td>
-                    <td>10/09/2024</td>
-                    <td><span class="badge badge-pill badge-danger">Inativo</span></td>
-                    <td>
-                      <a href="#" class="btn btn-outline-success btn-sm" title="Editar">
-                        <i class="bi bi-pencil-square"></i>
-                      </a>
-                      <a href="#" class="btn btn-outline-danger btn-sm" title="Excluir">
-                        <i class="bi bi-trash3"></i>
-                      </a>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+              <div class="card-body p-0">
+                <table class="table m-0">
+                  <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Nome</th>
+                      <th scope="col">Cargo</th>
+                      <th scope="col">CPF</th>
+                      <th scope="col">Salário</th>
+                      <th scope="col">Sexo</th>
+                      <th scope="col">Data Nascimento</th>
+                      <th scope="col">Tipo Acesso</th>
+                      <th scope="col">Celular</th>
+                      <th scope="col">Data Cadastro</th>
+                      <th scope="col">Status</th>
+                      <th scope="col">Ações</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <?php foreach($query as $funcionario) ?>
+                    <tr>
+                      <td><?php echo $funcionario['id'] ?></td>
+                      <td><?php echo $funcionario['nome'] ?></td>
+                      <td><?php echo $funcionario['id_cargo'] ?></td>
+                      <td><?php echo $funcionario['cpf'] ?></td>
+                      <td><?php echo $funcionario['salario'] ?></td>
+                      <td><?php echo $funcionario['sexo'] ?></td>
+                      <td><?php echo date('d/m/Y', strtotime($modelo['data_nascimento'])) ?></td>
+                      <td><?php echo '<span class="badge badge-pill badge-danger">' . $funcionario["tipo_acesso"] .'</span>'; ?></td>
+                      <td><?php echo $funcionario['telefone_celular'] ?></td>
+                      <td><?php echo date('d/m/Y', strtotime($modelo['data_cadastro'])) ?></td>
+                      <td>
+                        <?php 
+                          if ($funcionario['status'] == 0){
+                            echo '<span class="badge badge-pill badge-danger">Inativo</span>';
+                          } else {
+                            echo '<span class="badge badge-pill badge-success">Ativo</span>';
+                          }
+                        ?>
+                      </td>
+                      <td>
+                        <a href="#" class="btn btn-outline-success btn-sm" title="Editar">
+                          <i class="bi bi-pencil-square"></i>
+                        </a>
+                        <a href="#" class="btn btn-outline-danger btn-sm" title="Excluir">
+                          <i class="bi bi-trash3"></i>
+                        </a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
 
+            <?php
+              } else {
+                echo '<div class="alert alert-danger m-3" role="alert">Nenhum registro encontrado!</div>';
+              } 
+            ?>
           </div>
         </div>
 

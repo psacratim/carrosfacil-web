@@ -156,10 +156,10 @@
                           ?>
                         </td>
                         <td>
-                          <a href="#" class="btn btn-outline-success btn-sm" title="Editar">
+                          <a href="editar.php?id_cargo=<?php echo($cargo['id']) ?>" class="btn btn-outline-success btn-sm" title="Editar">
                             <i class="bi bi-pencil-square"></i>
                           </a>
-                          <a href="#" class="btn btn-outline-danger btn-sm" title="Excluir">
+                          <a href="excluir.php?id_cargo=<?php echo($cargo['id']) ?>" class="btn btn-outline-danger btn-sm" title="Excluir">
                             <i class="bi bi-trash3"></i>
                           </a>
                         </td>
@@ -170,9 +170,7 @@
               </div>
             <?php 
             } else {
-              echo '<div class="alert alert-danger mb-0 rounded-0 rounded-bottom-5" role="alert">
-                Nenhuma marca foi encontrado!
-              </div>';
+              echo '<div class="alert alert-danger m-3" role="alert">Nenhum registro encontrado!</div>';
             } 
             ?>
           </div>

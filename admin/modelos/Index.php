@@ -1,3 +1,11 @@
+<?php 
+    // STARTING SESSION
+    if (!isset($_SESSION)){
+        session_start();
+    }
+
+  require_once("../../conexao/conecta.php")
+?>
 <!doctype html>
 <html lang="pt-br">
 
@@ -44,6 +52,7 @@
       <main class="ml-auto col-lg-10 px-md-4">
         <?php
           include('../LoggedUser.php');
+          include('../Mensagem.php');
         ?>
 
         <div class="container mt-5">
@@ -66,34 +75,44 @@
                   </div>
 
                   <div class="modal-body">
-                    <div class="row">
-                      <div class="col-12 mb-3">
-                        <label for="nome"><strong class="text-danger">*</strong> Marca do Modelo:</label>
-                        <input type="text" name="nome" id="nome" class="form-control" maxlength="60" required>
+                    <form action="acoes.php" method="post">
+                      <div class="form-group">
+                          <div class="row">
+                            <div class="col-9">
+                              <label for="marca-modelo"><strong class="text-danger">*</strong> Marca do modelo:</label>
+                              <input type="number" name="marca-modelo" id="marca-modelo" class="form-control" maxlength="11" placeholder="0" required>
+                            </div>
+
+                            <div class="col-3 mt-auto">
+                              <button type="button" class="btn btn-primary w-100" id="buscar-marca">Buscar</button>
+                            </div>
+                            
+                            <div class="col-12" id="resultado-busca">
+                              <div class='text-danger'>Faça a busca pelo id da marca.</div>
+                            </div>
+                          </div>
+                      </div>
+                      <div class="form-group">
+                          <label for="nome-modelo"><strong class="text-danger">*</strong> Nome do modelo:</label>
+                          <input type="text" name="nome-modelo" id="nome-modelo" class="form-control" maxlength="80" placeholder="Hyundai HB20" required>
+                      </div>
+                      <div class="form-group">
+                          <label for="observacao">Observação:</label>
+                          <textarea type="text" name="observacao" id="observacao" class="form-control" maxlength="250"></textarea>
+                      </div>
+                      <div class="form-group">
+                          <label for="status"><strong class="text-danger">*</strong> Status:</label>
+                          <select name="status" id="status" class="form-control" disabled>
+                            <option value="1">Ativo</option>
+                            <option value="0">Inativo</option>
+                          </select>
                       </div>
 
-                      <div class="col-12 mb-3">
-                        <label for="nome"><strong class="text-danger">*</strong> Nome do Modelo:</label>
-                        <input type="text" name="nome" id="nome" class="form-control" maxlength="60" required>
-                      </div>
-
-                      <div class="col-12 mb-3">
-                        <label for="nome">Observação:</label>
-                        <input type="text" name="nome" id="nome" class="form-control" maxlength="60" required>
-                      </div>
-
-                      <div class="col-12">
-                        <label for="status"><strong class="text-danger">*</strong> Status:</label>
-                        <select name="status" id="status" class="form-control" disabled>
-                          <option value="1">Ativo</option>
-                          <option value="0">Inativo</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary">Cadastrar</button>
+                      <!-- Submit button -->
+                      <input type="hidden" name="cadastrar" value="cadastrar_modelos">
+                      <input type="submit" class="btn btn-primary btn-block" value="Cadastrar">
+                    </form>
+                    <button class="btn btn-danger btn-block mt-2" data-bs-dismiss="modal">Cancelar</button>
                   </div>
                 </div>
               </div>
@@ -110,38 +129,59 @@
               </div>
             </div>
 
-            <div class="card-body p-0">
-              <table class="table m-0">
-                <thead>
-                  <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Marca</th>
-                    <th scope="col">Nome do Modelo</th>
-                    <th scope="col">Data Cadastro</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Ações</th>  
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>1</td>
-                    <td>BMW</td>
-                    <td>BMW M4</td>
-                    <td>30/09/2025</td>
-                    <td><span class="badge badge-pill badge-success">Disponível</span></td>
-                    <td>
-                      <a href="#" class="btn btn-outline-success btn-sm" title="Editar">
-                        <i class="bi bi-pencil-square"></i>
-                      </a>
-                      <a href="#" class="btn btn-outline-danger btn-sm" title="Excluir">
-                        <i class="bi bi-trash3"></i>
-                      </a>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+            <?php 
+              $sql = "SELECT * FROM modelo";
+              $query = mysqli_query($conexao, $sql);
 
+              # O número de linhas retornado é > 0 ? Se sim, teve resultados.
+              if (mysqli_num_rows($query) > 0) { #Estranho, mas a gente vai fechar essa chave após o HTML, usando php novamente.
+            ?>
+              <div class="card-body p-0">
+                <table class="table m-0">
+                  <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Marca</th>
+                      <th scope="col">Nome do Modelo</th>
+                      <th scope="col">Data Cadastro</th>
+                      <th scope="col">Status</th>
+                      <th scope="col">Ações</th>  
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <?php foreach ($query as $modelo) { ?>
+                    <tr>
+                      <td><?php $modelo['id'] ?></td>
+                      <td><?php $modelo['id_marca'] ?></td>
+                      <td><?php $modelo['nome'] ?></td>
+                      <td><?php echo date('d/m/Y', strtotime($modelo['data_cadastro'])) ?></td>
+                      <td>
+                        <?php 
+                          if ($modelo['status'] == 0){
+                            echo '<span class="badge badge-pill badge-danger">Inativo</span>';
+                          } else {
+                            echo '<span class="badge badge-pill badge-success">Ativo</span>';
+                          }
+                        ?>
+                      </td>
+                      <td>
+                        <a href="#" class="btn btn-outline-success btn-sm" title="Editar">
+                          <i class="bi bi-pencil-square"></i>
+                        </a>
+                        <a href="#" class="btn btn-outline-danger btn-sm" title="Excluir">
+                          <i class="bi bi-trash3"></i>
+                        </a>
+                      </td>
+                    </tr>
+                    <?php } ?>
+                  </tbody>
+                </table>
+              </div>
+            <?php
+              } else {
+                echo '<div class="alert alert-danger m-3" role="alert">Nenhum registro encontrado!</div>';
+              } 
+            ?>
           </div>
         </div>
 
@@ -156,16 +196,25 @@
 
   <!-- CUSTOM SCRIPTS -->
   <script>
-    $('#icone-acessorio').change(function(e) {
-        let file = this.files[0]; // ou $(this)[0].files[0]
-        if (file) {
-            let reader = new FileReader();
-            reader.onload = function(event) {
-                $("#icone-img").attr("src", event.target.result);
-            };
-            reader.readAsDataURL(file);
-        }
-    });
+      $('#buscar-marca').click(function(e) {
+        e.preventDefault();
+
+        let marca_modelo = $('#marca-modelo').val();
+        $.ajax({
+          url: 'buscar.php',
+          method: "GET",
+          data: { "marca-modelo": marca_modelo },
+          success: function(resposta) {
+            console.log(resposta)
+            $("#resultado-busca").html(
+              '<div class="text-success">Marca: '+resposta+'</div>'
+            );
+          },
+          error: function() {
+            $("#resultado-busca").html("<div class='text-danger'>Marca não encontrada, digite um id válido!</div>")
+          }
+        })
+      })
   </script>
 </body>
 
