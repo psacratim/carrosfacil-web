@@ -26,7 +26,7 @@ CREATE TABLE `cargo` (
 );
 
 CREATE TABLE `acessorio` (
-  `id` INT(6) PRIMARY KEY,
+  `id` INT(6) PRIMARY KEY AUTO_INCREMENT,
   `nome` VARCHAR(80),
   `descricao` VARCHAR(250),
   `icone` VARCHAR(250),
@@ -52,13 +52,13 @@ CREATE TABLE `funcionario` (
   `telefone_recado` CHAR(13) NOT NULL,
   `telefone_residencial` CHAR(13),
   `endereco` VARCHAR(60) NOT NULL,
+  `cep` CHAR(9),
   `numero` INT(5) NOT NULL,
   `complemento` VARCHAR(200),
   `bairro` VARCHAR(32) NOT NULL,
   `cidade` VARCHAR(50) NOT NULL,
   `estado` VARCHAR(32) NOT NULL,
   `email` VARCHAR(100),
-  `cep` VARCHAR(10),
   `foto` VARCHAR(200),
   `data_cadastro` DATE NOT NULL,
   `status` BIT NOT NULL,
@@ -67,57 +67,57 @@ CREATE TABLE `funcionario` (
 );
 
 CREATE TABLE `cliente` (
-  `id` VARCHAR(10) PRIMARY KEY,
-  `cidade` VARCHAR(10),
-  `estado` VARCHAR(10),
-  `numero` VARCHAR(10),
-  `endereco` VARCHAR(10),
-  `complemento` VARCHAR(10),
-  `bairro` VARCHAR(10),
-  `cep` VARCHAR(10),
-  `telefone1` VARCHAR(10),
-  `email` VARCHAR(10),
-  `data_nascimento` VARCHAR(10),
-  `sexo` VARCHAR(10),
-  `usuario` VARCHAR(10),
+  `id` INT(8) PRIMARY KEY AUTO_INCREMENT,
+  `cpf` CHAR(14) UNIQUE NOT NULL,
+  `rg` VARCHAR(12) UNIQUE,
+  `nome_completo` VARCHAR(80),
+  `data_nascimento` DATE NOT NULL,
+  `usuario` VARCHAR(20) NOT NULL,
+  `senha` VARCHAR(26) NOT NULL,
+  `endereco` VARCHAR(60) NOT NULL,
+  `cep` CHAR(9),
+  `numero` INT(5) NOT NULL,
+  `complemento` VARCHAR(200),
+  `bairro` VARCHAR(32) NOT NULL,
+  `cidade` VARCHAR(50) NOT NULL,
+  `estado` VARCHAR(32) NOT NULL,
+  `telefone1` CHAR(13) NOT NULL,
+  `telefone2` CHAR(13),
+  `email` VARCHAR(10) NOT NULL,
+  `sexo` CHAR NOT NULL,
   `data_cadastro` DATETIME NOT NULL,
   `status` BIT,
-  `rg` VARCHAR(10),
-  `nome_completo` VARCHAR(10),
-  `cpf` VARCHAR(10),
-  `senha` VARCHAR(10),
-  `telefone2` VARCHAR(10)
 );
 
 CREATE TABLE `veiculo` (
-  `id` INT(11) PRIMARY KEY,
+  `id` INT(11) PRIMARY KEY AUTO_INCREMENT,
   `id_modelo` INT(11),
-  `categoria` VARCHAR(10), -- SUVS, Esportivo
-  `tempo_de_uso` VARCHAR(10),
-  `tipo` VARCHAR(10),
-  `preco` VARCHAR(10),
-  `kms_rodado` VARCHAR(10),
-  `numero_portas` VARCHAR(10),
-  `placa` VARCHAR(10),
-  `cor` VARCHAR(10),
-  `descricao` VARCHAR(10),
-  `ano` VARCHAR(10),
-  `tipo_cambio` VARCHAR(10),
-  `tipo_combustivel` VARCHAR(10),
-  `estoque` VARCHAR(10),
+  `categoria` VARCHAR(32), -- SUVS, Esportivo
+  `tempo_de_uso` INT(5), -- Tempo de uso em dias: 1 dia, 365 dias, 1.265 dias, ... -> Limite: 99.999 dias (273 anos)
+  `tipo` VARCHAR(26), -- Usado | Novo
+  `preco` DECIMAL(10, 2), -- 99,999,999.99
+  `kms_rodado` INT(7) -- Limite: 9.999.999 kms,
+  `numero_portas` INT(2),
+  `placa` VARCHAR(7),
+  `cor` VARCHAR(16),
+  `descricao` VARCHAR(250),
+  `ano` INT(4),
+  `tipo_cambio` VARCHAR(20),
+  `tipo_combustivel` VARCHAR(26),
+  `estoque` INT(5),
   `data_cadastro` DATETIME NOT NULL,
   `status` BIT,
-  `material_aro` VARCHAR(10),
-  `material_assento` VARCHAR(10),
+  `material_aro` VARCHAR(32),
+  `material_assento` VARCHAR(32),
 
   FOREIGN KEY (`id_modelo`) REFERENCES `modelo` (`id`)
 );
 
 CREATE TABLE `foto_veiculo` (
-  `id` VARCHAR(10) PRIMARY KEY,
-  `id_veiculo` VARCHAR(10),
-  `caminho` VARCHAR(10),
-  `ordem` VARCHAR(10),
+  `id` INT(11) PRIMARY KEY AUTO_INCREMENT,
+  `id_veiculo` INT(11) NOT NULL,
+  `caminho` VARCHAR(250) NOT NULL,
+  `ordem` INT(2) NOT NULL,
   `data_cadastro` DATETIME NOT NULL,
   `status` BIT,
 
@@ -125,20 +125,20 @@ CREATE TABLE `foto_veiculo` (
 );
 
 CREATE TABLE `acessorio_carro` (
-  `id_veiculo` INT(11),
-  `id_acessorio` INT(6),
+  `id_veiculo` INT(11) NOT NULL,
+  `id_acessorio` INT(6) NOT NULL,
 
   FOREIGN KEY (`id_veiculo`) REFERENCES `veiculo` (`id`),
   FOREIGN KEY (`id_acessorio`) REFERENCES `acessorio` (`id`)
 );
 
 CREATE TABLE `venda` (
-  `id` VARCHAR(10) PRIMARY KEY,
-  `id_funcionario` INT(4),
-  `id_cliente` VARCHAR(10),
+  `id` INT(11) PRIMARY KEY AUTO_INCREMENT,
+  `id_funcionario` INT(4) NOT NULL,
+  `id_cliente` INT(8) NOT NULL,
+  `valor_total` DECIMAL(10, 2) NOT NULL,
+  `data_venda` DATETIME NOT NULL,
   `data_cadastro` DATETIME NOT NULL,
-  `valor_total` VARCHAR(10),
-  `data_venda` VARCHAR(10),
   `status` BIT,
 
   FOREIGN KEY (`id_funcionario`) REFERENCES `funcionario` (`id`),
@@ -146,23 +146,23 @@ CREATE TABLE `venda` (
 );
 
 CREATE TABLE `item_venda` (
-  `id` VARCHAR(10) PRIMARY KEY,
-  `id_veiculo` VARCHAR(10),
-  `id_venda` VARCHAR(10),
-  `quantidade` VARCHAR(10),
-  `valor_unitario` VARCHAR(10),
+  `id` INT(11) PRIMARY KEY,
+  `id_veiculo` INT(11) NOT NULL,
+  `id_venda` INT(11) NOT NULL,
+  `quantidade` INT(3) NOT NULL,
+  `valor_unitario` DECIMAL(10, 2) NOT NULL,
 
   FOREIGN KEY (`id_veiculo`) REFERENCES `veiculo` (`id`),
   FOREIGN KEY (`id_venda`) REFERENCES `venda` (`id`)
 );
 
 CREATE TABLE `pagamento` (
-  `id` VARCHAR(10) PRIMARY KEY,
-  `id_venda` VARCHAR(10),
-  `tipo` VARCHAR(10),
-  `valor` VARCHAR(10),
-  `parcelas` VARCHAR(10),
-  `desconto` VARCHAR(10),
+  `id` INT(11) PRIMARY KEY,
+  `id_venda` INT(11) NOT NULL,
+  `tipo` VARCHAR(16) NOT NULL,
+  `valor` DECIMAL(10, 2) NOT NULL,
+  `parcelas` INT(2) NOT NULL,
+  `desconto` INT(3) NOT NULL,
   `status` BIT,
 
   FOREIGN KEY (`id_venda`) REFERENCES `venda` (`id`)
