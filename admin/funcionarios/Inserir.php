@@ -107,7 +107,7 @@
                       <div class="col-lg-3 col-md-3 mt-3">
                         <label for="estado-civil"><strong class="text-danger">*</strong> Estado Civil</label>
                         <select name="estado-civil" id="estado-civil" class="form-control" required>
-                          <option value="Solteiro">Solteiro(a)</option>
+                          <option value="Solteiro" selected>Solteiro(a)</option>
                           <option value="Casado">Casado(a)</option>
                           <option value="Separado">Separado(a)</option>
                           <option value="Divorciado">Divorciado(a)</option>
@@ -161,8 +161,8 @@
                       <div class="col-md-4 mt-3">
                         <label for="tipo-acesso"><strong class="text-danger">*</strong> Tipo de acesso</label>
                         <select name="tipo-acesso" id="tipo-acesso" class="form-control" required>
-                          <option value="Administrativo">Administrador</option>
-                          <option value="Normal">Normal</option>
+                          <option value="0" selected>Comum</option>
+                          <option value="1">Administrador</option>
                         </select>
                       </div>
                     </div>

@@ -47,10 +47,10 @@ CREATE TABLE `funcionario` (
   `usuario` VARCHAR(20) NOT NULL,
   `estado_civil` VARCHAR(20) NOT NULL,
   `data_nascimento` DATE NOT NULL,
-  `tipo_acesso` VARCHAR(32) NOT NULL,
-  `telefone_celular` CHAR(13),
-  `telefone_recado` CHAR(13) NOT NULL,
-  `telefone_residencial` CHAR(13),
+  `tipo_acesso` INT(2) NOT NULL,
+  `telefone_celular` CHAR(15),
+  `telefone_recado` CHAR(15) NOT NULL,
+  `telefone_residencial` CHAR(15),
   `endereco` VARCHAR(60) NOT NULL,
   `cep` CHAR(9),
   `numero` INT(5) NOT NULL,
@@ -83,10 +83,10 @@ CREATE TABLE `cliente` (
   `estado` VARCHAR(32) NOT NULL,
   `telefone1` CHAR(13) NOT NULL,
   `telefone2` CHAR(13),
-  `email` VARCHAR(10) NOT NULL,
-  `sexo` CHAR NOT NULL,
+  `email` VARCHAR(50) NOT NULL,
+  `sexo` CHAR(1) NOT NULL,
   `data_cadastro` DATETIME NOT NULL,
-  `status` BIT,
+  `status` BIT
 );
 
 CREATE TABLE `veiculo` (
@@ -96,7 +96,7 @@ CREATE TABLE `veiculo` (
   `tempo_de_uso` INT(5), -- Tempo de uso em dias: 1 dia, 365 dias, 1.265 dias, ... -> Limite: 99.999 dias (273 anos)
   `tipo` VARCHAR(26), -- Usado | Novo
   `preco` DECIMAL(10, 2), -- 99,999,999.99
-  `kms_rodado` INT(7) -- Limite: 9.999.999 kms,
+  `kms_rodado` INT(7), -- Limite: 9.999.999 kms,
   `numero_portas` INT(2),
   `placa` VARCHAR(7),
   `cor` VARCHAR(16),
@@ -146,7 +146,7 @@ CREATE TABLE `venda` (
 );
 
 CREATE TABLE `item_venda` (
-  `id` INT(11) PRIMARY KEY,
+  `id` INT(11) PRIMARY KEY AUTO_INCREMENT,
   `id_veiculo` INT(11) NOT NULL,
   `id_venda` INT(11) NOT NULL,
   `quantidade` INT(3) NOT NULL,
@@ -157,7 +157,7 @@ CREATE TABLE `item_venda` (
 );
 
 CREATE TABLE `pagamento` (
-  `id` INT(11) PRIMARY KEY,
+  `id` INT(11) PRIMARY KEY AUTO_INCREMENT,
   `id_venda` INT(11) NOT NULL,
   `tipo` VARCHAR(16) NOT NULL,
   `valor` DECIMAL(10, 2) NOT NULL,
