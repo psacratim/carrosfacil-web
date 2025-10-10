@@ -1,6 +1,11 @@
+CREATE DATABASE carrosfacil_ti50
+CHARSET=utf8 COLLATE=utf8_general_ci;
+
+USE carrosfacil_ti50;
+
 CREATE TABLE `marca` (
   `id` INT(9) PRIMARY KEY AUTO_INCREMENT,
-  `nome` VARCHAR(80) NOT NULL,
+  `nome` VARCHAR(80) NOT NULL UNIQUE,
   `observacao` VARCHAR(250),
   `data_cadastro` DATETIME NOT NULL,
   `status` BIT NOT NULL
@@ -9,7 +14,7 @@ CREATE TABLE `marca` (
 CREATE TABLE `modelo` (
   `id` INT(11) PRIMARY KEY AUTO_INCREMENT,
   `id_marca` INT(9) NOT NULL,
-  `nome` VARCHAR(80) NOT NULL,
+  `nome` VARCHAR(80) NOT NULL UNIQUE,
   `observacao` VARCHAR(250),
   `data_cadastro` DATETIME NOT NULL,
   `status` BIT,
@@ -25,11 +30,11 @@ CREATE TABLE `cargo` (
   `status` BIT NOT NULL
 );
 
-CREATE TABLE `acessorio` (
+CREATE TABLE `caracteristica` ( -- Ar condicionado, material do aro, cor do banco, etc...
   `id` INT(6) PRIMARY KEY AUTO_INCREMENT,
-  `nome` VARCHAR(80),
-  `descricao` VARCHAR(250),
-  `icone` VARCHAR(250),
+  `nome` VARCHAR(80) UNIQUE NOT NULL,
+  `descricao` VARCHAR(250) NOT NULL,
+  `icone` VARCHAR(250) NOT NULL,
   `data_cadastro` DATETIME NOT NULL,
   `status` BIT NOT NULL
 );
@@ -70,7 +75,7 @@ CREATE TABLE `cliente` (
   `id` INT(8) PRIMARY KEY AUTO_INCREMENT,
   `cpf` CHAR(14) UNIQUE NOT NULL,
   `rg` VARCHAR(12) UNIQUE,
-  `nome_completo` VARCHAR(80),
+  `nome_completo` VARCHAR(80) NOT NULL,
   `data_nascimento` DATE NOT NULL,
   `usuario` VARCHAR(20) NOT NULL,
   `senha` VARCHAR(26) NOT NULL,
@@ -83,7 +88,8 @@ CREATE TABLE `cliente` (
   `estado` VARCHAR(32) NOT NULL,
   `telefone1` CHAR(13) NOT NULL,
   `telefone2` CHAR(13),
-  `email` VARCHAR(50) NOT NULL,
+  `email` VARCHAR(50),
+  `estado_civil` VARCHAR(20) NOT NULL,
   `sexo` CHAR(1) NOT NULL,
   `data_cadastro` DATETIME NOT NULL,
   `status` BIT
@@ -107,8 +113,6 @@ CREATE TABLE `veiculo` (
   `estoque` INT(5),
   `data_cadastro` DATETIME NOT NULL,
   `status` BIT,
-  `material_aro` VARCHAR(32),
-  `material_assento` VARCHAR(32),
 
   FOREIGN KEY (`id_modelo`) REFERENCES `modelo` (`id`)
 );
@@ -124,12 +128,12 @@ CREATE TABLE `foto_veiculo` (
   FOREIGN KEY (`id_veiculo`) REFERENCES `veiculo` (`id`)
 );
 
-CREATE TABLE `acessorio_carro` (
+CREATE TABLE `caracteristica_carro` (
   `id_veiculo` INT(11) NOT NULL,
-  `id_acessorio` INT(6) NOT NULL,
+  `id_caracteristica` INT(6) NOT NULL,
 
   FOREIGN KEY (`id_veiculo`) REFERENCES `veiculo` (`id`),
-  FOREIGN KEY (`id_acessorio`) REFERENCES `acessorio` (`id`)
+  FOREIGN KEY (`id_caracteristica`) REFERENCES `caracteristica` (`id`)
 );
 
 CREATE TABLE `venda` (
