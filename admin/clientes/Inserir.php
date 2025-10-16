@@ -58,41 +58,27 @@
         <div class="container mt-5">
           <div class="card">
             <div class="card-header d-flex justify-content-between">
-              <h4 class="m-0">Novo Funcionário</h4>
+              <h4 class="m-0">Novo Cliente</h4>
 
               <a href="Index.php" class="btn btn-primary btn-sm"><i class="bi bi-arrow-left-short"></i> Voltar</a>
             </div>
 
             <div class="card-body">
-              <form action="" method="post">
+              <form action="acoes.php" method="post">
                 <div class="form-row">
-
-                  <div class="col-12 mb-3 text-center">
-                    <label for="foto-perfil">Foto de Perfil</label>
-
-                    <div>
-                      <img id="foto-img" src="../../assets/img/placeholder-funcionario.png" alt="" class="rounded-3">
-                    </div>
-
-                    <input type="file" name="foto-perfil" id="foto-perfil" class="form-control mt-3 mx-auto w-50" accept="image/png, image/jpeg">
-                  </div>
 
                   <fieldset class="form-group">
                     <h3>Dados Pessoais</h3>
                     <div class="row">
                       <div class="col-md-6">
-                        <label for="nome"><strong class="text-danger">*</strong> Nome:</label>
-                        <input type="text" name="nome" id="nome" class="form-control" maxlength="60" required>
+                        <label for="nome-completo"><strong class="text-danger">*</strong> Nome Completo:</label>
+                        <input type="text" name="nome-completo" id="nome-completo" class="form-control" maxlength="60" required>
                       </div>
-                      <div class="col-md-6">
-                        <label for="nome-social">Nome Social</label>
-                        <input type="text" name="nome-social" id="nome-social" class="form-control" maxlength="60">
-                      </div>
-                      <div class="col-lg-3 col-md-3 mt-3">
+                      <div class="col-lg-3 col-md-3">
                         <label for="cpf"><strong class="text-danger">*</strong> CPF</label>
                         <input type="text" name="cpf" id="cpf" class="form-control" maxlength="14" required data-mask="000.000.000-00">
                       </div>
-                      <div class="col-lg-3 col-md-3 mt-3">
+                      <div class="col-lg-3 col-md-3">
                         <label for="rg">RG</label>
                         <input type="text" name="rg" id="rg" class="form-control" maxlength="12" data-mask="00.000.000-A">
                       </div>
@@ -116,24 +102,7 @@
                       </div>
                       <div class="col-lg-3 col-md-3 mt-3">
                         <label for="data-nascimento"><strong class="text-danger">*</strong> Data Nascimento</label>
-                        <input type="date" name="data-nascimento" id="data-nascimento" class="form-control" data-mask="00/00/00">
-                      </div>
-                      <div class="col-lg-3 col-md-3 mt-3">
-                        <label for="cargo">Cargo</label>
-                        <select name="cargo" id="cargo" class="form-control">
-                          <option value="">- Selecione -</option>
-                          <?php 
-                            $sql = 'SELECT id, nome FROM cargo WHERE status = 1;';
-                            $query = mysqli_execute_query($conexao, $sql);
-                            foreach ($query as $cargo) {
-                              echo '<option value="'. $cargo['id'] .'">'. $cargo['nome'] .'</option>';
-                            }
-                          ?>
-                        </select>
-                      </div>
-                      <div class="col-lg-3 col-md-3 mt-3">
-                        <label for="salario">Salario</label>
-                        <input type="text" name="salario" id="salario" class="form-control" data-mask="#.##0,00" data-mask-reverse="true">
+                        <input type="date" name="data-nascimento" id="data-nascimento" class="form-control">
                       </div>
                       <div class="col-lg-3 col-md-3 mt-3">
                         <label for="status">Status</label>
@@ -148,22 +117,14 @@
                   <fieldset class="form-group col-lg-12 mt-3">
                     <h3>Dados de acesso</h3>
                     <div class="row">
-                      <div class="col-md-4 mt-3">
+                      <div class="col-md-6 mt-3">
                         <label for="usuario"><strong class="text-danger">*</strong> Usuário</label>
                         <input type="text" name="usuario" id="usuario" class="form-control" maxlength="20" required>
                       </div>
 
-                      <div class="col-md-4 mt-3">
+                      <div class="col-md-6 mt-3">
                         <label for="senha"><strong class="text-danger">*</strong> Senha</label>
                         <input type="password" name="senha" id="senha" class="form-control" maxlength="26" required>
-                      </div>
-
-                      <div class="col-md-4 mt-3">
-                        <label for="tipo-acesso"><strong class="text-danger">*</strong> Tipo de acesso</label>
-                        <select name="tipo-acesso" id="tipo-acesso" class="form-control" required>
-                          <option value="0" selected>Comum</option>
-                          <option value="1">Administrador</option>
-                        </select>
                       </div>
                     </div>
                   </fieldset>
@@ -172,19 +133,14 @@
                   <fieldset class="form-group col-lg-12 mt-3">
                     <h3>Dados de contato</h3>
                     <div class="row">
-                      <div class="col-lg-2 col-md-4 mt-3">
-                        <label for="telefone-recado"><strong class="text-danger">*</strong> Telefone Recado</label>
-                        <input type="text" name="telefone-recado" id="telefone-recado" class="form-control" minlength="15" maxlength="15" required data-mask="(00) 0000-0000">
+                      <div class="col-lg-3 col-md-4 mt-3">
+                        <label for="telefone-1"><strong class="text-danger">*</strong> Telefone 1</label>
+                        <input type="text" name="telefone-1" id="telefone-1" class="form-control" minlength="15" maxlength="15" required data-mask="(00) 00000-0000">
                       </div>
 
-                      <div class="col-lg-2 col-md-4 mt-3">
-                        <label for="telefone-celular">Telefone Celular</label>
-                        <input type="text" name="telefone-celular" id="telefone-celular" class="form-control" minlength="15" maxlength="15" data-mask="(00) 0000-0000">
-                      </div>
-
-                      <div class="col-lg-2 col-md-4 mt-3">
-                        <label for="telefone-residencial">Telefone Residencial</label>
-                        <input type="text" name="telefone-residencial" id="telefone-residencial" class="form-control" minlength="15" maxlength="15" data-mask="(00) 0000-0000">
+                      <div class="col-lg-3 col-md-4 mt-3">
+                        <label for="telefone-2">Telefone 2</label>
+                        <input type="text" name="telefone-2" id="telefone-2" class="form-control" minlength="15" maxlength="15" data-mask="(00) 00000-0000">
                       </div>
 
                       <div class="col-lg-6 mt-3">
@@ -267,7 +223,7 @@
                   </fieldset>
 
 
-                  <input type="hidden" value="cadastrar_funcionario" class="btn btn-primary mt-3">
+                  <input type="hidden" name="cadastrar" value="cadastrar_cliente" class="btn btn-primary mt-3">
                   <input type="submit" value="Cadastrar" class="btn btn-primary mt-3">
                 </div>
               </form>

@@ -64,7 +64,8 @@
             </div>
 
             <div class="card-body">
-              <form action="" method="post">
+              <!-- Se o formulario envia arquivos ao banco (foto) o enctype='multipart/form-data' é necessário! Caso contrário ele não receberá os arquivos. -->
+              <form action="acoes.php" method="post" enctype="multipart/form-data">
                 <div class="form-row">
 
                   <div class="col-12 mb-3 text-center">
@@ -74,7 +75,7 @@
                       <img id="foto-img" src="../../assets/img/placeholder-funcionario.png" alt="" class="rounded-3">
                     </div>
 
-                    <input type="file" name="foto-perfil" id="foto-perfil" class="form-control mt-3 mx-auto w-50" accept="image/png, image/jpeg">
+                    <input type="file" name="foto-perfil" id="foto-perfil" class="form-control mt-3 mx-auto w-50" accept="image/*">
                   </div>
 
                   <fieldset class="form-group">
@@ -116,7 +117,7 @@
                       </div>
                       <div class="col-lg-3 col-md-3 mt-3">
                         <label for="data-nascimento"><strong class="text-danger">*</strong> Data Nascimento</label>
-                        <input type="date" name="data-nascimento" id="data-nascimento" class="form-control" data-mask="00/00/00">
+                        <input type="date" name="data-nascimento" id="data-nascimento" class="form-control">
                       </div>
                       <div class="col-lg-3 col-md-3 mt-3">
                         <label for="cargo">Cargo</label>
@@ -174,17 +175,17 @@
                     <div class="row">
                       <div class="col-lg-2 col-md-4 mt-3">
                         <label for="telefone-recado"><strong class="text-danger">*</strong> Telefone Recado</label>
-                        <input type="text" name="telefone-recado" id="telefone-recado" class="form-control" minlength="15" maxlength="15" required data-mask="(00) 0000-0000">
+                        <input type="text" name="telefone-recado" id="telefone-recado" class="form-control" minlength="15" maxlength="15" required data-mask="(00) 00000-0000">
                       </div>
 
                       <div class="col-lg-2 col-md-4 mt-3">
                         <label for="telefone-celular">Telefone Celular</label>
-                        <input type="text" name="telefone-celular" id="telefone-celular" class="form-control" minlength="15" maxlength="15" data-mask="(00) 0000-0000">
+                        <input type="text" name="telefone-celular" id="telefone-celular" class="form-control" minlength="15" maxlength="15" data-mask="(00) 00000-0000">
                       </div>
 
                       <div class="col-lg-2 col-md-4 mt-3">
                         <label for="telefone-residencial">Telefone Residencial</label>
-                        <input type="text" name="telefone-residencial" id="telefone-residencial" class="form-control" minlength="15" maxlength="15" data-mask="(00) 0000-0000">
+                        <input type="text" name="telefone-residencial" id="telefone-residencial" class="form-control" minlength="15" maxlength="15" data-mask="(00) 00000-0000">
                       </div>
 
                       <div class="col-lg-6 mt-3">
@@ -266,8 +267,7 @@
                     </div>
                   </fieldset>
 
-
-                  <input type="hidden" value="cadastrar_funcionario" class="btn btn-primary mt-3">
+                  <input type="hidden" name="cadastrar" value="cadastrar_funcionario" class="btn btn-primary mt-3">
                   <input type="submit" value="Cadastrar" class="btn btn-primary mt-3">
                 </div>
               </form>

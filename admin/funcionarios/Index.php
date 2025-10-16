@@ -63,7 +63,7 @@
 
             <?php 
               $sql = "
-                SELECT id, nome, id_cargo, cpf, salario, sexo, data_nascimento, tipo_acesso, telefone_celular, email, data_cadastro, status
+                SELECT id, nome, id_cargo, cpf, salario, sexo, data_nascimento, tipo_acesso, telefone_recado, email, data_cadastro, status
                 FROM
                 funcionario;
               ";
@@ -145,7 +145,7 @@
                       <td><?php echo $funcionario['cpf'] ?></td>
                       <td><?php echo $funcionario['salario'] ?></td>
                       <td><?php echo $funcionario['sexo'] ?></td>
-                      <td><?php echo date('d/m/Y', strtotime($modelo['data_nascimento'])) ?></td>
+                      <td><?php echo date('d/m/Y', strtotime($funcionario['data_nascimento'])) ?></td>
                       <td><?php 
                         if ($funcionario['tipo_acesso'] == 0) {
                       echo '<span class="badge badge-pill badge-success">Comum</span>';
@@ -154,7 +154,7 @@
                         }
                       ?></td>
                       <td><?php echo $funcionario['telefone_recado'] ?></td>
-                      <td><?php echo date('d/m/Y', strtotime($modelo['data_cadastro'])) ?></td>
+                      <td><?php echo date('d/m/Y', strtotime($funcionario['data_cadastro'])) ?></td>
                       <td>
                         <?php 
                           if ($funcionario['status'] == 0){

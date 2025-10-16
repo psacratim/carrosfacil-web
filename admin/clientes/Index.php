@@ -56,16 +56,16 @@
         <div class="container mt-5">
           <div class="card">
             <div class="card-header d-flex justify-content-between">
-              <h4 class="m-0">Funcionários</h4>
+              <h4 class="m-0">Clientes</h4>
               
               <a href="inserir.php" class="btn btn-primary btn-sm"><i class="bi bi-plus"></i> Adicionar</a>
             </div>
 
             <?php 
               $sql = "
-                SELECT id, nome, id_cargo, cpf, salario, sexo, data_nascimento, tipo_acesso, telefone_celular, email, data_cadastro, status
+                SELECT id, cpf, nome_completo, data_nascimento, telefone1, sexo, status
                 FROM
-                funcionario;
+                cliente;
               ";
 
               $query = mysqli_query($conexao, $sql);
@@ -77,7 +77,7 @@
                   <!-- CAMPO DE BUSCA -->
                   <div class="col-4">
                     <form action="">
-                      <input type="search" name="pesquisa" id="pesquisa" class="form-control"  placeholder="Nome do funcionário">
+                      <input type="search" name="pesquisa" id="pesquisa" class="form-control"  placeholder="Nome do cliente">
                     </form>
                   </div>
 
@@ -89,32 +89,6 @@
                         <option value="0">Inativo</option>
                       </select>
                   </div>
-                  <div class="col-2">
-                    <form action="">
-                      <select name="sexo" id="sexo" class="form-control">
-                        <option value="T">Sexo</option>
-                        <option value="N">Não Informado</option>
-                        <option value="M">Masculino</option>
-                        <option value="F">Feminino</option>
-                      </select>
-                  </div>
-                  <div class="col-2">
-                    <form action="">
-                      <select name="tipo-acesso" id="tipo-acesso" class="form-control">
-                        <option value="">Tipo de acesso</option>
-                        <option value="administrador">Administrador</option>
-                        <option value="normal">Normal</option>
-                      </select>
-                  </div>
-                  <div class="col-2">
-                    <form action="">
-                      <select name="cargo" id="cargo" class="form-control">
-                        <option value="">Cargo</option>
-                        <option value="gerente">Gerente</option>
-                        <option value="vendedor">Vendedor</option>
-                        <option value="estoquista">Estoquista</option>
-                      </select>
-                  </div>
                 </div>
               </div>
 
@@ -123,41 +97,27 @@
                   <thead>
                     <tr>
                       <th scope="col">#</th>
-                      <th scope="col">Nome</th>
-                      <th scope="col">Cargo</th>
                       <th scope="col">CPF</th>
-                      <th scope="col">Salário</th>
+                      <th scope="col">Nome Completo</th>
+                      <th scope="col">Telefone</th>
                       <th scope="col">Sexo</th>
                       <th scope="col">Data Nascimento</th>
-                      <th scope="col">Tipo Acesso</th>
-                      <th scope="col">Telefone Recado</th>
-                      <th scope="col">Data Cadastro</th>
                       <th scope="col">Status</th>
                       <th scope="col">Ações</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <?php foreach($query as $funcionario) { ?>
+                    <?php foreach($query as $cliente) { ?>
                     <tr>
-                      <td><?php echo $funcionario['id'] ?></td>
-                      <td><?php echo $funcionario['nome'] ?></td>
-                      <td><?php echo $funcionario['id_cargo'] ?></td>
-                      <td><?php echo $funcionario['cpf'] ?></td>
-                      <td><?php echo $funcionario['salario'] ?></td>
-                      <td><?php echo $funcionario['sexo'] ?></td>
-                      <td><?php echo date('d/m/Y', strtotime($modelo['data_nascimento'])) ?></td>
-                      <td><?php 
-                        if ($funcionario['tipo_acesso'] == 0) {
-                      echo '<span class="badge badge-pill badge-success">Comum</span>';
-                        } else {
-                          echo '<span class="badge badge-pill badge-danger">Administrador</span>';
-                        }
-                      ?></td>
-                      <td><?php echo $funcionario['telefone_recado'] ?></td>
-                      <td><?php echo date('d/m/Y', strtotime($modelo['data_cadastro'])) ?></td>
+                      <td><?php echo $cliente['id'] ?></td>
+                      <td><?php echo $cliente['cpf'] ?></td>
+                      <td><?php echo $cliente['nome_completo'] ?></td>
+                      <td><?php echo $cliente['telefone1'] ?></td>
+                      <td><?php echo $cliente['sexo'] ?></td>
+                      <td><?php echo $cliente['data_nascimento'] ?></td>
                       <td>
                         <?php 
-                          if ($funcionario['status'] == 0){
+                          if ($cliente['status'] == 0){
                             echo '<span class="badge badge-pill badge-danger">Inativo</span>';
                           } else {
                             echo '<span class="badge badge-pill badge-success">Ativo</span>';

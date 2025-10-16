@@ -17,8 +17,8 @@
             $sexo = mysqli_escape_string($conexao, $_POST['sexo']);
             $estado_civil = mysqli_escape_string($conexao, $_POST['estado-civil']);
             $data_nascimento = mysqli_escape_string($conexao, $_POST['data-nascimento']);
-            $cargo = mysqli_escape_string($conexao, $_POST['cargo']);
-            $salario = $_POST['salario'];
+            $cargo = $_POST['cargo'] != null ? $_POST['cargo'] : "NULL";
+            $salario = $_POST['salario'] != null ? str_replace(array('.', ','), array('', '.'), $_POST['salario']) : 0;
             $status = mysqli_escape_string($conexao, $_POST['status']);
             $usuario = mysqli_escape_string($conexao, $_POST['usuario']);
             $senha = mysqli_escape_string($conexao, $_POST['senha']);
@@ -34,8 +34,14 @@
             $cidade = mysqli_escape_string($conexao, $_POST['cidade']);
             $estado = mysqli_escape_string($conexao, $_POST['estado']);
             $complemento = mysqli_escape_string($conexao, $_POST['complemento']);
-            $foto = mysqli_escape_string($conexao, $_POST['foto-perfil']);
 
+            // ENVIANDO FOTO PARA O SERVIDOR
+            $foto = basename($_FILES['foto-perfil']['name']); // Obtém caminho da foto (name = caminho da foto)
+            $tmp = $_FILES['foto-perfil']['tmp_name']; // Caminho da foto na pasta tmp (temporaria)
+            $final = '../../images/' . $foto;
+            move_uploaded_file($tmp, $final);
+
+            // CRIANDO QUERY SQL
             $sql = "INSERT INTO funcionario VALUES (
             0,
             $cargo,
@@ -48,20 +54,31 @@
             '$sexo',
             '$usuario',
             '$estado_civil',
-            '$email',
+            '$data_nascimento',
+            '$tipo_acesso',
+            '$telefone_celular',
+            '$telefone_recado',
+            '$telefone_residencial',
+            '$endereco',
             '$cep',
-            '$foto',
+            '$numero',
+            '$complemento',
+            '$bairro',
+            '$cidade',
+            '$estado',
+            '$email',
+            '$final',
             NOW(),
             1
             );";
-            
+
             if (mysqli_query($conexao, $sql)) {
-                $_SESSION['mensagem'] = 'Cargo cadastrado com sucesso!';
+                $_SESSION['mensagem'] = 'Funcionario cadastrado com sucesso!';
             } else {
                 throw new mysqli_sql_exception('Erro');
             }
-        } catch (mysqli_sql_exception) {
-            $_SESSION['mensagem'] = 'Erro ao cadastrar o cargo!';
+        } catch (mysqli_sql_exception $ex) {
+            $_SESSION['mensagem'] = 'Erro ao cadastrar o funcionário!';
         }
         
         header('Location: Index.php');

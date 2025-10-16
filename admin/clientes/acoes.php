@@ -8,63 +8,63 @@
     }
 
     // CADASTRANDO CARGO NOVO
-    if (isset($_POST['cadastrar']) && $_POST['cadastrar'] == "cadastrar_funcionario") {
+    if (isset($_POST['cadastrar']) && $_POST['cadastrar'] == "cadastrar_cliente") {
         try {
-            $nome = mysqli_escape_string($conexao, $_POST['nome']);
-            $nome_social = mysqli_escape_string($conexao, $_POST['nome-social']);
             $cpf = mysqli_escape_string($conexao, $_POST['cpf']);
             $rg = mysqli_escape_string($conexao, $_POST['rg']);
-            $sexo = mysqli_escape_string($conexao, $_POST['sexo']);
-            $estado_civil = mysqli_escape_string($conexao, $_POST['estado-civil']);
+            $nome_completo = mysqli_escape_string($conexao, $_POST['nome-completo']);
             $data_nascimento = mysqli_escape_string($conexao, $_POST['data-nascimento']);
-            $cargo = mysqli_escape_string($conexao, $_POST['cargo']);
-            $salario = $_POST['salario'];
-            $status = mysqli_escape_string($conexao, $_POST['status']);
             $usuario = mysqli_escape_string($conexao, $_POST['usuario']);
             $senha = mysqli_escape_string($conexao, $_POST['senha']);
-            $tipo_acesso = mysqli_escape_string($conexao, $_POST['tipo-acesso']);
-            $telefone_recado = mysqli_escape_string($conexao, $_POST['telefone-recado']);
-            $telefone_celular = mysqli_escape_string($conexao, $_POST['telefone-celular']);
-            $telefone_residencial = mysqli_escape_string($conexao, $_POST['telefone-residencial']);
-            $email = mysqli_escape_string($conexao, $_POST['email']);
-            $cep = mysqli_escape_string($conexao, $_POST['cep']);
             $endereco = mysqli_escape_string($conexao, $_POST['endereco']);
-            $numero_endereco = mysqli_escape_string($conexao, $_POST['numero-endereco']);
+            $cep = mysqli_escape_string($conexao, $_POST['cep']);
+            $numero = $_POST['numero-endereco'];
+            $complemento = mysqli_escape_string($conexao, $_POST['complemento']);
             $bairro = mysqli_escape_string($conexao, $_POST['bairro']);
             $cidade = mysqli_escape_string($conexao, $_POST['cidade']);
             $estado = mysqli_escape_string($conexao, $_POST['estado']);
-            $complemento = mysqli_escape_string($conexao, $_POST['complemento']);
-            $foto = mysqli_escape_string($conexao, $_POST['foto-perfil']);
+            $telefone1 = mysqli_escape_string($conexao, $_POST['telefone-1']);
+            $telefone2 = mysqli_escape_string($conexao, $_POST['telefone-2']);
+            $email = mysqli_escape_string($conexao, $_POST['email']);
+            $estado_civil = mysqli_escape_string($conexao, $_POST['estado-civil']);
+            $sexo = mysqli_escape_string($conexao, $_POST['sexo']);
 
-            $sql = "INSERT INTO funcionario VALUES (
+            $sql = "INSERT INTO cliente VALUES (
             0,
-            $cargo,
             '$cpf',
             '$rg',
-            '$nome',
-            '$nome_social',
-            '$senha',
-            $salario,
-            '$sexo',
+            '$nome_completo',
+            '$data_nascimento',
             '$usuario',
-            '$estado_civil',
-            '$email',
+            '$senha',
+            '$endereco',
             '$cep',
-            '$foto',
+            $numero,
+            '$complemento',
+            '$bairro',
+            '$cidade',
+            '$estado',
+            '$telefone1',
+            '$telefone2',
+            '$email',
+            '$estado_civil',
+            '$sexo',
             NOW(),
             1
             );";
+
+            echo $sql;
             
             if (mysqli_query($conexao, $sql)) {
-                $_SESSION['mensagem'] = 'Cargo cadastrado com sucesso!';
+                $_SESSION['mensagem'] = 'Cliente cadastrado com sucesso!';
             } else {
                 throw new mysqli_sql_exception('Erro');
             }
         } catch (mysqli_sql_exception) {
-            $_SESSION['mensagem'] = 'Erro ao cadastrar o cargo!';
+            $_SESSION['mensagem'] = 'Erro ao cadastrar o cliente!';
         }
         
-        header('Location: Index.php');
+        // header('Location: Index.php');
     }
 ?>
 
