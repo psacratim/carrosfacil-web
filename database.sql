@@ -114,7 +114,7 @@ CREATE TABLE `veiculo` (
   `data_cadastro` DATETIME NOT NULL,
   `status` BIT,
 
-  FOREIGN KEY (`id_modelo`) REFERENCES `modelo` (`id`)
+  FOREIGN KEY (`id_modelo`) REFERENCES `modelo` (`id`),
   FOREIGN KEY (`id_vendedor`) REFERENCES `cliente` (`id`)
 );
 
