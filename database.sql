@@ -97,24 +97,25 @@ CREATE TABLE `cliente` (
 
 CREATE TABLE `veiculo` (
   `id` INT(11) PRIMARY KEY AUTO_INCREMENT,
-  `id_modelo` INT(11),
-  `categoria` VARCHAR(32), -- SUVS, Esportivo
-  `tempo_de_uso` INT(5), -- Tempo de uso em dias: 1 dia, 365 dias, 1.265 dias, ... -> Limite: 99.999 dias (273 anos)
-  `tipo` VARCHAR(26), -- Usado | Novo
-  `preco` DECIMAL(10, 2), -- 99,999,999.99
-  `kms_rodado` INT(7), -- Limite: 9.999.999 kms,
-  `numero_portas` INT(2),
-  `placa` VARCHAR(7),
-  `cor` VARCHAR(16),
-  `descricao` VARCHAR(250),
-  `ano` INT(4),
-  `tipo_cambio` VARCHAR(20),
-  `tipo_combustivel` VARCHAR(26),
-  `estoque` INT(5),
+  `id_vendedor` INT(8),
+  `id_modelo` INT(11) NOT NULL,
+  `categoria` VARCHAR(32) NOT NULL, -- SUVS, Esportivo
+  `estado_do_veiculo` VARCHAR(26) NOT NULL, -- Usado | Novo
+  `tempo_de_uso` INT(5) NOT NULL, -- Tempo de uso em dias: 1 dia, 365 dias, 1.265 dias, ... -> Limite: 99.999 dias (273 anos)
+  `preco` DECIMAL(10, 2) NOT NULL, -- 99,999,999.99
+  `kms_rodado` INT(7) NOT NULL, -- Limite: 9.999.999 kms,
+  `final_placa` VARCHAR(1) NOT NULL,
+  `cor` VARCHAR(16) NOT NULL,
+  `descricao` VARCHAR(250) NOT NULL,
+  `ano` INT(4) NOT NULL,
+  `tipo_cambio` VARCHAR(20) NOT NULL,
+  `tipo_combustivel` VARCHAR(26) NOT NULL,
+  `estoque` INT(5) NOT NULL,
   `data_cadastro` DATETIME NOT NULL,
   `status` BIT,
 
   FOREIGN KEY (`id_modelo`) REFERENCES `modelo` (`id`)
+  FOREIGN KEY (`id_vendedor`) REFERENCES `cliente` (`id`)
 );
 
 CREATE TABLE `foto_veiculo` (
