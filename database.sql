@@ -43,7 +43,7 @@ CREATE TABLE `funcionario` (
   `id` INT(4) PRIMARY KEY AUTO_INCREMENT,
   `id_cargo` INT(3),
   `cpf` CHAR(14) UNIQUE NOT NULL,
-  `rg` VARCHAR(12) UNIQUE,
+  `rg` VARCHAR(12),
   `nome` VARCHAR(60) NOT NULL,
   `nome_social` VARCHAR(60),
   `senha` VARCHAR(26) NOT NULL,
@@ -74,7 +74,7 @@ CREATE TABLE `funcionario` (
 CREATE TABLE `cliente` (
   `id` INT(8) PRIMARY KEY AUTO_INCREMENT,
   `cpf` CHAR(14) UNIQUE NOT NULL,
-  `rg` VARCHAR(12) UNIQUE,
+  `rg` VARCHAR(12),
   `nome_completo` VARCHAR(80) NOT NULL,
   `data_nascimento` DATE NOT NULL,
   `usuario` VARCHAR(20) NOT NULL,
@@ -110,7 +110,6 @@ CREATE TABLE `veiculo` (
   `ano` INT(4) NOT NULL,
   `tipo_cambio` VARCHAR(20) NOT NULL,
   `tipo_combustivel` VARCHAR(26) NOT NULL,
-  `estoque` INT(5) NOT NULL,
   `data_cadastro` DATETIME NOT NULL,
   `status` BIT,
 

@@ -78,17 +78,18 @@
                     <form action="acoes.php" method="post">
                       <div class="form-group">
                           <div class="row">
-                            <div class="col-9">
+                            <div class="col-12">
                               <label for="marca-modelo"><strong class="text-danger">*</strong> Marca do modelo:</label>
-                              <input type="number" name="marca-modelo" id="marca-modelo" class="form-control" maxlength="11" placeholder="0" required>
-                            </div>
+                              <select name="marca-modelo" id="marca-modelo" class="form-control" required>
+                                <?php 
+                                  $sql = 'SELECT id, nome FROM marca WHERE status = 1;';
+                                  $query = mysqli_execute_query($conexao, $sql);
 
-                            <div class="col-3 mt-auto">
-                              <button type="button" class="btn btn-primary w-100" id="buscar-marca">Buscar</button>
-                            </div>
-                            
-                            <div class="col-12" id="resultado-busca">
-                              <div class='text-danger'>Faça a busca pelo id da marca.</div>
+                                  foreach ($query as $marca) {
+                                    echo '<option value="'. $marca['id'] .'">'. $marca['nome'] .'</option>';
+                                  }
+                                ?>
+                              </select>
                             </div>
                           </div>
                       </div>
@@ -130,7 +131,12 @@
             </div>
 
             <?php 
-              $sql = "SELECT * FROM modelo";
+              $sql = "
+              SELECT modelo.id, marca.nome AS nome_marca, modelo.nome AS nome_modelo, modelo.data_cadastro, modelo.status
+              FROM modelo
+              INNER JOIN marca ON marca.id = modelo.id_marca
+              WHERE modelo.status = 1;
+              ";
               $query = mysqli_query($conexao, $sql);
 
               # O número de linhas retornado é > 0 ? Se sim, teve resultados.
@@ -151,9 +157,9 @@
                   <tbody>
                     <?php foreach ($query as $modelo) { ?>
                     <tr>
-                      <td><?php $modelo['id'] ?></td>
-                      <td><?php $modelo['id_marca'] ?></td>
-                      <td><?php $modelo['nome'] ?></td>
+                      <td><?php echo  $modelo['id'] ?></td>
+                      <td><?php echo $modelo['nome_marca'] ?></td>
+                      <td><?php echo $modelo['nome_modelo'] ?></td>
                       <td><?php echo date('d/m/Y', strtotime($modelo['data_cadastro'])) ?></td>
                       <td>
                         <?php 
@@ -194,28 +200,6 @@
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js" integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y" crossorigin="anonymous"></script>
 
-  <!-- CUSTOM SCRIPTS -->
-  <script>
-      $('#buscar-marca').click(function(e) {
-        e.preventDefault();
-
-        let marca_modelo = $('#marca-modelo').val();
-        $.ajax({
-          url: 'buscar.php',
-          method: "GET",
-          data: { "marca-modelo": marca_modelo },
-          success: function(resposta) {
-            console.log(resposta)
-            $("#resultado-busca").html(
-              '<div class="text-success">Marca: '+resposta+'</div>'
-            );
-          },
-          error: function() {
-            $("#resultado-busca").html("<div class='text-danger'>Marca não encontrada, digite um id válido!</div>")
-          }
-        })
-      })
-  </script>
 </body>
 
 </html>

@@ -11,11 +11,11 @@
         // Caso tenha exceptions ele volta pra pagina index.
         try {
             // CADASTRANDO CARGO NOVO
-            $marca_modelo = mysqli_real_escape_string($conexao, $_POST['marca-modelo']);
+            $marca_modelo = $_POST['marca-modelo'];
             $nome_modelo = mysqli_real_escape_string($conexao, $_POST['nome-modelo']);
             $observacao = mysqli_real_escape_string($conexao, $_POST['observacao']);
-
-            $sql = "INSERT INTO modelo VALUES (0, '$nome', '$observacao', NOW(), 1);";
+            $sql = "INSERT INTO modelo VALUES (0, $marca_modelo, '$nome_modelo', '$observacao', NOW(), 1);";
+            echo $sql;
             if (mysqli_query($conexao, $sql)) {
                 $_SESSION['mensagem'] = 'Modelo cadastrado com sucesso!';
             } else {

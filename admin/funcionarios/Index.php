@@ -63,9 +63,10 @@
 
             <?php 
               $sql = "
-                SELECT id, nome, id_cargo, cpf, salario, sexo, data_nascimento, tipo_acesso, telefone_recado, email, data_cadastro, status
-                FROM
-                funcionario;
+                SELECT funcionario.id, funcionario.nome AS nome_funcionario, cargo.nome AS nome_cargo, funcionario.cpf, funcionario.salario, funcionario.sexo, funcionario.data_nascimento, funcionario.tipo_acesso, funcionario.telefone_recado, funcionario.email, funcionario.data_cadastro, funcionario.status
+                FROM funcionario
+                INNER JOIN cargo ON cargo.id = funcionario.id_cargo
+                ;
               ";
 
               $query = mysqli_query($conexao, $sql);
@@ -137,11 +138,13 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <?php foreach($query as $funcionario) { ?>
+                    <?php 
+                    foreach($query as $funcionario) {
+                      ?>
                     <tr>
                       <td><?php echo $funcionario['id'] ?></td>
-                      <td><?php echo $funcionario['nome'] ?></td>
-                      <td><?php echo $funcionario['id_cargo'] ?></td>
+                      <td><?php echo $funcionario['nome_funcionario'] ?></td>
+                      <td><?php echo $funcionario['nome_cargo'] ?></td>
                       <td><?php echo $funcionario['cpf'] ?></td>
                       <td><?php echo $funcionario['salario'] ?></td>
                       <td><?php echo $funcionario['sexo'] ?></td>
