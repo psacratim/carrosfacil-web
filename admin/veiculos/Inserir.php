@@ -119,83 +119,124 @@
                       <div class="col-md-3">
                         <label for="categoria"><strong class="text-danger">*</strong> Categoria:</label>
                         <select name="categoria" id="categoria" class="form-control" required>
-                          <option value=""></option>
+                          <option value="Hatchback">Hatchback</option>
+                          <option value="Sedan">Sedan</option>
+                          <option value="SUV">SUV</option>
+                          <option value="Crossover">Crossover</option>
+                          <option value="Cupê">Cupê</option>
+                          <option value="Conversível">Conversível</option>
+                          <option value="Perua / Station Wagon">Perua / Station Wagon</option>
+                          <option value="Roadster">Roadster</option>
+                          <option value="Esportivo">Esportivo</option>
+                          <option value="Compacto">Compacto</option>
+                          <option value="Minivan">Minivan</option>
+                          <option value="Pickup">Pickup</option>
+
+                          <option value="Van">Van</option>
+                          <option value="Furgão">Furgão</option>
+                          <option value="Caminhonete">Caminhonete</option>
+
+                          <option value="Superesportivo">Superesportivo</option>
+                          <option value="Luxo / Premium">Luxo / Premium</option>
+                          <option value="Gran Turismo (GT)">Gran Turismo (GT)</option>
+                          <option value="Conversível Esportivo">Conversível Esportivo</option>
+
+                          <option value="Caminhão Leve">Caminhão Leve</option>
+                          <option value="Caminhão Médio">Caminhão Médio</option>
+                          <option value="Caminhão Pesado">Caminhão Pesado</option>
+                          <option value="Carreta">Carreta</option>
+
+                          <option value="Motocicleta">Motocicleta</option>
+                          <option value="Scooter">Scooter</option>
+                          <option value="Triciclo">Triciclo</option>
+                          <option value="Quadriciclo">Quadriciclo</option>
+
+                          <option value="Buggy">Buggy</option>
+                          <option value="Off-Road / 4x4">Off-Road / 4x4</option>
+                          <option value="Motorhome">Motorhome</option>
                         </select>
                       </div>
-                  </fieldset>
 
-                  
-
-                  <fieldset class="form-group col-lg-12 mt-3">
-                    <h3>Dados do endereço</h3>
-                    <div class="row">
-                      <div class="col-lg-2 col-md-3 mt-3">
-                        <label for="cep">CEP</label>
-                        <input type="text" name="cep" id="cep" class="form-control" maxlength="10" data-mask="00000-000">
-                      </div>
-
-                      <div class="col-lg-4 col-md-7 mt-3">
-                        <label for="endereco"><strong class="text-danger">*</strong> Endereço</label>
-                        <input type="text" name="endereco" id="endereco" class="form-control" maxlength="60" required>
-                      </div>
-
-                      <div class="col-lg-2 col-md-2 mt-3">
-                        <label for="numero-endereco"><strong class="text-danger">*</strong> Número</label>
-                        <input type="number" name="numero-endereco" id="numero-endereco" class="form-control" min="1" max="99999" required>
-                      </div>
-
-                      <div class="col-lg-4 col-md-6 mt-3">
-                        <label for="bairro"><strong class="text-danger">*</strong> Bairro</label>
-                        <input type="text" name="bairro" id="bairro" class="form-control" maxlength="32" required>
-                      </div>
-
-                      <div class="col-lg-5 col-md-6 mt-3">
-                        <label for="cidade"><strong class="text-danger">*</strong> Cidade</label>
-                        <input type="text" name="cidade" id="cidade" class="form-control" maxlength="50" required>
-                      </div>
-
-                      <div class="col-lg-2 col-md-6 mt-3">
-                        <label for="estado"><strong class="text-danger">*</strong> Estado</label>
-
+                      <div class="col-md-2">
+                        <label for="estado"><strong class="text-danger">*</strong> Estado do veículo:</label>
                         <select name="estado" id="estado" class="form-control" required>
-                          <option value="AC">Acre</option>
-                          <option value="AL">Alagoas</option>
-                          <option value="AP">Amapá</option>
-                          <option value="AM">Amazonas</option>
-                          <option value="BA">Bahia</option>
-                          <option value="CE">Ceará</option>
-                          <option value="DF">Distrito Federal</option>
-                          <option value="ES">Espírito Santo</option>
-                          <option value="GO">Goiás</option>
-                          <option value="MA">Maranhão</option>
-                          <option value="MT">Mato Grosso</option>
-                          <option value="MS">Mato Grosso do Sul</option>
-                          <option value="MG">Minas Gerais</option>
-                          <option value="PA">Pará</option>
-                          <option value="PB">Paraíba</option>
-                          <option value="PR">Paraná</option>
-                          <option value="PE">Pernambuco</option>
-                          <option value="PI">Piauí</option>
-                          <option value="RJ">Rio de Janeiro</option>
-                          <option value="RN">Rio Grande do Norte</option>
-                          <option value="RS">Rio Grande do Sul</option>
-                          <option value="RO">Rondônia</option>
-                          <option value="RR">Roraima</option>
-                          <option value="SC">Santa Catarina</option>
-                          <option value="SP" selected>São Paulo</option>
-                          <option value="SE">Sergipe</option>
-                          <option value="TO">Tocantins</option>
+                          <option value="Novo">Novo</option>
+                          <option value="Usado">Usado</option>
                         </select>
                       </div>
 
-                      <div class="col-lg-5 col-md-6 mt-3">
-                        <label for="complemento">Complemento</label>
-                        <input type="text" name="complemento" id="complemento" class="form-control" maxlength="200">
-                        </input>
+                      <div class="col-md-2">
+                        <label for="tempo_uso"><strong class="text-danger">*</strong> Tempo de uso:</label>
+                        <input type="text" name="tempo_uso" id="tempo_uso" class="form-control" maxlength="20" required>
                       </div>
-                    </div>
-                  </fieldset>
 
+                      <div class="col-md-2">
+                        <label for="tempo_uso"><strong class="text-danger">*</strong> KMs rodado:</label>
+                        <input type="text" name="tempo_uso" id="tempo_uso" class="form-control" maxlength="20" required>
+                      </div>
+
+                      <div class="col-md-3 mt-3">
+                        <label for="final_placa"><strong class="text-danger">*</strong> Final da placa:</label>
+                        <input type="text" name="final_placa" id="final_placa" class="form-control" maxlength="20" required>
+                      </div>
+
+                      <div class="col-md-3 mt-3">
+                        <label for="cor"><strong class="text-danger">*</strong> Cor principal:</label>
+                        <select name="cor" id="cor" class="form-control" required>
+                          <option value="Branco">Branco</option>
+                          <option value="Preto">Preto</option>
+                          <option value="Prata">Prata</option>
+                          <option value="Cinza">Cinza</option>
+                          <option value="Vermelho">Vermelho</option>
+                          <option value="Azul">Azul</option>
+                          <option value="Verde">Verde</option>
+                          <option value="Amarelo">Amarelo</option>
+                          <option value="Laranja">Laranja</option>
+                          <option value="Marrom">Marrom</option>
+                          <option value="Bege">Bege</option>
+                          <option value="Bordo">Bordo</option>
+                          <option value="Dourado">Dourado</option>
+                          <option value="Roxo">Roxo</option>
+                          <option value="Rosa">Rosa</option>
+                          <option value="Grafite">Grafite</option>
+                          <option value="Champagne">Champagne</option>
+                          <option value="Vinho">Vinho</option>
+                        </select>
+                      </div>
+
+                      <div class="col-md-3 mt-3">
+                        <label for="ano"><strong class="text-danger">*</strong> Ano do carro:</label>
+                        <input type="text" name="ano" id="ano" class="form-control" maxlength="20" required>
+                      </div>
+
+                      <div class="col-md-3 mt-3">
+                        <label for="tipo_combustivel"><strong class="text-danger">*</strong> Tipo de combustível/energia:</label>
+                        <select name="tipo_combustivel" id="tipo_combustivel" class="form-control" required>
+                          <option value="Gasolina">Gasolina</option>
+                          <option value="Etanol">Etanol</option>
+                          <option value="Flex">Flex</option>
+                          <option value="Diesel">Diesel</option>
+                          <option value="Elétrico">Elétrico</option>
+                          <option value="Gás Natural Veicular (GNV)">Gás Natural Veicular (GNV)</option>
+                        </select>
+                      </div>
+
+                      <div class="col-md-3 mt-3">
+                        <label for="tipo_cambio"><strong class="text-danger">*</strong> Tipo de câmbio:</label>
+                        <select name="tipo_cambio" id="tipo_cambio" class="form-control" required>
+                          <option value="Manual">Manual</option>
+                          <option value="Automático Tradicional">Automático Tradicional</option>
+                          <option value="CVT (Transmissão Continuamente Variável)">CVT (Transmissão Continuamente Variável)</option>
+                          <option value="Automatizado (Monoembreagem)">Automatizado (Monoembreagem)</option>
+                          <option value="Automático de Dupla Embreagem (DCT)">Automático de Dupla Embreagem (DCT)</option>
+                        </select>
+                      </div>
+
+                      <div class="form-group mt-3">
+                          <label for="descricao">Descrição:</label>
+                          <textarea type="text" name="descricao" id="descricao" class="form-control" maxlength="250"></textarea>
+                      </div>
+                  </fieldset>
 
                   <input type="hidden" name="cadastrar" value="cadastrar_veiculo" class="btn btn-primary mt-3">
                   <input type="submit" value="Cadastrar" class="btn btn-primary mt-3">
