@@ -63,7 +63,7 @@ CREATE TABLE `funcionario` (
   `bairro` VARCHAR(32) NOT NULL,
   `cidade` VARCHAR(50) NOT NULL,
   `estado` VARCHAR(32) NOT NULL,
-  `email` VARCHAR(100),
+  `email` VARCHAR(50),
   `foto` VARCHAR(200),
   `data_cadastro` DATE NOT NULL,
   `status` BIT NOT NULL,
