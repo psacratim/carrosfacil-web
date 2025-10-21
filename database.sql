@@ -7,7 +7,7 @@ CREATE TABLE `marca` (
   `id` INT(9) PRIMARY KEY AUTO_INCREMENT,
   `nome` VARCHAR(80) NOT NULL UNIQUE,
   `observacao` VARCHAR(250),
-  `data_cadastro` DATETIME NOT NULL,
+  `data_cadastro` DATE NOT NULL,
   `status` BIT NOT NULL
 );
 
@@ -16,7 +16,7 @@ CREATE TABLE `modelo` (
   `id_marca` INT(9) NOT NULL,
   `nome` VARCHAR(80) NOT NULL UNIQUE,
   `observacao` VARCHAR(250),
-  `data_cadastro` DATETIME NOT NULL,
+  `data_cadastro` DATE NOT NULL,
   `status` BIT,
 
   FOREIGN KEY (`id_marca`) REFERENCES `marca` (`id`)
@@ -26,7 +26,7 @@ CREATE TABLE `cargo` (
   `id` INT(3) PRIMARY KEY AUTO_INCREMENT,
   `nome` VARCHAR(60) UNIQUE NOT NULL,
   `observacao` VARCHAR(250),
-  `data_cadastro` DATETIME NOT NULL,
+  `data_cadastro` DATE NOT NULL,
   `status` BIT NOT NULL
 );
 
@@ -35,7 +35,7 @@ CREATE TABLE `caracteristica` ( -- Ar condicionado, material do aro, cor do banc
   `nome` VARCHAR(80) UNIQUE NOT NULL,
   `descricao` VARCHAR(250) NOT NULL,
   `icone` VARCHAR(250) NOT NULL,
-  `data_cadastro` DATETIME NOT NULL,
+  `data_cadastro` DATE NOT NULL,
   `status` BIT NOT NULL
 );
 
@@ -91,7 +91,7 @@ CREATE TABLE `cliente` (
   `email` VARCHAR(50),
   `estado_civil` VARCHAR(20) NOT NULL,
   `sexo` CHAR(1) NOT NULL,
-  `data_cadastro` DATETIME NOT NULL,
+  `data_cadastro` DATE NOT NULL,
   `status` BIT
 );
 
@@ -110,7 +110,7 @@ CREATE TABLE `veiculo` (
   `ano` INT(4) NOT NULL,
   `tipo_cambio` VARCHAR(20) NOT NULL,
   `tipo_combustivel` VARCHAR(26) NOT NULL,
-  `data_cadastro` DATETIME NOT NULL,
+  `data_cadastro` DATE NOT NULL,
   `status` BIT,
 
   FOREIGN KEY (`id_modelo`) REFERENCES `modelo` (`id`),
@@ -122,7 +122,7 @@ CREATE TABLE `foto_veiculo` (
   `id_veiculo` INT(11) NOT NULL,
   `caminho` VARCHAR(250) NOT NULL,
   `ordem` INT(2) NOT NULL,
-  `data_cadastro` DATETIME NOT NULL,
+  `data_cadastro` DATE NOT NULL,
   `status` BIT,
 
   FOREIGN KEY (`id_veiculo`) REFERENCES `veiculo` (`id`)
@@ -141,7 +141,6 @@ CREATE TABLE `venda` (
   `id_funcionario` INT(4) NOT NULL,
   `id_cliente` INT(8) NOT NULL,
   `valor_total` DECIMAL(10, 2) NOT NULL,
-  `data_venda` DATETIME NOT NULL,
   `data_cadastro` DATETIME NOT NULL,
   `status` BIT,
 
