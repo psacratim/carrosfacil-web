@@ -97,7 +97,7 @@ CREATE TABLE `cliente` (
 
 CREATE TABLE `veiculo` (
   `id` INT(11) PRIMARY KEY AUTO_INCREMENT,
-  `id_vendedor` INT(8),
+  -- `id_vendedor` INT(8), A loja não terá mais revenda.
   `id_modelo` INT(11) NOT NULL,
   `categoria` VARCHAR(32) NOT NULL, -- SUVS, Esportivo
   `estado_do_veiculo` VARCHAR(26) NOT NULL, -- Usado | Novo
@@ -114,7 +114,7 @@ CREATE TABLE `veiculo` (
   `status` BIT,
 
   FOREIGN KEY (`id_modelo`) REFERENCES `modelo` (`id`),
-  FOREIGN KEY (`id_vendedor`) REFERENCES `cliente` (`id`)
+  -- FOREIGN KEY (`id_vendedor`) REFERENCES `cliente` (`id`)
 );
 
 CREATE TABLE `foto_veiculo` (
