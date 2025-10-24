@@ -67,7 +67,7 @@
             '$cidade',
             '$estado',
             '$email',
-            '$final',
+            '$foto',
             NOW(),
             1
             );";

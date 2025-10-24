@@ -63,7 +63,7 @@
 
             <?php 
               $sql = "
-                SELECT funcionario.id, funcionario.nome AS nome_funcionario, cargo.nome AS nome_cargo, funcionario.cpf, funcionario.salario, funcionario.sexo, funcionario.data_nascimento, funcionario.tipo_acesso, funcionario.telefone_recado, funcionario.email, funcionario.data_cadastro, funcionario.status
+                SELECT funcionario.id, funcionario.nome AS nome_funcionario, cargo.nome AS nome_cargo, funcionario.cpf, funcionario.salario, funcionario.sexo, funcionario.data_nascimento, funcionario.tipo_acesso, funcionario.telefone_recado, funcionario.email, funcionario.foto, funcionario.data_cadastro, funcionario.status
                 FROM funcionario
                 INNER JOIN cargo ON cargo.id = funcionario.id_cargo
                 ;
@@ -124,6 +124,7 @@
                   <thead>
                     <tr>
                       <th scope="col">#</th>
+                      <th scope="col">Foto</th>
                       <th scope="col">Nome</th>
                       <th scope="col">Cargo</th>
                       <th scope="col">CPF</th>
@@ -143,6 +144,9 @@
                       ?>
                     <tr>
                       <td><?php echo $funcionario['id'] ?></td>
+                      <td >
+                          <?php echo '<img class="icone-tabela" src="../../images/'. $funcionario['foto'] .'" alt="">' ?>
+                      </td>
                       <td><?php echo $funcionario['nome_funcionario'] ?></td>
                       <td><?php echo $funcionario['nome_cargo'] ?></td>
                       <td><?php echo $funcionario['cpf'] ?></td>

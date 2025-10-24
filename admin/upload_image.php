@@ -9,7 +9,7 @@
         $final = '../images/' . $image;
         
         if (move_uploaded_file($tmp, $final)){
-            echo json_encode($final);
+            echo json_encode($image);
         } else {
             echo json_encode("unknown_error");
         }

@@ -1,3 +1,11 @@
+<?php 
+    // STARTING SESSION
+    if (!isset($_SESSION)){
+        session_start();
+    }
+
+  require_once("../../conexao/conecta.php")
+?>
 <!doctype html>
 <html lang="pt-br">
 
@@ -44,6 +52,7 @@
       <main class="ml-auto col-lg-10 px-md-4">
         <?php
           include('../LoggedUser.php');
+          include('../Mensagem.php');
         ?>
 
         <div class="container mt-5">
@@ -101,6 +110,13 @@
               </div>
             </div>
 
+            <?php 
+              $sql = "SELECT id, nome, descricao, icone, data_cadastro, status FROM caracteristica;";
+
+              $query = mysqli_query($conexao, $sql);
+              if (mysqli_num_rows($query) > 0) {
+            ?>
+
             <div class="card-body">
               <div class="row">
                 <!-- CAMPO DE BUSCA -->
@@ -120,69 +136,46 @@
                     <th scope="col">Icone</th>
                     <th scope="col">Nome</th>
                     <th scope="col">Descrição</th>
-                    <th scope="col">Observação</th>
                     <th scope="col">Status</th>
                     <th scope="col">Ações</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>1</td>
-                    <td >
-                        <img class="icone-tabela" src="../../assets/img/bluetooth.png" alt="">
-                    </td>
-                    <td>Bluetooth</td>
-                    <td>Permite conectar dispositivos com bluetooth para trocar dados ou ouvir músicas.</td>
-                    <td></td>
-                    <td><span class="badge badge-pill badge-success">Ativo</span></td>
-                    <td>
-                      <a href="#" class="btn btn-outline-success btn-sm" title="Editar">
-                        <i class="bi bi-pencil-square"></i>
-                      </a>
-                      <a href="#" class="btn btn-outline-danger btn-sm" title="Excluir">
-                        <i class="bi bi-trash3"></i>
-                      </a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>2</td>
-                    <td >
-                        <img class="icone-tabela" src="../../assets/img/bluetooth.png" alt="">
-                    </td>
-                    <td>Bluetooth</td>
-                    <td>Permite conectar dispositivos com bluetooth para trocar dados ou ouvir músicas.</td>
-                    <td></td>
-                    <td><span class="badge badge-pill badge-success">Ativo</span></td>
-                    <td>
-                      <a href="#" class="btn btn-outline-success btn-sm" title="Editar">
-                        <i class="bi bi-pencil-square"></i>
-                      </a>
-                      <a href="#" class="btn btn-outline-danger btn-sm" title="Excluir">
-                        <i class="bi bi-trash3"></i>
-                      </a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>3</td>
-                    <td >
-                        <img class="icone-tabela" src="../../assets/img/bluetooth.png" alt="">
-                    </td>
-                    <td>Bluetooth</td>
-                    <td>Permite conectar dispositivos com bluetooth para trocar dados ou ouvir músicas.</td>
-                    <td></td>
-                    <td><span class="badge badge-pill badge-success">Ativo</span></td>
-                    <td>
-                      <a href="#" class="btn btn-outline-success btn-sm" title="Editar">
-                        <i class="bi bi-pencil-square"></i>
-                      </a>
-                      <a href="#" class="btn btn-outline-danger btn-sm" title="Excluir">
-                        <i class="bi bi-trash3"></i>
-                      </a>
-                    </td>
-                  </tr>
+                  <?php foreach($query as $caracteristica) { ?>
+                    <tr>
+                      <td>1</td>
+                      <td >
+                          <?php echo '<img class="icone-tabela" src="../../images/'. $caracteristica['icone'] .'" alt="">' ?>
+                      </td>
+                      <td><?php echo $caracteristica['nome'] ?></td>
+                      <td><?php echo $caracteristica['descricao'] ?></td>
+                      <td>
+                        <?php 
+                          if ($caracteristica['status'] == 0){
+                            echo '<span class="badge badge-pill badge-danger">Inativo</span>';
+                          } else {
+                            echo '<span class="badge badge-pill badge-success">Ativo</span>';
+                          }
+                        ?>
+                      </td>
+                      <td>
+                        <a href="#" class="btn btn-outline-success btn-sm" title="Editar">
+                          <i class="bi bi-pencil-square"></i>
+                        </a>
+                        <a href="#" class="btn btn-outline-danger btn-sm" title="Excluir">
+                          <i class="bi bi-trash3"></i>
+                        </a>
+                      </td>
+                    </tr>
+                  <?php } ?>
                 </tbody>
               </table>
             </div>
+            <?php
+              } else {
+                echo '<div class="alert alert-danger m-3" role="alert">Nenhum registro encontrado!</div>';
+              } 
+            ?>
 
           </div>
         </div>
