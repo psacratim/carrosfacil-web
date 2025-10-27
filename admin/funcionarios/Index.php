@@ -172,10 +172,10 @@
                         ?>
                       </td>
                       <td>
-                        <a href="#" class="btn btn-outline-success btn-sm" title="Editar">
+                        <a href="editar.php?id=<?php echo $funcionario['id'] ?>" class="btn btn-outline-success btn-sm" title="Editar">
                           <i class="bi bi-pencil-square"></i>
                         </a>
-                        <a href="#" class="btn btn-outline-danger btn-sm" title="Excluir">
+                        <a href="deletar.php?id=<?php echo $funcionario['id'] ?>" class="btn btn-outline-danger btn-sm" title="Excluir">
                           <i class="bi bi-trash3"></i>
                         </a>
                       </td>

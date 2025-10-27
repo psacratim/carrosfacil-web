@@ -76,7 +76,7 @@
                           <img id="foto-img" src="../../assets/img/placeholder-veiculo.avif" alt="" class="rounded-3">
                         </div>
 
-                        <input type="file" name="foto-veiculo" id="foto-veiculo" class="form-control mt-3 mx-auto w-50" accept="image/*">
+                        <input type="file" name="foto-veiculo" id="foto-veiculo" class="form-control mt-3 mx-auto w-50" accept="image/*" required>
                       </div>
 
                       <div class="col-md-2">
