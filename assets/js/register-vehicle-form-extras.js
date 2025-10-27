@@ -57,6 +57,17 @@ $(document).ready(function() {
         updateFinalPrice();
     });
 
+    $('#foto-veiculo').change(function(e) {
+        let file = this.files[0]; // ou $(this)[0].files[0]
+        if (file) {
+            let reader = new FileReader();
+            reader.onload = function(event) {
+                $("#foto-img").attr("src", event.target.result);
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
     $("form").on("submit", function(event) {
         const costRaw = document.querySelector("#custo").value;
         const profitRaw = document.querySelector("#lucro_esperado").value;
@@ -84,8 +95,7 @@ $(document).ready(function() {
             event.preventDefault(); // cancela o envio
             return;
         }
-
-        //
+        
         // document.querySelector("#preco_final").value = precoFinal.toLocaleString('pt-BR', {
         //     minimumFractionDigits: 2,
         //     maximumFractionDigits: 2

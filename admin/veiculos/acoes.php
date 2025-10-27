@@ -10,6 +10,7 @@ if (!isset($_SESSION)) {
 // CADASTRAR VEÍCULO
 if (isset($_POST['cadastrar']) && $_POST['cadastrar'] === "cadastrar_veiculo") {
     try {
+        // Get values from form send by user.
         $id_modelo        = mysqli_escape_string($conexao, $_POST['modelo']);
         $categoria        = mysqli_escape_string($conexao, $_POST['categoria']);
         $estado_do_veiculo = mysqli_escape_string($conexao, $_POST['estado']);
@@ -24,40 +25,29 @@ if (isset($_POST['cadastrar']) && $_POST['cadastrar'] === "cadastrar_veiculo") {
         $status           = 1; // Ativo por padrão
         $estoque          = $_POST['estoque']; // Estoque inicial
 
-        // Custo e lucro
         $custo_raw       = mysqli_escape_string($conexao, $_POST['custo']);
         $lucro_esperado  = (float) $_POST['lucro_esperado'];
         $desconto        = (float) $_POST['desconto'];
 
-        // Converte o custo (remove pontos e vírgulas)
         $custo = floatval(str_replace(',', '.', str_replace('.', '', $custo_raw)));
 
-        // Calcula o preço final
         $lucro = ($custo * ($lucro_esperado / 100));
         $preco_final = $custo + $lucro;
 
+        // Calculate the discount in server-side to avoid errors.
         if ($desconto > 0) {
             $preco_final -= ($preco_final * ($desconto / 100));
         }
+            
+        // Save feature icon in server.
+        $photoName = basename($_FILES['foto-veiculo']['name']); // Get photo path send by client.
+        $photoTmp = $_FILES['foto-veiculo']['tmp_name']; // Get photo path in the temp file.
+        $photo = '../../images/' . $photoName;
+        move_uploaded_file($photoTmp, $photo);
 
-        // Monta o SQL compatível com a tabela
-        $sql = "INSERT INTO veiculo (
-            id_modelo,
-            categoria,
-            estado_do_veiculo,
-            tempo_de_uso,
-            preco,
-            kms_rodado,
-            final_placa,
-            cor,
-            descricao,
-            ano,
-            tipo_cambio,
-            tipo_combustivel,
-            data_cadastro,
-            estoque,
-            status
-        ) VALUES (
+        // Create sql query string.
+        $sql = "INSERT INTO veiculo VALUES (
+            0,
             '$id_modelo',
             '$categoria',
             '$estado_do_veiculo',
@@ -70,12 +60,14 @@ if (isset($_POST['cadastrar']) && $_POST['cadastrar'] === "cadastrar_veiculo") {
             '$ano',
             '$tipo_cambio',
             '$tipo_combustivel',
+            '$photoName',
             NOW(),
             '$estoque',
             b'$status'
         );";
         
-        // Executa o SQL
+        echo $sql;
+        // Send to mysql.
         if (mysqli_query($conexao, $sql)) {
             $_SESSION['mensagem'] = 'Veículo cadastrado com sucesso!';
         } else {

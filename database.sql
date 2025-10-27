@@ -110,12 +110,12 @@ CREATE TABLE `veiculo` (
   `ano` INT(4) NOT NULL,
   `tipo_cambio` VARCHAR(20) NOT NULL,
   `tipo_combustivel` VARCHAR(26) NOT NULL,
+  `foto` VARCHAR(250) NOT NULL,
   `data_cadastro` DATE NOT NULL,
   `estoque` INT(5) DEFAULT 0,
   `status` BIT,
 
   FOREIGN KEY (`id_modelo`) REFERENCES `modelo` (`id`)
-  -- FOREIGN KEY (`id_vendedor`) REFERENCES `cliente` (`id`)
 );
 
 CREATE TABLE `foto_veiculo` (

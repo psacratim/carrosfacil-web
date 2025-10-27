@@ -288,7 +288,6 @@
   <!-- JS MASK -->
   <script src="../../assets/js/jquery.mask.js"></script>
   <script src="../../assets/js/mascaras.js"></script>
-  
 </body>
 
 </html>

@@ -65,10 +65,20 @@
             </div>
 
             <div class="card-body">
-              <form action="acoes.php" method="post">
+              <form action="acoes.php" method="post" enctype="multipart/form-data">
                 <div class="form-row">
-                  <fieldset class="form-group col-lg-12 mt-3">
+                  <fieldset class="form-group col-lg-12">
                     <div class="row">
+                      <div class="col-12 mb-3 text-center">
+                        <label for="foto-veiculo">Foto do Veículo</label>
+
+                        <div>
+                          <img id="foto-img" src="../../assets/img/placeholder-veiculo.avif" alt="" class="rounded-3">
+                        </div>
+
+                        <input type="file" name="foto-veiculo" id="foto-veiculo" class="form-control mt-3 mx-auto w-50" accept="image/*">
+                      </div>
+
                       <div class="col-md-2">
                         <label for="id_veiculo"><strong class="text-danger">*</strong> ID:</label>
                         <input type="text" name="id_veiculo" id="id_veiculo" class="form-control" maxlength="11" value="0" required disabled>
@@ -273,7 +283,7 @@
   <!-- JS MASK -->
   <script src="../../assets/js/jquery.mask.js"></script>
   <script src="../../assets/js/mascaras.js"></script>
-  <script src="../../assets/js/register-vehicle-form-formatters.js"></script>
+  <script src="../../assets/js/register-vehicle-form-extras.js"></script>
   
 </body>
 

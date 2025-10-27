@@ -75,36 +75,35 @@
                   </div>
 
                   <div class="modal-body">
-                    <div class="row">
-                      <div class="col-12 mb-3 text-center">
-                        <label for="icone-acessorio">Icone do Acessorio</label>
+                    <form action="actions.php" method="post" enctype="multipart/form-data">
+                      <div class="row">
+                        <div class="col-12 mb-3 text-center">
+                          <label for="icone-acessorio">Icone do Acessorio</label>
 
-                        <div>
-                          <img id="icone-img" class="icone-preview" src="../../assets/img/placeholder-funcionario.png" alt="" class="rounded-3">
+                          <div>
+                            <img id="icone-img" class="icone-preview" src="../../assets/img/placeholder-funcionario.png" alt="" class="rounded-3">
+                          </div>
+
+                          <input type="file" name="icone-acessorio" id="icone-acessorio" class="form-control mt-3 mx-auto w-100" accept="image/png, image/jpeg">
                         </div>
 
-                        <input type="file" name="icone-acessorio" id="icone-acessorio" class="form-control mt-3 mx-auto w-100" accept="image/png, image/jpeg">
+                        <div class="col-12 mb-3">
+                          <label for="nome"><strong class="text-danger">*</strong> Nome do acessório:</label>
+                          <input type="text" name="nome" id="nome" class="form-control" maxlength="60" required>
+                        </div>
+
+                        <div class="col-12 mb-3">
+                          <label for="description"><strong class="text-danger">*</strong> Descrição:</label>
+                          <input type="text" name="description" id="description" class="form-control" maxlength="60" required>
+                        </div>
                       </div>
 
-                      <div class="col-12 mb-3">
-                        <label for="nome"><strong class="text-danger">*</strong> Nome do acessório:</label>
-                        <input type="text" name="nome" id="nome" class="form-control" maxlength="60" required>
-                      </div>
-
-                      <div class="col-12 mb-3">
-                        <label for="nome"><strong class="text-danger">*</strong> Descrição:</label>
-                        <input type="text" name="nome" id="nome" class="form-control" maxlength="60" required>
-                      </div>
-
-                      <div class="col-12 mb-3">
-                        <label for="nome">Observação:</label>
-                        <input type="text" name="nome" id="nome" class="form-control" maxlength="60" required>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary">Cadastrar</button>
+                      <!-- Submit button -->
+                      <hr>
+                      <input type="hidden" name="cadastrar" value="cadastrar_caracteristicas">
+                      <input type="submit" class="btn btn-primary btn-block" value="Cadastrar">
+                    </form>
+                    <button class="btn btn-danger btn-block mt-2" data-bs-dismiss="modal">Cancelar</button>
                   </div>
                 </div>
               </div>
@@ -143,7 +142,7 @@
                 <tbody>
                   <?php foreach($query as $caracteristica) { ?>
                     <tr>
-                      <td>1</td>
+                      <td><?php echo $caracteristica['id'] ?></td>
                       <td >
                           <?php echo '<img class="icone-tabela" src="../../images/'. $caracteristica['icone'] .'" alt="">' ?>
                       </td>
