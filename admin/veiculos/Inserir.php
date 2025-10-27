@@ -53,6 +53,7 @@
       <main class="ml-auto col-lg-10 px-md-4">
         <?php
           include('../LoggedUser.php');
+          include('../Mensagem.php');
         ?>
 
         <div class="container mt-5">
@@ -66,45 +67,30 @@
             <div class="card-body">
               <form action="acoes.php" method="post">
                 <div class="form-row">
-
-                  <fieldset class="form-group col-12">
-                    <h3 class="mt-2">Dados sobre vendas:</h3>
+                  <fieldset class="form-group col-lg-12 mt-3">
                     <div class="row">
-                      <div class="col-md-6">
-                        <label for="vendedor"><strong class="text-danger">*</strong> Vendedor:</label>
-                        <select name="vendedor" id="vendedor" class="form-control" required>
-                          <?php 
-                            $sql = 'SELECT id, nome_completo FROM cliente WHERE status = 1;';
-                            $query = mysqli_execute_query($conexao, $sql);
-
-                            foreach ($query as $cliente) {
-                              echo '<option value="'. $cliente['id'] .'">'. $cliente['nome_completo'] .'</option>';
-                            }
-                          ?>
-                        </select>
+                      <div class="col-md-2">
+                        <label for="id_veiculo"><strong class="text-danger">*</strong> ID:</label>
+                        <input type="text" name="id_veiculo" id="id_veiculo" class="form-control" maxlength="11" value="0" required disabled>
                       </div>
 
-                      <div class="col-md-3">
-                        <label for="preco"><strong class="text-danger">*</strong> Preço:</label>
-                        <input type="text" name="preco" id="preco" class="form-control" data-mask="#.##0,00" data-mask-reverse="true">
-                      </div>
-                      
-                      <div class="col-md-3">
+                      <div class="col-md-2">
                         <label for="status">Status</label>
                         <select name="status" id="status" class="form-control" disabled>
                           <option value="1">Ativo</option>
                           <option value="0">Inativo</option>
                         </select>
                       </div>
-                    </div>
-                  </fieldset>
 
-                  <fieldset class="form-group col-lg-12 mt-3">
-                    <h3>Dados do veículo:</h3>
-                    <div class="row">
+                      <div class="col-md-2">
+                        <label for="data_cadastro">Data de Cadastro:</label>
+                        <input disabled type="date" name="data_cadastro" id="data_cadastro" class="form-control" value="1000-01-01">
+                      </div>
+
                       <div class="col-md-3">
                         <label for="modelo"><strong class="text-danger">*</strong> Modelo:</label>
                         <select name="modelo" id="modelo" class="form-control" required>
+                          <option value="none" selected>- Nenhum Selecionado -</option>
                           <?php 
                             $sql = 'SELECT id, nome FROM modelo WHERE status = 1;';
                             $query = mysqli_execute_query($conexao, $sql);
@@ -119,6 +105,7 @@
                       <div class="col-md-3">
                         <label for="categoria"><strong class="text-danger">*</strong> Categoria:</label>
                         <select name="categoria" id="categoria" class="form-control" required>
+                          <option value="none" selected>- Nenhum Selecionado -</option>
                           <option value="Hatchback">Hatchback</option>
                           <option value="Sedan">Sedan</option>
                           <option value="SUV">SUV</option>
@@ -157,30 +144,31 @@
                         </select>
                       </div>
 
-                      <div class="col-md-2">
+                      <div class="col-md-2 mt-3">
                         <label for="estado"><strong class="text-danger">*</strong> Estado do veículo:</label>
                         <select name="estado" id="estado" class="form-control" required>
                           <option value="Novo">Novo</option>
+                          <option value="Usado">Semi-novo</option>
                           <option value="Usado">Usado</option>
                         </select>
                       </div>
 
-                      <div class="col-md-2">
+                      <div class="col-md-2 mt-3">
                         <label for="tempo_uso"><strong class="text-danger">*</strong> Tempo de uso:</label>
-                        <input type="text" name="tempo_uso" id="tempo_uso" class="form-control" maxlength="20" required>
+                        <input type="text" name="tempo_uso" id="tempo_uso" class="form-control" maxlength="5" required>
                       </div>
 
-                      <div class="col-md-2">
-                        <label for="tempo_uso"><strong class="text-danger">*</strong> KMs rodado:</label>
-                        <input type="text" name="tempo_uso" id="tempo_uso" class="form-control" maxlength="20" required>
+                      <div class="col-md-2 mt-3">
+                        <label for="kms_rodados"><strong class="text-danger">*</strong> KMs rodado:</label>
+                        <input type="text" name="kms_rodados" id="kms_rodados" class="form-control" maxlength="7" required>
                       </div>
 
-                      <div class="col-md-3 mt-3">
+                      <div class="col-md-2 mt-3">
                         <label for="final_placa"><strong class="text-danger">*</strong> Final da placa:</label>
-                        <input type="text" name="final_placa" id="final_placa" class="form-control" maxlength="20" required>
+                        <input type="text" name="final_placa" id="final_placa" class="form-control" maxlength="1" required>
                       </div>
 
-                      <div class="col-md-3 mt-3">
+                      <div class="col-md-2 mt-3">
                         <label for="cor"><strong class="text-danger">*</strong> Cor principal:</label>
                         <select name="cor" id="cor" class="form-control" required>
                           <option value="Branco">Branco</option>
@@ -204,14 +192,15 @@
                         </select>
                       </div>
 
-                      <div class="col-md-3 mt-3">
+                      <div class="col-md-2 mt-3">
                         <label for="ano"><strong class="text-danger">*</strong> Ano do carro:</label>
-                        <input type="text" name="ano" id="ano" class="form-control" maxlength="20" required>
+                        <input type="text" name="ano" id="ano" class="form-control" maxlength="4" required>
                       </div>
 
                       <div class="col-md-3 mt-3">
                         <label for="tipo_combustivel"><strong class="text-danger">*</strong> Tipo de combustível/energia:</label>
                         <select name="tipo_combustivel" id="tipo_combustivel" class="form-control" required>
+                          <option value="none" selected>- Nenhum Selecionado -</option>
                           <option value="Gasolina">Gasolina</option>
                           <option value="Etanol">Etanol</option>
                           <option value="Flex">Flex</option>
@@ -224,12 +213,37 @@
                       <div class="col-md-3 mt-3">
                         <label for="tipo_cambio"><strong class="text-danger">*</strong> Tipo de câmbio:</label>
                         <select name="tipo_cambio" id="tipo_cambio" class="form-control" required>
+                          <option value="none" selected>- Nenhum Selecionado -</option>
                           <option value="Manual">Manual</option>
                           <option value="Automático Tradicional">Automático Tradicional</option>
                           <option value="CVT (Transmissão Continuamente Variável)">CVT (Transmissão Continuamente Variável)</option>
                           <option value="Automatizado (Monoembreagem)">Automatizado (Monoembreagem)</option>
                           <option value="Automático de Dupla Embreagem (DCT)">Automático de Dupla Embreagem (DCT)</option>
                         </select>
+                      </div>
+
+                      <div class="col-md-3 mt-3">
+                        <label for="estoque"><strong class="text-danger">*</strong> Estoque:</label>
+                        <input type="text" name="estoque" id="estoque" class="form-control" data-mask="#" data-mask-reverse="true">
+                      </div>
+
+                      <div class="col-md-3 mt-3">
+                        <label for="custo"><strong class="text-danger">*</strong> Custo:</label>
+                        <input type="text" name="custo" id="custo" class="form-control" data-mask="#.##0,00" data-mask-reverse="true" maxlength="13">
+                      </div>
+
+                      <div class="col-md-3 mt-3">
+                        <label for="lucro_esperado"><strong class="text-danger">*</strong> Lucro desejado (%):</label>
+                        <input type="text" name="lucro_esperado" id="lucro_esperado" class="form-control" data-mask="#" data-mask-reverse="true" maxlength="5">
+                      </div>
+                      <div class="col-md-3 mt-3">
+                        <label for="desconto"><strong class="text-danger">*</strong> Promoção (%):</label>
+                        <input type="text" name="desconto" id="desconto" class="form-control" data-mask="#" data-mask-reverse="true">
+                      </div>
+
+                      <div class="col-md-3 mt-3">
+                        <label for="preco_final"><strong class="text-danger">*</strong> Preço de Venda:</label>
+                        <input disabled type="text" name="preco_final" id="preco_final" class="form-control" data-mask="#" data-mask-reverse="true" required>
                       </div>
 
                       <div class="form-group mt-3">
@@ -259,6 +273,7 @@
   <!-- JS MASK -->
   <script src="../../assets/js/jquery.mask.js"></script>
   <script src="../../assets/js/mascaras.js"></script>
+  <script src="../../assets/js/register-vehicle-form-formatters.js"></script>
   
 </body>
 

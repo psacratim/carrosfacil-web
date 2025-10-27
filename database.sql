@@ -44,7 +44,7 @@ CREATE TABLE `funcionario` (
   `id_cargo` INT(3),
   `cpf` CHAR(14) UNIQUE NOT NULL,
   `rg` VARCHAR(12),
-  `nome` VARCHAR(60) NOT NULL,
+  `nome` VARCHAR(60) NOT NULL UNIQUE,
   `nome_social` VARCHAR(60),
   `senha` VARCHAR(26) NOT NULL,
   `salario` DECIMAL(10,2),
@@ -111,9 +111,10 @@ CREATE TABLE `veiculo` (
   `tipo_cambio` VARCHAR(20) NOT NULL,
   `tipo_combustivel` VARCHAR(26) NOT NULL,
   `data_cadastro` DATE NOT NULL,
+  `estoque` INT(5) DEFAULT 0,
   `status` BIT,
 
-  FOREIGN KEY (`id_modelo`) REFERENCES `modelo` (`id`),
+  FOREIGN KEY (`id_modelo`) REFERENCES `modelo` (`id`)
   -- FOREIGN KEY (`id_vendedor`) REFERENCES `cliente` (`id`)
 );
 

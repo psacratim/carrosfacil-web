@@ -63,10 +63,9 @@
 
             <?php 
               $sql = "
-                SELECT veiculo.id, cliente.nome_completo, modelo.nome, veiculo.categoria, veiculo.estado_do_veiculo, veiculo.preco, veiculo.estoque, veiculo.data_cadastro
+                SELECT veiculo.id, modelo.nome 'modelo', veiculo.categoria, veiculo.estado_do_veiculo, veiculo.preco, veiculo.estoque, veiculo.data_cadastro, veiculo.status
                 FROM veiculo
-                INNER JOIN cliente ON cliente.id = veiculo.id_vendedor
-                INNER JOIN modelo ON modelo.nome = veiculo.id_modelo;
+                INNER JOIN modelo ON modelo.id = veiculo.id_modelo;
               ";
 
               $query = mysqli_query($conexao, $sql);
@@ -98,11 +97,12 @@
                   <thead>
                     <tr>
                       <th scope="col">#</th>
-                      <th scope="col">CPF</th>
-                      <th scope="col">Nome Completo</th>
-                      <th scope="col">Telefone</th>
-                      <th scope="col">Sexo</th>
-                      <th scope="col">Data Nascimento</th>
+                      <th scope="col">Modelo</th>
+                      <th scope="col">Categoria</th>
+                      <th scope="col">Situação</th>
+                      <th scope="col">Preço</th>
+                      <th scope="col">Estoque</th>
+                      <th scope="col">Data Cadastro</th>
                       <th scope="col">Status</th>
                       <th scope="col">Ações</th>
                     </tr>
@@ -111,11 +111,12 @@
                     <?php foreach($query as $veiculo) { ?>
                     <tr>
                       <td><?php echo $veiculo['id'] ?></td>
-                      <td><?php echo $veiculo['cpf'] ?></td>
-                      <td><?php echo $veiculo['nome_completo'] ?></td>
-                      <td><?php echo $veiculo['telefone1'] ?></td>
-                      <td><?php echo $veiculo['sexo'] ?></td>
-                      <td><?php echo $veiculo['data_nascimento'] ?></td>
+                      <td><?php echo $veiculo['modelo'] ?></td>
+                      <td><?php echo $veiculo['categoria'] ?></td>
+                      <td><?php echo $veiculo['estado_do_veiculo'] ?></td>
+                      <td><?php echo $veiculo['preco'] ?></td>
+                      <td><?php echo $veiculo['estoque'] ?></td>
+                      <td><?php echo $veiculo['data_cadastro'] ?></td>
                       <td>
                         <?php 
                           if ($veiculo['status'] == 0){

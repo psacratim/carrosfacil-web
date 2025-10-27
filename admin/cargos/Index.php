@@ -1,4 +1,9 @@
 <?php 
+    // STARTING SESSION
+    if (!isset($_SESSION)){
+        session_start();
+    }
+
   require_once("../../conexao/conecta.php")
 ?>
 <!doctype html>
@@ -43,8 +48,10 @@
       ?>
 
       <main class="ml-auto col-lg-10 px-md-4">
+
         <?php
           include('../LoggedUser.php');
+          include('../Mensagem.php');
         ?>
 
 

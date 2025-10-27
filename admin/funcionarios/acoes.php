@@ -61,7 +61,7 @@
             '$telefone_residencial',
             '$endereco',
             '$cep',
-            '$numero',
+            '$numero_endereco',
             '$complemento',
             '$bairro',
             '$cidade',
