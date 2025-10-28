@@ -14,8 +14,8 @@ if (isset($_POST['cadastrar']) && $_POST['cadastrar'] === "cadastrar_veiculo") {
         $id_modelo        = mysqli_escape_string($conexao, $_POST['modelo']);
         $categoria        = mysqli_escape_string($conexao, $_POST['categoria']);
         $estado_do_veiculo = mysqli_escape_string($conexao, $_POST['estado']);
-        $tempo_de_uso     = (int) $_POST['tempo_uso'];
-        $kms_rodado       = (int) $_POST['kms_rodados'];
+        $tempo_de_uso     = (int) $_POST['tempo_usado'];
+        $quilometragem    = (int) $_POST['quilometragem'];
         $final_placa      = mysqli_escape_string($conexao, $_POST['final_placa']);
         $cor              = mysqli_escape_string($conexao, $_POST['cor']);
         $descricao        = mysqli_escape_string($conexao, $_POST['descricao']);
@@ -40,11 +40,11 @@ if (isset($_POST['cadastrar']) && $_POST['cadastrar'] === "cadastrar_veiculo") {
         }
             
         // Save feature icon in server.
-        $photoName = basename($_FILES['foto-veiculo']['name']); // Get photo path send by client.
-        $photoTmp = $_FILES['foto-veiculo']['tmp_name']; // Get photo path in the temp file.
+        $photoName = basename($_FILES['foto-veiculo-input']['name']); // Get photo path send by client.
+        $photoTmp = $_FILES['foto-veiculo-input']['tmp_name']; // Get photo path in the temp file.
         $photo = '../../images/' . $photoName;
         move_uploaded_file($photoTmp, $photo);
-
+        
         // Create sql query string.
         $sql = "INSERT INTO veiculo VALUES (
             0,
@@ -53,7 +53,7 @@ if (isset($_POST['cadastrar']) && $_POST['cadastrar'] === "cadastrar_veiculo") {
             '$estado_do_veiculo',
             '$tempo_de_uso',
             '$preco_final',
-            '$kms_rodado',
+            '$quilometragem',
             '$final_placa',
             '$cor',
             '$descricao',
@@ -66,7 +66,6 @@ if (isset($_POST['cadastrar']) && $_POST['cadastrar'] === "cadastrar_veiculo") {
             b'$status'
         );";
         
-        echo $sql;
         // Send to mysql.
         if (mysqli_query($conexao, $sql)) {
             $_SESSION['mensagem'] = 'Veículo cadastrado com sucesso!';

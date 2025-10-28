@@ -19,3 +19,28 @@ textarea {
 .icone-tabela {
     max-width: 32px;
 }
+
+.form-fs .title {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.fs-container label {
+    font-size: 16px;
+}
+
+.image-preview {
+    border: 1px dashed rgb(200, 200, 200);
+}
+
+.image-preview-empty i {
+    font-size: 48px;
+}
+
+.image-preview-empty h3 {
+    font-size: 22px;
+}
+
+.image-preview-empty p {
+    font-size: 16px;
+}

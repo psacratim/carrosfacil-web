@@ -57,12 +57,14 @@ $(document).ready(function() {
         updateFinalPrice();
     });
 
-    $('#foto-veiculo').change(function(e) {
+    $('#foto-veiculo-input').change(function(e) {
         let file = this.files[0]; // ou $(this)[0].files[0]
         if (file) {
             let reader = new FileReader();
             reader.onload = function(event) {
-                $("#foto-img").attr("src", event.target.result);
+                $("#veiculo-foto-preview").attr("style", "display: none !important");
+                $("#foto-veiculo").css("display", "block");
+                $("#foto-veiculo").attr("src", event.target.result);
             };
             reader.readAsDataURL(file);
         }
