@@ -104,6 +104,7 @@ CREATE TABLE `veiculo` (
   `tempo_de_uso` INT(5) NOT NULL, -- Tempo de uso em dias: 1 dia, 365 dias, 1.265 dias, ... -> Limite: 99.999 dias (273 anos)
   `preco` DECIMAL(10, 2) NOT NULL, -- 99,999,999.99
   'desconto' INT(5) NOT NULL,
+  'lucro' INT(5) NOT NULL,
   `kms_rodado` INT(7) NOT NULL, -- Limite: 9.999.999 kms,
   `final_placa` VARCHAR(1) NOT NULL,
   `cor` VARCHAR(16) NOT NULL,

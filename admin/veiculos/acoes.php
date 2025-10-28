@@ -53,6 +53,8 @@ if (isset($_POST['cadastrar']) && $_POST['cadastrar'] === "cadastrar_veiculo") {
             '$estado_do_veiculo',
             '$tempo_de_uso',
             '$preco_final',
+            '$desconto',
+            '$lucro',
             '$quilometragem',
             '$final_placa',
             '$cor',
