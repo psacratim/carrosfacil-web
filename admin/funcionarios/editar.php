@@ -66,7 +66,7 @@
           ?>
             <div class="card">
               <div class="card-header d-flex justify-content-between">
-                <h4 class="m-0">Novo Funcionário</h4>
+                <h4 class="m-0">Editar Funcionário</h4>
 
                 <a href="Index.php" class="btn btn-primary btn-sm"><i class="bi bi-arrow-left-short"></i> Voltar</a>
               </div>
@@ -80,7 +80,7 @@
                       <label for="foto-perfil">Foto de Perfil</label>
 
                       <div>
-                        <img id="foto-img" src="../../assets/img/placeholder-funcionario.png" alt="" class="rounded-3">
+                        <img id="foto-img" src="<?php echo $funcionario['foto'] != "" ? '../../images/'.$funcionario['foto'] : '../../assets/img/placeholder-funcionario.png' ?>" alt="" class="rounded-3">
                       </div>
 
                       <input type="file" name="foto-perfil" id="foto-perfil" class="form-control mt-3 mx-auto w-50" accept="image/*">
@@ -89,6 +89,9 @@
                     <fieldset class="form-group">
                       <h3>Dados Pessoais</h3>
                       <div class="row">
+                        <div class="col-md-12">
+                          <input hidden type="text" name="id" id="id" class="form-control" maxlength="60" required value="<?php echo $funcionario['id'] ?>">
+                        </div>
                         <div class="col-md-6">
                           <label for="nome"><strong class="text-danger">*</strong> Nome:</label>
                           <input type="text" name="nome" id="nome" class="form-control" maxlength="60" required value="<?php echo $funcionario['nome'] ?>">
@@ -137,7 +140,7 @@
                               foreach ($query as $cargo) { 
                                 $select = $cargo['id'] == $funcionario['id_cargo'] ? 'selected' : '';
                                 echo '<option '. $select .' value="'. $cargo['id'] .'">'. $cargo['nome'] .'</option>';
-                              }
+                              } 
                             ?>
                           </select>
                         </div>
@@ -276,8 +279,8 @@
                       </div>
                     </fieldset>
 
-                    <input type="hidden" name="cadastrar" value="cadastrar_funcionario" class="btn btn-primary mt-3">
-                    <input type="submit" value="Cadastrar" class="btn btn-primary mt-3">
+                    <input type="hidden" name="editar" value="editar_funcionario" class="btn btn-primary mt-3">
+                    <input type="submit" value="Atualizar" class="btn btn-primary mt-3">
                   </div>
                 </form>
               </div>
