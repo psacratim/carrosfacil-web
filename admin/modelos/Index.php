@@ -132,7 +132,7 @@
 
             <?php 
               $sql = "
-              SELECT modelo.id, marca.nome AS nome_marca, modelo.nome AS nome_modelo, modelo.data_cadastro, modelo.status
+              SELECT modelo.id, marca.nome AS nome_marca, modelo.nome AS nome_modelo, modelo.observacao, modelo.data_cadastro, modelo.status
               FROM modelo
               INNER JOIN marca ON marca.id = modelo.id_marca
               WHERE modelo.status = 1;
@@ -149,6 +149,7 @@
                       <th scope="col">#</th>
                       <th scope="col">Marca</th>
                       <th scope="col">Nome do Modelo</th>
+                      <th scope="col">Observação</th>
                       <th scope="col">Data Cadastro</th>
                       <th scope="col">Status</th>
                       <th scope="col">Ações</th>  
@@ -160,6 +161,7 @@
                       <td><?php echo  $modelo['id'] ?></td>
                       <td><?php echo $modelo['nome_marca'] ?></td>
                       <td><?php echo $modelo['nome_modelo'] ?></td>
+                      <td><?php echo $modelo['observacao'] ?></td>
                       <td><?php echo date('d/m/Y', strtotime($modelo['data_cadastro'])) ?></td>
                       <td>
                         <?php 

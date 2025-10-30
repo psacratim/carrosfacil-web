@@ -93,11 +93,11 @@
                       <div class="col-lg-3 col-md-3 mt-3">
                         <label for="estado-civil"><strong class="text-danger">*</strong> Estado Civil</label>
                         <select name="estado-civil" id="estado-civil" class="form-control" required>
-                          <option value="Solteiro" selected>Solteiro(a)</option>
-                          <option value="Casado">Casado(a)</option>
-                          <option value="Separado">Separado(a)</option>
-                          <option value="Divorciado">Divorciado(a)</option>
-                          <option value="Viuvo">Viúvo(a)</option>
+                          <option value="Solteiro(a)" selected>Solteiro(a)</option>
+                          <option value="Casado(a)">Casado(a)</option>
+                          <option value="Separado(a)">Separado(a)</option>
+                          <option value="Divorciado(a)">Divorciado(a)</option>
+                          <option value="Viuvo(a)">Viúvo(a)</option>
                         </select>
                       </div>
                       <div class="col-lg-3 col-md-3 mt-3">

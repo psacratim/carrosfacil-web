@@ -97,24 +97,23 @@ CREATE TABLE `cliente` (
 
 CREATE TABLE `veiculo` (
   `id` INT(11) PRIMARY KEY AUTO_INCREMENT,
-  -- `id_vendedor` INT(8), A loja não terá mais revenda.
   `id_modelo` INT(11) NOT NULL,
   `categoria` VARCHAR(32) NOT NULL, -- SUVS, Esportivo
   `estado_do_veiculo` VARCHAR(26) NOT NULL, -- Usado | Novo
   `tempo_de_uso` INT(5) NOT NULL, -- Tempo de uso em dias: 1 dia, 365 dias, 1.265 dias, ... -> Limite: 99.999 dias (273 anos)
   `preco` DECIMAL(10, 2) NOT NULL, -- 99,999,999.99
-  'desconto' INT(5) NOT NULL,
-  'lucro' INT(5) NOT NULL,
+  `desconto` INT(5) NOT NULL,
+  `lucro` INT(5) NOT NULL,
   `kms_rodado` INT(7) NOT NULL, -- Limite: 9.999.999 kms,
   `final_placa` VARCHAR(1) NOT NULL,
   `cor` VARCHAR(16) NOT NULL,
-  `descricao` VARCHAR(250) NOT NULL,
+  `descricao` VARCHAR(250),
   `ano` INT(4) NOT NULL,
   `tipo_cambio` VARCHAR(20) NOT NULL,
   `tipo_combustivel` VARCHAR(26) NOT NULL,
   `foto` VARCHAR(250) NOT NULL,
-  `data_cadastro` DATE NOT NULL,
   `estoque` INT(5) DEFAULT 0,
+  `data_cadastro` DATE NOT NULL,
   `status` BIT,
 
   FOREIGN KEY (`id_modelo`) REFERENCES `modelo` (`id`)

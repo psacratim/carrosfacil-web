@@ -64,7 +64,7 @@
             $_SESSION['mensagem'] = 'Erro ao cadastrar o cliente!';
         }
         
-        // header('Location: Index.php');
+        header('Location: Index.php');
     }
 ?>
 

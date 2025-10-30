@@ -84,7 +84,7 @@
                   </div>
                   <div class="col-md-5 mt-2 fs-container ">
                     <label for="categoria">Categoria <strong class="text-danger">*</strong></label>
-                    <select name="categoria" id="categoria" class="form-select" required>
+                    <select required name="categoria" id="categoria" class="form-select">
                         <option value="none" selected>- Nenhum Selecionado -</option>
                         <option value="Hatchback">Hatchback</option>
                         <option value="Sedan">Sedan</option>
@@ -125,7 +125,7 @@
                   </div>
                   <div class="col-md-3 mt-2 fs-container ">
                     <label for="cor">Cor <strong class="text-danger">*</strong></label>
-                    <select name="cor" id="cor" class="form-select" required>
+                    <select required name="cor" id="cor" class="form-select">
                       <option value="Branco">Branco</option>
                       <option value="Preto">Preto</option>
                       <option value="Prata">Prata</option>
@@ -152,20 +152,20 @@
                   <div class="title">Informações básicas</div>
                   <div class="col-md-5 mt-2 fs-container ">
                     <label for="estado">Estado do Veículo <strong class="text-danger">*</strong></label>
-                    <select name="estado" id="estado" class="form-select" required>
+                    <select required name="estado" id="estado" class="form-select">
                       <option value="none" selected>- Nenhum Selecionado -</option>
                       <option value="Novo">Novo</option>
-                      <option value="Usado">Semi-novo</option>
+                      <option value="Semi-novo">Semi-novo</option>
                       <option value="Usado">Usado</option>
                     </select>
                   </div>
                   <div class="col-md-2 mt-2 fs-container">
                     <label for="ano">Ano <strong class="text-danger">*</strong></label>
-                    <input type="text" name="ano" id="ano" class="form-control" maxlength="4" required placeholder="Ex: 2025">
+                    <input required type="text" name="ano" id="ano" class="form-control" maxlength="4" placeholder="Ex: 2025">
                   </div>
                   <div class="col-md-3 mt-2 fs-container">
                     <label for="final_placa">Final da placa <strong class="text-danger">*</strong></label>
-                    <input type="text" name="final_placa" id="final_placa" class="form-control" maxlength="1" required placeholder="Ex: 1">
+                    <input required type="text" name="final_placa" id="final_placa" class="form-control" maxlength="1" placeholder="Ex: 1">
                   </div>
                   <div class="col-md-2 mt-2 fs-container">
                     <label for="estoque">Estoque <strong class="text-danger">*</strong></label>
@@ -173,16 +173,15 @@
                   </div>
                   <div class="col-md-3 mt-2 fs-container">
                     <label for="quilometragem">Quilômetragem <strong class="text-danger">*</strong></label>
-                    <input type="text" name="quilometragem" id="quilometragem" class="form-control" maxlength="7" required placeholder="0">
+                    <input required type="text" name="quilometragem" id="quilometragem" class="form-control" maxlength="7" placeholder="0">
                   </div>
                   <div class="col-md-3 mt-2 fs-container">
                     <label for="tempo_usado">Tempo de uso <strong class="text-danger">*</strong></label>
-                    <input type="text" name="tempo_usado" id="tempo_usado" class="form-control" maxlength="5" required placeholder="0">
+                    <input required type="text" name="tempo_usado" id="tempo_usado" class="form-control" maxlength="5" placeholder="0">
                   </div>
                   <div class="col-md-3 mt-2 fs-container">
                     <label for="tipo_combustivel">Tipo de combustivel <strong class="text-danger">*</strong></label>
-                    <select name="tipo_combustivel" id="tipo_combustivel" class="form-control" required>
-                      <option value="none" selected>- Nenhum Selecionado -</option>
+                    <select required name="tipo_combustivel" id="tipo_combustivel" class="form-control">
                       <option value="Gasolina">Gasolina</option>
                       <option value="Etanol">Etanol</option>
                       <option value="Flex">Flex</option>
@@ -194,8 +193,7 @@
                   <div class="col-md-3 mt-2 fs-container">
                     <label for="tipo_cambio">Tipo de câmbio <strong class="text-danger">*</strong></label>
                     
-                    <select name="tipo_cambio" id="tipo_cambio" class="form-control" required>
-                      <option value="none" selected>- Nenhum Selecionado -</option>
+                    <select required name="tipo_cambio" id="tipo_cambio" class="form-control">
                       <option value="Manual">Manual</option>
                       <option value="Automático Tradicional">Automático Tradicional</option>
                       <option value="CVT (Transmissão Continuamente Variável)">CVT (Transmissão Continuamente Variável)</option>
@@ -209,21 +207,21 @@
                   <div class="title">Valores</div>
                   <div class="col-md-3 mt-2 fs-container">
                     <label for="custo">Custo de venda <strong class="text-danger">*</strong></label>
-                    <input type="text" name="custo" id="custo" class="form-control" data-mask="#.##0,00" data-mask-reverse="true" maxlength="13" placeholder="R$0,00">
+                    <input required type="text" name="custo" id="custo" class="form-control" data-mask="#.##0,00" data-mask-reverse="true" maxlength="13" placeholder="R$0,00">
                   </div>
 
                   <div class="col-md-3 mt-2 fs-container">
                     <label for="lucro_esperado">Lucro (%) <strong class="text-danger">*</strong></label>
-                    <input type="text" name="lucro_esperado" id="lucro_esperado" class="form-control" data-mask="#" data-mask-reverse="true" maxlength="5" placeholder="0">
+                    <input required type="text" name="lucro_esperado" id="lucro_esperado" class="form-control" data-mask="#" data-mask-reverse="true" maxlength="5" placeholder="0">
                   </div>
 
                   <div class="col-md-3 mt-2 fs-container">
                     <label for="desconto">Desconto (%) <strong class="text-danger">*</strong></label>
-                    <input type="text" name="desconto" id="desconto" class="form-control" data-mask="#" data-mask-reverse="true" placeholder="0">
+                    <input required type="text" name="desconto" id="desconto" class="form-control" data-mask="#" data-mask-reverse="true" placeholder="0">
                   </div>
                   <div class="col-md-3 mt-2 fs-container">
                     <label for="preco_final">Preço Final <strong class="text-danger">*</strong></label>
-                    <input type="text" name="preco_final" id="preco_final" class="form-control" data-mask="#.##0,00" data-mask-reverse="true" maxlength="13" placeholder="R$0,00" disabled>
+                    <input required type="text" name="preco_final" id="preco_final" class="form-control" data-mask="#.##0,00" data-mask-reverse="true" maxlength="13" placeholder="R$0,00" disabled>
                   </div>
                 </fieldset>
                 <hr>
@@ -246,7 +244,7 @@
                         <h3 class="w-100">Adicionar foto do veículo</h3>
                         <p class="w-100">Selecione uma imagem do veículo</p>
                       </div>
-                      <img id="foto-veiculo" style="display: none;" src="" alt="">
+                      <img required id="foto-veiculo" style="display: none;" src="" alt="">
                     </div>
                     
                     

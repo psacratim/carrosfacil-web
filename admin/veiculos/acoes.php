@@ -63,8 +63,8 @@ if (isset($_POST['cadastrar']) && $_POST['cadastrar'] === "cadastrar_veiculo") {
             '$tipo_cambio',
             '$tipo_combustivel',
             '$photoName',
-            NOW(),
             '$estoque',
+            NOW(),
             b'$status'
         );";
         
