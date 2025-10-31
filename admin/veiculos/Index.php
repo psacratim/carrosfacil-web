@@ -127,7 +127,7 @@
                         ?>
                       </td>
                       <td>
-                        <a href="#" class="btn btn-outline-success btn-sm" title="Editar">
+                        <a href="edit.php?id=<?php echo $veiculo['id'] ?>" class="btn btn-outline-success btn-sm" title="Editar">
                           <i class="bi bi-pencil-square"></i>
                         </a>
                         <a href="#" class="btn btn-outline-danger btn-sm" title="Excluir">

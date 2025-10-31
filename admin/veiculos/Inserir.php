@@ -187,7 +187,7 @@
                       <option value="Flex">Flex</option>
                       <option value="Diesel">Diesel</option>
                       <option value="Elétrico">Elétrico</option>
-                      <option value="Gás Natural Veicular (GNV)">Gás Natural Veicular (GNV)</option>
+                      <option value="GNV (Gás Natural Veicular)">GNV (Gás Natural Veicular)</option>
                     </select>
                   </div>
                   <div class="col-md-3 mt-2 fs-container">
@@ -196,9 +196,9 @@
                     <select required name="tipo_cambio" id="tipo_cambio" class="form-control">
                       <option value="Manual">Manual</option>
                       <option value="Automático Tradicional">Automático Tradicional</option>
-                      <option value="CVT (Transmissão Continuamente Variável)">CVT (Transmissão Continuamente Variável)</option>
+                      <option value="CVT">CVT</option>
                       <option value="Automatizado (Monoembreagem)">Automatizado (Monoembreagem)</option>
-                      <option value="Automático de Dupla Embreagem (DCT)">Automático de Dupla Embreagem (DCT)</option>
+                      <option value="DCT (Automático de Dupla Embreagem)">DCT (Automático de Dupla Embreagem)</option>
                     </select>
                   </div>
                 </fieldset>

@@ -58,7 +58,7 @@
             <div class="card-header d-flex justify-content-between">
               <h4 class="m-0">Funcionários</h4>
               
-              <a href="inserir.php" class="btn btn-primary btn-sm"><i class="bi bi-plus"></i> Adicionar</a>
+              <a href="Inserir.php" class="btn btn-primary btn-sm"><i class="bi bi-plus"></i> Adicionar</a>
             </div>
 
             <?php 
