@@ -109,9 +109,17 @@
                           </select>
                       </div>
 
-                      <!-- Submit button -->
-                      <input type="hidden" name="cadastrar" value="cadastrar_modelos">
-                      <input type="submit" class="btn btn-primary btn-block" value="Cadastrar">
+                      <input type="hidden" name="id-modelo" id="id-modelo">
+
+                      <!-- Botão Cadastrar (padrão) -->
+                      <button type="submit" id="btnCadastrar" name="cadastrar" value="cadastrar_modelos" class="btn btn-primary btn-block">
+                        Cadastrar
+                      </button>
+
+                      <!-- Botão Salvar (somente editar) -->
+                      <button type="submit" id="btnSalvar" name="editar" value="editar_modelos" class="btn btn-success btn-block d-none">
+                        Salvar
+                      </button>
                     </form>
                     <button class="btn btn-danger btn-block mt-2" data-bs-dismiss="modal">Cancelar</button>
                   </div>
@@ -132,10 +140,9 @@
 
             <?php 
               $sql = "
-              SELECT modelo.id, marca.nome AS nome_marca, modelo.nome AS nome_modelo, modelo.observacao, modelo.data_cadastro, modelo.status
+              SELECT modelo.id, modelo.id_marca, marca.nome AS nome_marca, modelo.nome AS nome_modelo, modelo.observacao, modelo.data_cadastro, modelo.status
               FROM modelo
-              INNER JOIN marca ON marca.id = modelo.id_marca
-              WHERE modelo.status = 1;
+              INNER JOIN marca ON marca.id = modelo.id_marca;
               ";
               $query = mysqli_query($conexao, $sql);
 
@@ -173,9 +180,21 @@
                         ?>
                       </td>
                       <td>
-                        <a href="#" class="btn btn-outline-success btn-sm" title="Editar">
+                        <a href="#" 
+                          class="btn btn-outline-success btn-sm btn-editar" 
+                          title="Editar"
+                          data-id="<?php echo $modelo['id'] ?>"
+                          data-id-marca="<?php echo $modelo['id_marca'] ?>"
+                          data-nome-modelo="<?php echo $modelo['nome_modelo'] ?>"
+                          data-observacao="<?php echo $modelo['observacao'] ?>"
+                          data-status="<?php echo $modelo['status'] ?>"
+                          data-bs-toggle="modal" 
+                          data-bs-target="#modelosModal">
                           <i class="bi bi-pencil-square"></i>
                         </a>
+                        <!-- <a href="#" class="btn btn-outline-success btn-sm" title="Editar">
+                          <i class="bi bi-pencil-square"></i>
+                        </a> -->
                         <a href="#" class="btn btn-outline-danger btn-sm" title="Excluir">
                           <i class="bi bi-trash3"></i>
                         </a>
@@ -201,6 +220,47 @@
   <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js" integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y" crossorigin="anonymous"></script>
+  <script>
+    function enableRegister(){
+      // Change modal title, disable status, hide save button and show register button.
+      $("#modelosModalLabel").text("Cadastrar Modelo");
+      $("#btnCadastrar").removeClass("d-none");
+      $("#btnSalvar").addClass("d-none");
+      $("#status").prop("disabled", true);
+      
+      // Clear all fields.
+      $("#id-modelo").val("");
+      $("#marca-modelo").val("");
+      $("#nome-modelo").val("");
+      $("#observacao").val("");
+      $("#status").val("1");
+    }
+
+    function enableEdit(btn){
+      // Change modal title, enable status, show save button and hide register button.
+      $("#modelosModalLabel").text("Editar Modelo");
+      $("#btnCadastrar").addClass("d-none");
+      $("#btnSalvar").removeClass("d-none");
+      $("#status").prop("disabled", false);
+
+      // Add current model data.
+      $("#id-modelo").val($(btn).data("id"));
+      $("#marca-modelo").val($(btn).data("id-marca"));
+      $("#nome-modelo").val($(btn).data("nome-modelo"));
+      $("#observacao").val($(btn).data("observacao"));
+      $("#status").val($(btn).data("status"));
+    }
+
+    // Quando clicar no botão "Adicionar"
+    $("[data-bs-target='#modelosModal']").on("click", function(){
+      enableRegister();
+    });
+
+    // Quando clicar no botão editar
+    $(document).on("click", ".btn-editar", function(){
+      enableEdit(this);
+    });
+  </script>
 
 </body>
 
