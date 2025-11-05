@@ -63,7 +63,7 @@
 
             <?php 
               $sql = "
-                SELECT veiculo.id, modelo.nome 'modelo', veiculo.categoria, veiculo.estado_do_veiculo, veiculo.preco, veiculo.estoque, veiculo.data_cadastro, veiculo.status
+                SELECT veiculo.id, modelo.nome 'modelo', veiculo.categoria, veiculo.estado_do_veiculo, veiculo.preco_venda, veiculo.preco_desconto, veiculo.estoque, veiculo.data_cadastro, veiculo.status
                 FROM veiculo
                 INNER JOIN modelo ON modelo.id = veiculo.id_modelo;
               ";
@@ -100,7 +100,8 @@
                       <th scope="col">Modelo</th>
                       <th scope="col">Categoria</th>
                       <th scope="col">Situação</th>
-                      <th scope="col">Preço</th>
+                      <th scope="col">Preço Venda</th>
+                      <th scope="col">Preço Desconto</th>
                       <th scope="col">Estoque</th>
                       <th scope="col">Data Cadastro</th>
                       <th scope="col">Status</th>
@@ -108,13 +109,16 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <?php foreach($query as $veiculo) { ?>
+                    <?php 
+                    foreach($query as $veiculo) {
+                    ?>
                     <tr>
                       <td><?php echo $veiculo['id'] ?></td>
                       <td><?php echo $veiculo['modelo'] ?></td>
                       <td><?php echo $veiculo['categoria'] ?></td>
                       <td><?php echo $veiculo['estado_do_veiculo'] ?></td>
-                      <td><?php echo $veiculo['preco'] ?></td>
+                      <td><?php echo number_format($veiculo['preco_venda'], 2, ',', '.') ?></td>
+                      <td><?php echo number_format($veiculo['preco_desconto'], 2, ',', '.') ?></td>
                       <td><?php echo $veiculo['estoque'] ?></td>
                       <td><?php echo $veiculo['data_cadastro'] ?></td>
                       <td>
