@@ -1,4 +1,8 @@
 $(document).ready(function() {
+    var precoDescontoInput = $('#preco_desconto')
+    var descontoInput = $('#desconto')
+    descontoInput[0].setCustomValidity('O preço com promoção não pode ser menor que o de custo.');
+
     function updateFinalPrice(){
         const vehicleCostRaw = $('#preco_custo').val(); // -> text
         if (!vehicleCostRaw) { 
@@ -15,14 +19,19 @@ $(document).ready(function() {
         let sellPrice = vehicleCost * profitFactor
         let discountPrice = 0
 
-        const discount = parseInt($('#desconto').val().replace(/\D/g, '')) / 100;
+        const discount = parseInt(descontoInput.val().replace(/\D/g, '')) / 100;
         if (discount > 0) {
             discountPrice = sellPrice - (sellPrice * discount);
         
             if (discountPrice < vehicleCost) {
-                alert('O preço com promoção não pode ser menor que o de custo. Diminua a % de desconto.');
+                descontoInput[0].reportValidity();
+                descontoInput.toggleClass('error-input', true);
+                precoDescontoInput.toggleClass('error-input', true);
                 return;
-            }   
+            } else {
+                descontoInput.toggleClass('error-input', false);
+                precoDescontoInput.toggleClass('error-input', false);
+            }
         }
         
         // Formata o resultado com 2 casas decimais e vírgula
@@ -47,7 +56,7 @@ $(document).ready(function() {
         updateFinalPrice();
     })
 
-    $('#desconto').on('input', function() {
+    descontoInput.on('input', function() {
         let discountRaw = $(this).val().replace(/\D/g, '');
         if (discountRaw === '') {
             $(this).val('0');
@@ -62,7 +71,7 @@ $(document).ready(function() {
         $(this).val(discount);
         updateFinalPrice();
     });
-
+    
     $('#foto-veiculo-input').change(function(e) {
         let file = this.files[0]; // ou $(this)[0].files[0]
         if (file) {
@@ -87,10 +96,6 @@ $(document).ready(function() {
 
         let finalPrice = cost + (cost * (profit / 100));
         finalPrice -= finalPrice * (discount / 100);
-
-        console.log(finalPrice);
-        console.log(cost);
-        console.log(discount);
 
         if (finalPrice < cost && discount > 0) {
             alert("O valor com desconto é menor que o preço de custo. Diminua o desconto ou aumente o custo ou lucro.");

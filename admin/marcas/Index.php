@@ -4,7 +4,7 @@
         session_start();
     }
 
-  require_once("../../conexao/conecta.php")
+    require_once("../../conexao/conecta.php");
 ?>
 
 <!doctype html>
@@ -12,12 +12,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="">
-  <meta name="author" content="">
   <title>Carros Fácil - Painel</title>
 
   <!-- BOOTSTRAP CSS -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 
   <!-- BOOTSTRAP ICONS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
@@ -34,19 +32,11 @@
 </head>
 <body>
     
-  <?php
-    #Início TOPO
-    include('../Topo.php');
-    #Final TOPO
-  ?>
+  <?php include('../Topo.php'); ?>
 
   <div class="container-fluid">
     <div class="row">
-      <?php
-        #Início MENU
-        include('../Navegacao.php');
-        #Final MENU
-      ?>
+      <?php include('../Navegacao.php'); ?>
 
       <main class="ml-auto col-lg-10 px-md-4">
         <?php
@@ -56,15 +46,12 @@
 
         <div class="container mt-5">
           <div class="card">
-            <div class="card-header d-flex justify-content-between">
+            <div class="card-header d-flex justify-content-between align-items-center">
               <h4 class="m-0 lh-base">Marca</h4>
-              
-              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#marcaModal"> 
-                Adicionar
-              </button>
+              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#marcaModal">Adicionar</button>
             </div>
 
-            <!-- Modal -->
+            <!-- Modal CADASTRAR -->
             <div class="modal fade" id="marcaModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="marcaModalLabel" aria-hidden="true">
               <div class="modal-dialog">
                 <div class="modal-content">
@@ -75,22 +62,20 @@
                   <div class="modal-body">
                     <form action="acoes.php" method="post">
                       <div class="form-group">
-                          <label for="nome"><strong class="text-danger">*</strong> Nome da marca:</label>
-                          <input type="text" name="nome" id="nome" class="form-control" maxlength="80" required>
+                        <label for="nome"><strong class="text-danger">*</strong> Nome da marca:</label>
+                        <input type="text" name="nome" id="nome" class="form-control" maxlength="80" required>
                       </div>
                       <div class="form-group">
-                          <label for="observacao"><strong class="text-danger">*</strong> Observação:</label>
-                          <textarea type="text" name="observacao" id="observacao" class="form-control" maxlength="250" required> </textarea>
+                        <label for="observacao"><strong class="text-danger">*</strong> Observação:</label>
+                        <textarea name="observacao" id="observacao" class="form-control" maxlength="250" required></textarea>
                       </div>
                       <div class="form-group">
-                          <label for="status"><strong class="text-danger">*</strong> Status:</label>
-                          <select name="status" id="status" class="form-control" disabled>
-                            <option value="1">Ativo</option>
-                            <option value="0">Inativo</option>
-                          </select>
+                        <label for="status"><strong class="text-danger">*</strong> Status:</label>
+                        <select name="status" id="status" class="form-control" disabled>
+                          <option value="1">Ativo</option>
+                          <option value="0">Inativo</option>
+                        </select>
                       </div>
-
-                      <!-- Submit button -->
                       <input type="hidden" name="cadastrar" value="cadastrar_marca">
                       <input type="submit" class="btn btn-primary btn-block" value="Cadastrar">
                     </form>
@@ -104,15 +89,13 @@
               $sql = "SELECT * FROM marca";
               $query = mysqli_query($conexao, $sql);
 
-              # O número de linhas retornado é > 0 ? Se sim, teve resultados.
-              if (mysqli_num_rows($query) > 0) { #Estranho, mas a gente vai fechar essa chave após o HTML, usando php novamente.
+              if (mysqli_num_rows($query) > 0) {
             ?>
               <div class="card-body">
                 <div class="row">
-                  <!-- CAMPO DE BUSCA -->
                   <div class="col-4">
                     <form action="">
-                      <input type="search" name="pesquisa" id="pesquisa" class="form-control"  placeholder="Nome da marca">
+                      <input type="search" name="pesquisa" id="pesquisa" class="form-control" placeholder="Nome da marca">
                     </form>
                   </div>
 
@@ -123,6 +106,7 @@
                         <option value="1">Ativo</option>
                         <option value="0">Inativo</option>
                       </select>
+                    </form>
                   </div>
                 </div>
               </div>
@@ -131,21 +115,21 @@
                 <table class="table m-0">
                   <thead>
                     <tr>
-                      <th scope="col">#</th>
-                      <th scope="col">Nome</th>
-                      <th scope="col">Observação</th>
-                      <th scope="col">Data Cadastro</th>
-                      <th scope="col">Status</th>
-                      <th scope="col">Ações</th>
+                      <th>#</th>
+                      <th>Nome</th>
+                      <th>Observação</th>
+                      <th>Data Cadastro</th>
+                      <th>Status</th>
+                      <th>Ações</th>
                     </tr>
                   </thead>
                   <tbody>
                     <?php foreach ($query as $marca) { ?>
                       <tr>
-                        <td><?php echo $marca['id'] ?></td>
-                        <td><?php echo $marca['nome'] ?></td>
-                        <td><?php echo $marca['observacao'] ?></td>
-                        <td><?php echo date('d/m/Y', strtotime($marca['data_cadastro'])) ?></td>
+                        <td><?php echo $marca['id']; ?></td>
+                        <td><?php echo htmlspecialchars($marca['nome']); ?></td>
+                        <td><?php echo htmlspecialchars($marca['observacao']); ?></td>
+                        <td><?php echo date('d/m/Y', strtotime($marca['data_cadastro'])); ?></td>
                         <td>
                           <?php 
                             if ($marca['status'] == 0){
@@ -156,10 +140,18 @@
                           ?>
                         </td>
                         <td>
-                          <a href="editar.php?id_cargo=<?php echo($cargo['id']) ?>" class="btn btn-outline-success btn-sm" title="Editar">
+                          <button type="button" 
+                                  class="btn btn-outline-success btn-sm editar-btn"
+                                  data-id="<?php echo $marca['id']; ?>"
+                                  data-nome="<?php echo htmlspecialchars($marca['nome']); ?>"
+                                  data-observacao="<?php echo htmlspecialchars($marca['observacao']); ?>"
+                                  data-status="<?php echo $marca['status']; ?>"
+                                  title="Editar">
                             <i class="bi bi-pencil-square"></i>
-                          </a>
-                          <a href="excluir.php?id_cargo=<?php echo($cargo['id']) ?>" class="btn btn-outline-danger btn-sm" title="Excluir">
+                          </button>
+
+                          <a href="excluir.php?id_marca=<?php echo $marca['id']; ?>" 
+                             class="btn btn-outline-danger btn-sm" title="Excluir">
                             <i class="bi bi-trash3"></i>
                           </a>
                         </td>
@@ -180,9 +172,63 @@
     </div>
   </div>
 
-  <!-- BOOTSTRAP JS -->
-  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js" integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y" crossorigin="anonymous"></script>
+  <!-- Modal EDITAR -->
+  <div class="modal fade" id="editarMarcaModal" tabindex="-1" aria-labelledby="editarMarcaModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="editarMarcaModalLabel">Editar Marca</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form action="acoes.php" method="post">
+            <input type="hidden" name="id" id="edit_id">
+
+            <div class="form-group">
+              <label for="edit_nome"><strong class="text-danger">*</strong> Nome da marca:</label>
+              <input type="text" name="nome" id="edit_nome" class="form-control" maxlength="80" required>
+            </div>
+            <div class="form-group">
+              <label for="edit_observacao"><strong class="text-danger">*</strong> Observação:</label>
+              <textarea name="observacao" id="edit_observacao" class="form-control" maxlength="250" required></textarea>
+            </div>
+            <div class="form-group">
+              <label for="edit_status"><strong class="text-danger">*</strong> Status:</label>
+              <select name="status" id="edit_status" class="form-control">
+                <option value="1">Ativo</option>
+                <option value="0">Inativo</option>
+              </select>
+            </div>
+
+            <input type="hidden" name="atualizar" value="atualizar_marca">
+            <input type="submit" class="btn btn-success btn-block" value="Salvar Alterações">
+          </form>
+          <button class="btn btn-secondary btn-block mt-2" data-bs-dismiss="modal">Cancelar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BOOTSTRAP JS + JQUERY -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js"></script>
+
+  <!-- SCRIPT EDIÇÃO -->
+  <script>
+    $(document).on('click', '.editar-btn', function() {
+      const id = $(this).data('id');
+      const nome = $(this).data('nome');
+      const observacao = $(this).data('observacao');
+      const status = $(this).data('status');
+
+      $('#edit_id').val(id);
+      $('#edit_nome').val(nome);
+      $('#edit_observacao').val(observacao);
+      $('#edit_status').val(status);
+
+      $('#editarMarcaModal').modal('show');
+    });
+  </script>
 </body> 
 </html>
