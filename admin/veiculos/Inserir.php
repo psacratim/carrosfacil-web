@@ -206,8 +206,8 @@
                 <fieldset class="form-fs row">
                   <div class="title">Valores</div>
                   <div class="col-md-4 mt-2 fs-container">
-                    <label for="custo">Preço Custo <strong class="text-danger">*</strong></label>
-                    <input required type="text" name="custo" id="custo" class="form-control" data-mask="#.##0,00" data-mask-reverse="true" maxlength="13" placeholder="R$0,00">
+                    <label for="preco_custo">Preço Custo <strong class="text-danger">*</strong></label>
+                    <input required type="text" name="preco_custo" id="preco_custo" class="form-control" data-mask="#.##0,00" data-mask-reverse="true" maxlength="13" placeholder="R$0,00">
                   </div>
 
                   <div class="col-md-4 mt-2 fs-container">
@@ -217,17 +217,17 @@
 
                   <div class="col-md-4 mt-2 fs-container">
                     <label for="desconto">Desconto (%) <strong class="text-danger">*</strong></label>
-                    <input required type="text" name="desconto" id="desconto" class="form-control" data-mask="#" data-mask-reverse="true" placeholder="0">
+                    <input type="text" name="desconto" id="desconto" class="form-control" data-mask="#" data-mask-reverse="true" placeholder="0">
                   </div>
 
                   <div class="col-md-6 mt-2 fs-container">
-                    <label for="preco_final">Preço Venda <strong class="text-danger">*</strong></label>
-                    <input required type="text" name="preco_final" id="preco_final" class="form-control" data-mask="#.##0,00" data-mask-reverse="true" maxlength="13" placeholder="R$0,00" disabled>
+                    <label for="preco_venda">Preço Venda <strong class="text-danger">*</strong></label>
+                    <input readonly required type="text" name="preco_venda" id="preco_venda" class="form-control" data-mask="#.##0,00" data-mask-reverse="true" maxlength="13" placeholder="R$0,00">
                   </div>
 
                   <div class="col-md-6 mt-2 fs-container">
-                    <label for="preco_final">Preço Desconto <strong class="text-danger">*</strong></label>
-                    <input required type="text" name="preco_final" id="preco_final" class="form-control" data-mask="#.##0,00" data-mask-reverse="true" maxlength="13" placeholder="R$0,00" disabled>
+                    <label for="preco_desconto">Preço Desconto <strong class="text-danger">*</strong></label>
+                    <input readonly required type="text" name="preco_desconto" id="preco_desconto" class="form-control" data-mask="#.##0,00" data-mask-reverse="true" maxlength="13" placeholder="R$0,00">
                   </div>
                 </fieldset>
                 <hr>

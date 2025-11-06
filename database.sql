@@ -101,10 +101,10 @@ CREATE TABLE `veiculo` (
   `categoria` VARCHAR(32) NOT NULL, -- SUVS, Esportivo
   `estado_do_veiculo` VARCHAR(26) NOT NULL, -- Usado | Novo
   `tempo_de_uso` INT(5) NOT NULL, -- Tempo de uso em dias: 1 dia, 365 dias, 1.265 dias, ... -> Limite: 99.999 dias (273 anos)
-  `preco_custo` DECIMAL(10, 2) NOT NULL,
-  `preco_venda` DECIMAL(10, 2) NOT NULL, -- 99,999,999.99
-  `preco_desconto` DECIMAL(10, 2) NOT NULL,
-  `desconto` INT(2) NOT NULL,
+  `preco_custo` DECIMAL(14, 2) NOT NULL,
+  `preco_venda` DECIMAL(14, 2) NOT NULL, -- 999,999,999,999.99
+  `preco_desconto` DECIMAL(14, 2) NOT NULL,
+  `desconto` INT(2) DEFAULT 0,
   `tem_desconto` BIT NOT NULL,
   `lucro` INT(5) NOT NULL,
   `kms_rodado` INT(7) NOT NULL, -- Limite: 9.999.999 kms,
@@ -170,7 +170,7 @@ CREATE TABLE `pagamento` (
   `tipo` VARCHAR(16) NOT NULL,
   `valor` DECIMAL(10, 2) NOT NULL,
   `parcelas` INT(2) NOT NULL,
-  `desconto` INT(3) NOT NULL,
+  `desconto` INT(3) DEFAULT 0,
   `status` BIT,
 
   FOREIGN KEY (`id_venda`) REFERENCES `venda` (`id`)

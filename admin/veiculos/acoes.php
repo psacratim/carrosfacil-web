@@ -24,26 +24,19 @@ if (isset($_POST['cadastrar']) && $_POST['cadastrar'] === "cadastrar_veiculo") {
     $status           = 1; // Ativo por padrão
     $estoque          = $_POST['estoque']; // Estoque inicial
 
-    $custo_raw       = mysqli_escape_string($conexao, $_POST['custo']);
+    $preco_custo     = str_replace(['.', ','], ['', '.'], mysqli_escape_string($conexao, $_POST['preco_custo']));
+    $preco_venda     = str_replace(['.', ','], ['', '.'], mysqli_escape_string($conexao, $_POST['preco_venda']));
+    $preco_desconto  = str_replace(['.', ','], ['', '.'], mysqli_escape_string($conexao, $_POST['preco_desconto']));
     $lucro_esperado  = (float) $_POST['lucro_esperado'];
-    $desconto        = (float) $_POST['desconto'];
+    $desconto        = (float) ($_POST['desconto'] ?? 0);
+    $tem_desconto    = (int) ($desconto > 0.0);
 
-    $custo = floatval(str_replace(',', '.', str_replace('.', '', $custo_raw)));
-
-    $lucro = ($custo * ($lucro_esperado / 100));
-    $preco_final = $custo + $lucro;
-
-    // Calculate the discount in server-side to avoid errors.
-    if ($desconto > 0) {
-        $preco_final -= ($preco_final * ($desconto / 100));
-    }
-        
     // Save feature icon in server.
     $photoName = basename($_FILES['foto-veiculo-input']['name']); // Get photo path send by client.
     $photoTmp = $_FILES['foto-veiculo-input']['tmp_name']; // Get photo path in the temp file.
     $photo = '../../images/' . $photoName;
     move_uploaded_file($photoTmp, $photo);
-    
+
     // Create sql query string.
     $sql = "INSERT INTO veiculo VALUES (
         0,
@@ -51,22 +44,25 @@ if (isset($_POST['cadastrar']) && $_POST['cadastrar'] === "cadastrar_veiculo") {
         '$categoria',
         '$estado_do_veiculo',
         '$tempo_de_uso',
-        '$custo_raw',
-        '$desconto',
-        '$lucro_esperado',
-        '$quilometragem',
+        $preco_custo,
+        $preco_venda,
+        $preco_desconto,
+        $desconto,
+        $tem_desconto,
+        $lucro_esperado,
+        $quilometragem,
         '$final_placa',
         '$cor',
         '$descricao',
-        '$ano',
+        $ano,
         '$tipo_cambio',
         '$tipo_combustivel',
         '$photoName',
-        '$estoque',
+        $estoque,
         NOW(),
         b'$status'
     );";
-        
+    
     try {
         // Send to mysql.
         if (mysqli_query($conexao, $sql)) {
@@ -78,7 +74,7 @@ if (isset($_POST['cadastrar']) && $_POST['cadastrar'] === "cadastrar_veiculo") {
     } catch (mysqli_sql_exception $e) {
         $_SESSION['mensagem'] = 'Erro ao cadastrar o veículo!';
     }
-
+    
     header('Location: index.php');
 }
 
@@ -99,19 +95,12 @@ if (isset($_POST['editar']) && $_POST['editar'] === "editar_veiculo") {
     $status           = 1; // Ativo por padrão
     $estoque          = $_POST['estoque']; // Estoque inicial
 
-    $custo_raw       = mysqli_escape_string($conexao, $_POST['custo']);
-    $lucro_esperado  = (float) $_POST['lucro_esperado'];
-    $desconto        = (float) $_POST['desconto'];
-
-    $custo = floatval(str_replace(',', '.', str_replace('.', '', $custo_raw)));
-
-    $lucro = ($custo * ($lucro_esperado / 100));
-    $preco_final = $custo + $lucro;
-
-    // Calculate the discount in server-side to avoid errors.
-    if ($desconto > 0) {
-        $preco_final -= ($preco_final * ($desconto / 100));
-    }
+    $preco_custo      = str_replace(['.', ','], ['', '.'], mysqli_escape_string($conexao, $_POST['preco_custo']));
+    $preco_venda      = str_replace(['.', ','], ['', '.'], mysqli_escape_string($conexao, $_POST['preco_venda']));
+    $preco_desconto   = str_replace(['.', ','], ['', '.'], mysqli_escape_string($conexao, $_POST['preco_desconto']));
+    $lucro_esperado   = (float) $_POST['lucro_esperado'];
+    $desconto         = (float) ($_POST['desconto'] ?? 0);
+    $tem_desconto     = (int) ($desconto > 0.0);
     
     // Save feature icon in server.
     $photoName = basename($_FILES['foto-veiculo-input']['name']); // Get photo path send by client.
@@ -127,9 +116,12 @@ if (isset($_POST['editar']) && $_POST['editar'] === "editar_veiculo") {
         categoria = '$categoria',
         estado_do_veiculo = '$estado_do_veiculo',
         tempo_de_uso = '$tempo_de_uso',
-        preco = '". str_replace(['.', ','], ['', '.'], $custo_raw) ."',
-        desconto = '$desconto',
-        lucro = '$lucro_esperado',
+        preco_custo = $preco_custo,
+        preco_venda = $preco_venda,
+        preco_desconto = $preco_desconto,
+        desconto = $desconto,
+        tem_desconto = $tem_desconto,
+        lucro = $lucro_esperado,
         kms_rodado = '$quilometragem',
         final_placa = '$final_placa',
         cor = '$cor',

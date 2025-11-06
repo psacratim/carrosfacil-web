@@ -193,47 +193,52 @@
                     <div class="col-md-3 mt-2 fs-container">
                       <label for="tipo_combustivel">Tipo de combustivel <strong class="text-danger">*</strong></label>
                       <select required name="tipo_combustivel" id="tipo_combustivel" class="form-control">
-                        <option <?php if ($veiculo['estado_do_veiculo'] == 'Gasolina') echo 'selected'; ?> value="Gasolina">Gasolina</option>
-                        <option <?php if ($veiculo['estado_do_veiculo'] == 'Etanol') echo 'selected'; ?> value="Etanol">Etanol</option>
-                        <option <?php if ($veiculo['estado_do_veiculo'] == 'Flex') echo 'selected'; ?> value="Flex">Flex</option>
-                        <option <?php if ($veiculo['estado_do_veiculo'] == 'Diesel') echo 'selected'; ?> value="Diesel">Diesel</option>
-                        <option <?php if ($veiculo['estado_do_veiculo'] == 'Elétrico') echo 'selected'; ?> value="Elétrico">Elétrico</option>
-                        <option <?php if ($veiculo['estado_do_veiculo'] == 'GNV (Gás Natural Veicular)') echo 'selected'; ?> value="GNV (Gás Natural Veicular)">GNV (Gás Natural Veicular)</option>
+                        <option <?php if ($veiculo['tipo_combustivel'] == 'Gasolina') echo 'selected'; ?> value="Gasolina">Gasolina</option>
+                        <option <?php if ($veiculo['tipo_combustivel'] == 'Etanol') echo 'selected'; ?> value="Etanol">Etanol</option>
+                        <option <?php if ($veiculo['tipo_combustivel'] == 'Flex') echo 'selected'; ?> value="Flex">Flex</option>
+                        <option <?php if ($veiculo['tipo_combustivel'] == 'Diesel') echo 'selected'; ?> value="Diesel">Diesel</option>
+                        <option <?php if ($veiculo['tipo_combustivel'] == 'Elétrico') echo 'selected'; ?> value="Elétrico">Elétrico</option>
+                        <option <?php if ($veiculo['tipo_combustivel'] == 'GNV (Gás Natural Veicular)') echo 'selected'; ?> value="GNV (Gás Natural Veicular)">GNV (Gás Natural Veicular)</option>
                       </select>
                     </div>
                     <div class="col-md-3 mt-2 fs-container">
                       <label for="tipo_cambio">Tipo de câmbio <strong class="text-danger">*</strong></label>
                       
                       <select required name="tipo_cambio" id="tipo_cambio" class="form-control">
-                        <option <?php if ($veiculo['estado_do_veiculo'] == 'Manual') echo 'selected'; ?> value="Manual">Manual</option>
-                        <option <?php if ($veiculo['estado_do_veiculo'] == 'Automático Tradicional') echo 'selected'; ?> value="Automático Tradicional">Automático Tradicional</option>
-                        <option <?php if ($veiculo['estado_do_veiculo'] == 'CVT') echo 'selected'; ?> value="CVT">CVT (Transmissão Continuamente Variável)</option>
-                        <option <?php if ($veiculo['estado_do_veiculo'] == 'Automatizado (Monoembreagem)') echo 'selected'; ?> value="Automatizado (Monoembreagem)">Automatizado (Monoembreagem)</option>
-                        <option <?php if ($veiculo['estado_do_veiculo'] == 'DCT (Automático de Dupla Embreagem)') echo 'selected'; ?> value="DCT (Automático de Dupla Embreagem)">DCT (Automático de Dupla Embreagem)</option>
+                        <option <?php if ($veiculo['tipo_cambio'] == 'Manual') echo 'selected'; ?> value="Manual">Manual</option>
+                        <option <?php if ($veiculo['tipo_cambio'] == 'Automático Tradicional') echo 'selected'; ?> value="Automático Tradicional">Automático Tradicional</option>
+                        <option <?php if ($veiculo['tipo_cambio'] == 'CVT') echo 'selected'; ?> value="CVT">CVT (Transmissão Continuamente Variável)</option>
+                        <option <?php if ($veiculo['tipo_cambio'] == 'Automatizado (Monoembreagem)') echo 'selected'; ?> value="Automatizado (Monoembreagem)">Automatizado (Monoembreagem)</option>
+                        <option <?php if ($veiculo['tipo_cambio'] == 'DCT (Automático de Dupla Embreagem)') echo 'selected'; ?> value="DCT (Automático de Dupla Embreagem)">DCT (Automático de Dupla Embreagem)</option>
                       </select>
                     </div>
                   </fieldset>
                   <hr>
                   <fieldset class="form-fs row">
                     <div class="title">Valores</div>
-                    <div class="col-md-3 mt-2 fs-container">
-                      <label for="custo">Custo de venda <strong class="text-danger">*</strong></label>
-                      <input value="<?php echo $veiculo['preco']; ?>" required type="text" name="custo" id="custo" class="form-control" data-mask="#.##0,00" data-mask-reverse="true" maxlength="13" placeholder="R$0,00">
+                    <div class="col-md-4 mt-2 fs-container">
+                      <label for="preco_custo">Preço Custo <strong class="text-danger">*</strong></label>
+                      <input value="<?php echo $veiculo['preco_custo'] ?>" required type="text" name="preco_custo" id="preco_custo" class="form-control" data-mask="#.##0,00" data-mask-reverse="true" maxlength="13" placeholder="R$0,00">
                     </div>
 
-                    <div class="col-md-3 mt-2 fs-container">
+                    <div class="col-md-4 mt-2 fs-container">
                       <label for="lucro_esperado">Lucro (%) <strong class="text-danger">*</strong></label>
-                      <input value="<?php echo $veiculo['lucro']; ?>" required type="text" name="lucro_esperado" id="lucro_esperado" class="form-control" data-mask="#" data-mask-reverse="true" maxlength="5" placeholder="0">
+                      <input value="<?php echo $veiculo['lucro'] ?>" required type="text" name="lucro_esperado" id="lucro_esperado" class="form-control" data-mask="#" data-mask-reverse="true" maxlength="5" placeholder="0">
                     </div>
 
-                    <div class="col-md-3 mt-2 fs-container">
+                    <div class="col-md-4 mt-2 fs-container">
                       <label for="desconto">Desconto (%) <strong class="text-danger">*</strong></label>
-                      <input value="<?php echo $veiculo['desconto']; ?>" required type="text" name="desconto" id="desconto" class="form-control" data-mask="#" data-mask-reverse="true" placeholder="0">
+                      <input value="<?php echo $veiculo['desconto'] ?>" type="text" name="desconto" id="desconto" class="form-control" data-mask="#" data-mask-reverse="true" placeholder="0">
                     </div>
 
-                    <div class="col-md-3 mt-2 fs-container">
-                      <label for="preco_final">Preço Final <strong class="text-danger">*</strong></label>
-                      <input required type="text" name="preco_final" id="preco_final" class="form-control" data-mask="#.##0,00" data-mask-reverse="true" maxlength="13" placeholder="R$0,00" disabled>
+                    <div class="col-md-6 mt-2 fs-container">
+                      <label for="preco_venda">Preço Venda <strong class="text-danger">*</strong></label>
+                      <input value="<?php echo $veiculo['preco_venda'] ?>" readonly required type="text" name="preco_venda" id="preco_venda" class="form-control" data-mask="#.##0,00" data-mask-reverse="true" maxlength="13" placeholder="R$0,00">
+                    </div>
+
+                    <div class="col-md-6 mt-2 fs-container">
+                      <label for="preco_desconto">Preço Desconto <strong class="text-danger">*</strong></label>
+                      <input value="<?php echo $veiculo['preco_desconto'] ?>" readonly required type="text" name="preco_desconto" id="preco_desconto" class="form-control" data-mask="#.##0,00" data-mask-reverse="true" maxlength="13" placeholder="R$0,00">
                     </div>
                   </fieldset>
                   <hr>

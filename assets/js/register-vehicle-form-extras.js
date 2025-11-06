@@ -1,6 +1,6 @@
 $(document).ready(function() {
     function updateFinalPrice(){
-        const vehicleCostRaw = $('#custo').val(); // -> text
+        const vehicleCostRaw = $('#preco_custo').val(); // -> text
         if (!vehicleCostRaw) { 
             return;
         }
@@ -12,28 +12,34 @@ $(document).ready(function() {
         }
 
         const profitFactor = (expectedProfit / 100) + 1;
-        let finalPrice = vehicleCost * profitFactor
+        let sellPrice = vehicleCost * profitFactor
+        let discountPrice = 0
 
         const discount = parseInt($('#desconto').val().replace(/\D/g, '')) / 100;
         if (discount > 0) {
-            finalPrice = finalPrice - (finalPrice * discount);
+            discountPrice = sellPrice - (sellPrice * discount);
         
-            if (finalPrice < vehicleCost) {
+            if (discountPrice < vehicleCost) {
                 alert('O preço com promoção não pode ser menor que o de custo. Diminua a % de desconto.');
                 return;
             }   
         }
         
         // Formata o resultado com 2 casas decimais e vírgula
-        const formatted = finalPrice
+        const sellPriceF = sellPrice
+            .toFixed(2)              // 1234.56
+            .replace('.', ',')       // 1234,56
+            .replace(/\B(?=(\d{3})+(?!\d))/g, '.'); // 1.234,56
+        const discountPriceF = discountPrice
             .toFixed(2)              // 1234.56
             .replace('.', ',')       // 1234,56
             .replace(/\B(?=(\d{3})+(?!\d))/g, '.'); // 1.234,56
 
-        $('#preco_final').val(formatted); // atualiza com máscara
+        $('#preco_venda').val(sellPriceF); // atualiza com máscara
+        $('#preco_desconto').val(discountPriceF); // atualiza com máscara
     }
 
-    $('#custo').on('input', function(){
+    $('#preco_custo').on('input', function(){
         updateFinalPrice();
     })
 
@@ -71,7 +77,7 @@ $(document).ready(function() {
     });
 
     $("form").on("submit", function(event) {
-        const costRaw = document.querySelector("#custo").value;
+        const costRaw = document.querySelector("#preco_custo").value;
         const profitRaw = document.querySelector("#lucro_esperado").value;
         const discountRaw = document.querySelector("#desconto").value;
 
