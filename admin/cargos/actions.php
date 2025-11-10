@@ -16,12 +16,14 @@
             $sql = "INSERT INTO cargo VALUES (0, '$nome_cargo', '$observacao', NOW(), 1);";
             
             if (mysqli_query($conexao, $sql)) {
-                $_SESSION['mensagem'] = 'Cargo cadastrado com sucesso!';
+                $_SESSION['message_type'] = 'success';
+                $_SESSION['message_text'] = 'Sucesso: Cargo cadastrado com sucesso!';
             } else {
                 throw new mysqli_sql_exception('Erro');
             }
         } catch (mysqli_sql_exception) {
-            $_SESSION['mensagem'] = 'Erro ao cadastrar o cargo!';
+            $_SESSION['message_type'] = 'error';
+            $_SESSION['message_text'] = "Erro: Não foi possível excluir esse cargo.";
         }
         
         header('Location: Index.php');
@@ -38,32 +40,45 @@
             $sql = "UPDATE cargo SET nome = '$nome_cargo', observacao = '$observacao', status = $status WHERE id = $id;";
             echo $sql;
             if (mysqli_query($conexao, $sql)) {
-                $_SESSION['mensagem'] = 'Cargo editado com sucesso!';
+                $_SESSION['message_type'] = 'success';
+                $_SESSION['message_text'] = 'Sucesso: Cargo editado com sucesso!';
             } else {
                 throw new mysqli_sql_exception('Erro');
             }
         } catch (mysqli_sql_exception) {
-            $_SESSION['mensagem'] = 'Erro ao atualizar o cargo!';
+                $_SESSION['message_type'] = 'error';
+                $_SESSION['message_text'] = "Erro: Não foi possível atualizar esse cargo.";
         }
         
         header('Location: Index.php');
     }
 
-    // EXCLUINDO CARGO NOVO
-    if (isset($_POST['deletar_cargo'])) {
-        $id = $_POST['deletar_cargo'];
+    // EXCLUINDO CARGO
+    if (isset($_POST['excluir_cargo'])) {
+        $id = $_POST['excluir_cargo'];
+
         try {
-            $sql = "DELETE FROM cargo WHERE id = $id";
-            
+            $sql = "DELETE FROM cargo WHERE id = $id;";
             if (mysqli_query($conexao, $sql)) {
-                $_SESSION['mensagem'] = 'Cargo excluido com sucesso!';
+                $_SESSION['message_type'] = 'success';
+                $_SESSION['message_text'] = "Sucesso: O cargo foi excluido com sucesso.";
             } else {
                 throw new mysqli_sql_exception('Erro');
             }
-        } catch (mysqli_sql_exception) {
-            $_SESSION['mensagem'] = 'Erro ao excluir o cargo!';
+        } catch (mysqli_sql_exception $e) {
+            if ($e->getCode() == 1451) {
+                $sql = "SELECT COUNT(id) AS total FROM funcionario WHERE id_cargo = $id";
+                $query = mysqli_query($conexao, $sql);
+                $total = mysqli_fetch_assoc($query)['total'];
+
+                $_SESSION['message_type'] = 'info';
+                $_SESSION['message_text'] = "Falhou: Não foi possível excluir esse cargo. Existem $total funcionários que dependem dele.";
+            } else {
+                $_SESSION['message_type'] = 'error';
+                $_SESSION['message_text'] = "Erro: Não foi possível excluir esse cargo.";
+            }
         }
-        
+
         header('Location: Index.php');
     }
 ?>

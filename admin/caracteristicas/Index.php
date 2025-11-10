@@ -143,10 +143,11 @@
                           <i class="bi bi-pencil-square"></i>
                         </button>
 
-                        <a href="excluir.php?id_caracteristica=<?php echo $caracteristica['id']; ?>" 
-                           class="btn btn-outline-danger btn-sm" title="Excluir">
-                          <i class="bi bi-trash3"></i>
-                        </a>
+                        <form action="actions.php" method="post" class="d-inline">
+                          <button type="submit" class="btn btn-outline-danger btn-sm" title="Excluir" name="excluir_caracteristica" value="<?php echo $caracteristica['id'] ?>" onclick="return confirm('Tem certeza que deseja excluir?')">
+                            <i class="bi bi-trash3"></i>
+                          </button>
+                        </form>
                       </td>
                     </tr>
                   <?php } ?>

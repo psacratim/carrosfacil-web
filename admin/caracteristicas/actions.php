@@ -65,5 +65,34 @@
         
         header('Location: Index.php');
     }
+
+    // EXCLUINDO CARACTERISTICAS
+    if (isset($_POST['excluir_caracteristica'])) {
+        $id = $_POST['excluir_caracteristica'];
+
+        try {
+            $sql = "DELETE FROM caracteristica WHERE id = $id;";
+            if (mysqli_query($conexao, $sql)) {
+                $_SESSION['message_type'] = 'success';
+                $_SESSION['message_text'] = "Sucesso: A caracteristica foi excluida com sucesso.";
+            } else {
+                throw new mysqli_sql_exception('Erro');
+            }
+        } catch (mysqli_sql_exception $e) {
+            if ($e->getCode() == 1451) {
+                $sql = "SELECT COUNT(id_veiculo) AS total FROM caracteristica_carro WHERE id_caracteristica = $id";
+                $query = mysqli_query($conexao, $sql);
+                $total = mysqli_fetch_assoc($query)['total'];
+
+                $_SESSION['message_type'] = 'info';
+                $_SESSION['message_text'] = "Falhou: Não foi possível excluir essa caracteristica. Existem $total veículos que dependem dela.";
+            } else {
+                $_SESSION['message_type'] = 'error';
+                $_SESSION['message_text'] = "Erro: Não foi possível excluir essa caracteristica.";
+            }
+        }
+
+        header('Location: Index.php');
+    }
 ?>
 

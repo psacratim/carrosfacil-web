@@ -139,7 +139,7 @@
                         </button>
 
                         <form action="actions.php" method="post" class="d-inline">
-                          <button type="submit" class="btn btn-outline-danger btn-sm" title="Excluir" name="deletar_cargo" value="<?php echo $cargo['id'] ?>" onclick="return confirm('Tem certeza que deseja excluir?')">
+                          <button type="submit" class="btn btn-outline-danger btn-sm" title="Excluir" name="excluir_cargo" value="<?php echo $cargo['id'] ?>" onclick="return confirm('Tem certeza que deseja excluir?')">
                             <i class="bi bi-trash3"></i>
                           </button>
                         </form>

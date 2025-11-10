@@ -1,0 +1,242 @@
+<?php 
+    // STARTING SESSION
+    if (!isset($_SESSION)){
+        session_start();
+    }
+
+  require_once("../../conexao/conecta.php")
+?>
+
+<!doctype html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <title>Carros Fácil - Painel</title>
+
+  <!-- BOOTSTRAP CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+  <!-- BOOTSTRAP ICONS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+  <!-- CUSTOMIZAÇÃO DO TEMPLATE -->
+  <link rel="stylesheet" href="../../assets/css/dashboard.css">
+  <link rel="stylesheet" href="../../assets/css/styles.css">
+
+  <!-- FAVICON -->
+  <link rel="shortcut icon" href="../../assets/img/favicon.ico" type="image/x-icon">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="../../custom/css/style.css">
+</head>
+
+<body>
+
+  <?php
+  #Início TOPO
+  include('../Topo.php');
+  #Final TOPO
+  ?>
+
+  <div class="container-fluid">
+    <div class="row">
+      <?php
+      #Início MENU
+      include('../Navegacao.php');
+      #Final MENU
+      ?>
+
+      <main class="ml-auto col-lg-10 px-md-4">
+        <?php
+          include('../LoggedUser.php');
+        ?>
+
+        <div class="container mt-5">
+          <?php 
+            if (isset($_GET['id']) && $_GET['id'] != '') {
+              $id = $_GET['id'];
+              $sql = "SELECT * FROM cliente WHERE id = $id";
+              $query = mysqli_execute_query($conexao, $sql);
+              $cliente = mysqli_fetch_assoc($query);
+          ?>
+            <div class="card">
+              <div class="card-header d-flex justify-content-between">
+                <h4 class="m-0">Editar Cliente</h4>
+                <a href="index.php" class="btn btn-primary btn-sm"><i class="bi bi-arrow-left-short"></i> Voltar</a>
+              </div>
+
+              <div class="card-body">
+                <form action="acoes.php" method="post">
+                  <div class="form-row">
+
+                    <fieldset class="form-group">
+                      <h3>Dados Pessoais</h3>
+                      <div class="row">
+                        <div class="col-md-12">
+                          <input type="hidden" name="id" value="<?php echo $cliente['id']; ?>">
+                        </div>
+
+                        <div class="col-md-6">
+                          <label for="nome-completo"><strong class="text-danger">*</strong> Nome Completo:</label>
+                          <input type="text" name="nome-completo" id="nome-completo" class="form-control" maxlength="60" required value="<?php echo $cliente['nome_completo']; ?>">
+                        </div>
+
+                        <div class="col-lg-3 col-md-3">
+                          <label for="cpf"><strong class="text-danger">*</strong> CPF</label>
+                          <input type="text" name="cpf" id="cpf" class="form-control" maxlength="14" required data-mask="000.000.000-00" value="<?php echo $cliente['cpf']; ?>">
+                        </div>
+
+                        <div class="col-lg-3 col-md-3">
+                          <label for="rg">RG</label>
+                          <input type="text" name="rg" id="rg" class="form-control" maxlength="12" data-mask="00.000.000-A" value="<?php echo $cliente['rg']; ?>">
+                        </div>
+
+                        <div class="col-lg-3 col-md-3 mt-3">
+                          <label for="sexo"><strong class="text-danger">*</strong> Sexo</label>
+                          <select name="sexo" id="sexo" class="form-control" required>
+                            <option value="N" <?php if ($cliente['sexo'] == 'N') echo 'selected'; ?>>Não Informado</option>
+                            <option value="M" <?php if ($cliente['sexo'] == 'M') echo 'selected'; ?>>Masculino</option>
+                            <option value="F" <?php if ($cliente['sexo'] == 'F') echo 'selected'; ?>>Feminino</option>
+                          </select>
+                        </div>
+
+                        <div class="col-lg-3 col-md-3 mt-3">
+                          <label for="estado-civil"><strong class="text-danger">*</strong> Estado Civil</label>
+                          <select name="estado-civil" id="estado-civil" class="form-control" required>
+                            <option value="Solteiro(a)" <?php if ($cliente['estado_civil'] == 'Solteiro(a)') echo 'selected'; ?>>Solteiro(a)</option>
+                            <option value="Casado(a)" <?php if ($cliente['estado_civil'] == 'Casado(a)') echo 'selected'; ?>>Casado(a)</option>
+                            <option value="Separado(a)" <?php if ($cliente['estado_civil'] == 'Separado(a)') echo 'selected'; ?>>Separado(a)</option>
+                            <option value="Divorciado(a)" <?php if ($cliente['estado_civil'] == 'Divorciado(a)') echo 'selected'; ?>>Divorciado(a)</option>
+                            <option value="Viuvo(a)" <?php if ($cliente['estado_civil'] == 'Viuvo(a)') echo 'selected'; ?>>Viúvo(a)</option>
+                          </select>
+                        </div>
+
+                        <div class="col-lg-3 col-md-3 mt-3">
+                          <label for="data-nascimento"><strong class="text-danger">*</strong> Data Nascimento</label>
+                          <input type="date" name="data-nascimento" id="data-nascimento" class="form-control" value="<?php echo $cliente['data_nascimento']; ?>">
+                        </div>
+
+                        <div class="col-lg-3 col-md-3 mt-3">
+                          <label for="status">Status</label>
+                          <select name="status" id="status" class="form-control">
+                            <option value="1" <?php if ($cliente['status'] == 1) echo 'selected'; ?>>Ativo</option>
+                            <option value="0" <?php if ($cliente['status'] == 0) echo 'selected'; ?>>Inativo</option>
+                          </select>
+                        </div>
+                      </div>
+                    </fieldset>
+
+                    <fieldset class="form-group col-lg-12 mt-3">
+                      <h3>Dados de acesso</h3>
+                      <div class="row">
+                        <div class="col-md-6 mt-3">
+                          <label for="usuario"><strong class="text-danger">*</strong> Usuário</label>
+                          <input type="text" name="usuario" id="usuario" class="form-control" maxlength="20" required value="<?php echo $cliente['usuario']; ?>">
+                        </div>
+
+                        <div class="col-md-6 mt-3">
+                          <label for="senha"><strong class="text-danger">*</strong> Senha</label>
+                          <input type="password" name="senha" id="senha" class="form-control" maxlength="26" required value="<?php echo $cliente['senha']; ?>">
+                        </div>
+                      </div>
+                    </fieldset>
+
+                    <fieldset class="form-group col-lg-12 mt-3">
+                      <h3>Dados de contato</h3>
+                      <div class="row">
+                        <div class="col-lg-3 col-md-4 mt-3">
+                          <label for="telefone-1"><strong class="text-danger">*</strong> Telefone 1</label>
+                          <input type="text" name="telefone-1" id="telefone-1" class="form-control" minlength="15" maxlength="15" required data-mask="(00) 00000-0000" value="<?php echo $cliente['telefone1']; ?>">
+                        </div>
+
+                        <div class="col-lg-3 col-md-4 mt-3">
+                          <label for="telefone-2">Telefone 2</label>
+                          <input type="text" name="telefone-2" id="telefone-2" class="form-control" minlength="15" maxlength="15" data-mask="(00) 00000-0000" value="<?php echo $cliente['telefone2']; ?>">
+                        </div>
+
+                        <div class="col-lg-6 mt-3">
+                          <label for="email">Email</label>
+                          <input type="email" name="email" id="email" class="form-control" maxlength="100" value="<?php echo $cliente['email']; ?>">
+                        </div>
+                      </div>
+                    </fieldset>
+
+                    <fieldset class="form-group col-lg-12 mt-3">
+                      <h3>Dados do endereço</h3>
+                      <div class="row">
+                        <div class="col-lg-2 col-md-3 mt-3">
+                          <label for="cep">CEP</label>
+                          <input type="text" name="cep" id="cep" class="form-control" maxlength="10" data-mask="00000-000" value="<?php echo $cliente['cep']; ?>">
+                        </div>
+
+                        <div class="col-lg-4 col-md-7 mt-3">
+                          <label for="endereco"><strong class="text-danger">*</strong> Endereço</label>
+                          <input type="text" name="endereco" id="endereco" class="form-control" maxlength="60" required value="<?php echo $cliente['endereco']; ?>">
+                        </div>
+
+                        <div class="col-lg-2 col-md-2 mt-3">
+                          <label for="numero-endereco"><strong class="text-danger">*</strong> Número</label>
+                          <input type="number" name="numero-endereco" id="numero-endereco" class="form-control" min="1" max="99999" required value="<?php echo $cliente['numero']; ?>">
+                        </div>
+
+                        <div class="col-lg-4 col-md-6 mt-3">
+                          <label for="bairro"><strong class="text-danger">*</strong> Bairro</label>
+                          <input type="text" name="bairro" id="bairro" class="form-control" maxlength="32" required value="<?php echo $cliente['bairro']; ?>">
+                        </div>
+
+                        <div class="col-lg-5 col-md-6 mt-3">
+                          <label for="cidade"><strong class="text-danger">*</strong> Cidade</label>
+                          <input type="text" name="cidade" id="cidade" class="form-control" maxlength="50" required value="<?php echo $cliente['cidade']; ?>">
+                        </div>
+
+                        <div class="col-lg-2 col-md-6 mt-3">
+                          <label for="estado"><strong class="text-danger">*</strong> Estado</label>
+                          <select name="estado" id="estado" class="form-control" required>
+                            <?php 
+                              $estados = ["AC","AL","AP","AM","BA","CE","DF","ES","GO","MA","MT","MS","MG","PA","PB","PR","PE","PI","RJ","RN","RS","RO","RR","SC","SP","SE","TO"];
+                              foreach ($estados as $uf) {
+                                $selected = ($cliente['estado'] == $uf) ? 'selected' : '';
+                                echo "<option value='$uf' $selected>$uf</option>";
+                              }
+                            ?>
+                          </select>
+                        </div>
+
+                        <div class="col-lg-5 col-md-6 mt-3">
+                          <label for="complemento">Complemento</label>
+                          <input type="text" name="complemento" id="complemento" class="form-control" maxlength="200" value="<?php echo $cliente['complemento']; ?>">
+                        </div>
+                      </div>
+                    </fieldset>
+
+                    <input type="hidden" name="atualizar" value="atualizar_cliente">
+                    <input type="submit" value="Atualizar" class="btn btn-primary mt-3">
+                  </div>
+                </form>
+              </div>
+            </div>
+          <?php } else {
+            echo '<div class="alert alert-danger m-3" role="alert">Cliente não encontrado!</div>';
+          } ?>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- BOOTSTRAP JS -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+  
+  <!-- JS MASK -->
+  <script src="../../assets/js/jquery.mask.js"></script>
+  <script src="../../assets/js/mascaras.js"></script>
+  
+</body>
+
+</html>

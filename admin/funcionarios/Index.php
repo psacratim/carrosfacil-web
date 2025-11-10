@@ -171,7 +171,7 @@
                         </a>
 
                         <form action="acoes.php" method="post" class="d-inline">
-                          <button type="submit" class="btn btn-outline-danger btn-sm" title="Excluir" name="deletar_funcionario" value="<?php echo $funcionario['id'] ?>">
+                          <button type="submit" class="btn btn-outline-danger btn-sm" title="Excluir" name="excluir_funcionario" value="<?php echo $funcionario['id'] ?>" onclick="return confirm('Tem certeza que deseja excluir?')">
                             <i class="bi bi-trash3"></i>
                           </button>
                         </form>
