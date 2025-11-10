@@ -124,7 +124,6 @@
                   <thead>
                     <tr>
                       <th scope="col">#</th>
-                      <th scope="col">Foto</th>
                       <th scope="col">Nome</th>
                       <th scope="col">Cargo</th>
                       <th scope="col">CPF</th>
@@ -132,7 +131,6 @@
                       <th scope="col">Sexo</th>
                       <th scope="col">Data Nascimento</th>
                       <th scope="col">Tipo Acesso</th>
-                      <th scope="col">Telefone Recado</th>
                       <th scope="col">Data Cadastro</th>
                       <th scope="col">Status</th>
                       <th scope="col">Ações</th>
@@ -144,9 +142,6 @@
                       ?>
                     <tr>
                       <td><?php echo $funcionario['id'] ?></td>
-                      <td >
-                          <?php echo '<img class="icone-tabela" src="../../images/'. $funcionario['foto'] .'" alt="">' ?>
-                      </td>
                       <td><?php echo $funcionario['nome_funcionario'] ?></td>
                       <td><?php echo $funcionario['nome_cargo'] ?></td>
                       <td><?php echo $funcionario['cpf'] ?></td>
@@ -160,7 +155,6 @@
                           echo '<span class="badge badge-pill badge-danger">Administrador</span>';
                         }
                       ?></td>
-                      <td><?php echo $funcionario['telefone_recado'] ?></td>
                       <td><?php echo date('d/m/Y', strtotime($funcionario['data_cadastro'])) ?></td>
                       <td>
                         <?php 
@@ -175,9 +169,12 @@
                         <a href="editar.php?id=<?php echo $funcionario['id'] ?>" class="btn btn-outline-success btn-sm" title="Editar">
                           <i class="bi bi-pencil-square"></i>
                         </a>
-                        <a href="deletar.php?id=<?php echo $funcionario['id'] ?>" class="btn btn-outline-danger btn-sm" title="Excluir">
-                          <i class="bi bi-trash3"></i>
-                        </a>
+
+                        <form action="acoes.php" method="post" class="d-inline">
+                          <button type="submit" class="btn btn-outline-danger btn-sm" title="Excluir" name="deletar_funcionario" value="<?php echo $funcionario['id'] ?>">
+                            <i class="bi bi-trash3"></i>
+                          </button>
+                        </form>
                       </td>
                     </tr>
                     <?php } ?>
