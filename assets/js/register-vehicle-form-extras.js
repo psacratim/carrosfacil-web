@@ -1,7 +1,6 @@
 $(document).ready(function() {
     var precoDescontoInput = $('#preco_desconto')
     var descontoInput = $('#desconto')
-    descontoInput[0].setCustomValidity('O preço com promoção não pode ser menor que o de custo.');
 
     function updateFinalPrice(){
         const vehicleCostRaw = $('#preco_custo').val(); // -> text
@@ -19,33 +18,37 @@ $(document).ready(function() {
         let sellPrice = vehicleCost * profitFactor
         let discountPrice = 0
 
-        const discount = parseInt(descontoInput.val().replace(/\D/g, '')) / 100;
+        const discount = parseInt(descontoInput.val()) / 100;
         if (discount > 0) {
-            discountPrice = sellPrice - (sellPrice * discount);
+            discountPrice = sellPrice - (sellPrice * discount)
         
+            const discountPriceF = discountPrice
+            .toFixed(2)              // 1234.56
+            .replace('.', ',')       // 1234,56
+            .replace(/\B(?=(\d{3})+(?!\d))/g, '.'); // 1.234,56
+            $('#preco_desconto').val(discountPriceF); // atualiza com máscara
+
             if (discountPrice < vehicleCost) {
+                descontoInput[0].setCustomValidity('O preço com promoção não pode ser menor que o de custo.');
                 descontoInput[0].reportValidity();
                 descontoInput.toggleClass('error-input', true);
                 precoDescontoInput.toggleClass('error-input', true);
                 return;
-            } else {
-                descontoInput.toggleClass('error-input', false);
-                precoDescontoInput.toggleClass('error-input', false);
             }
         }
+
+        // Reseta a mensagem
+        descontoInput[0].setCustomValidity('');
+        descontoInput.toggleClass('error-input', false);
+        precoDescontoInput.toggleClass('error-input', false);
         
         // Formata o resultado com 2 casas decimais e vírgula
         const sellPriceF = sellPrice
             .toFixed(2)              // 1234.56
             .replace('.', ',')       // 1234,56
             .replace(/\B(?=(\d{3})+(?!\d))/g, '.'); // 1.234,56
-        const discountPriceF = discountPrice
-            .toFixed(2)              // 1234.56
-            .replace('.', ',')       // 1234,56
-            .replace(/\B(?=(\d{3})+(?!\d))/g, '.'); // 1.234,56
 
         $('#preco_venda').val(sellPriceF); // atualiza com máscara
-        $('#preco_desconto').val(discountPriceF); // atualiza com máscara
     }
 
     $('#preco_custo').on('input', function(){
