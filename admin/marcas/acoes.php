@@ -45,5 +45,33 @@
     }
     header('Location: Index.php');
     
+    // EXCLUINDO MARCA
+    if (isset($_POST['excluir_marca'])) {
+        $id = $_POST['excluir_marca'];
+
+        try {
+            $sql = "DELETE FROM marca WHERE id = $id;";
+            if (mysqli_query($conexao, $sql)) {
+                $_SESSION['message_type'] = 'success';
+                $_SESSION['message_text'] = "Sucesso: A marca foi excluido com sucesso.";
+            } else {
+                throw new mysqli_sql_exception('Erro');
+            }
+        } catch (mysqli_sql_exception $e) {
+            if ($e->getCode() == 1451) {
+                $sql = "SELECT COUNT(id) AS total FROM modelo WHERE id_marca = $id";
+                $query = mysqli_query($conexao, $sql);
+                $total = mysqli_fetch_assoc($query)['total'];
+
+                $_SESSION['message_type'] = 'info';
+                $_SESSION['message_text'] = "Falhou: Não foi possível excluir essa marca. Existem $total modelos que dependem dele.";
+            } else {
+                $_SESSION['message_type'] = 'error';
+                $_SESSION['message_text'] = "Erro: Não foi possível excluir essa marca.";
+            }
+        }
+
+        header('Location: Index.php');
+    }
 ?>
 

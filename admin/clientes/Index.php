@@ -4,7 +4,7 @@
         session_start();
     }
 
-  require_once("../../conexao/conecta.php")
+  require_once("../../conexao/conecta.php");
 ?>
 
 <!doctype html>
@@ -76,18 +76,19 @@
                 <div class="row">
                   <!-- CAMPO DE BUSCA -->
                   <div class="col-4">
-                    <form action="">
+                    <form method="post">
                       <input type="search" name="pesquisa" id="pesquisa" class="form-control"  placeholder="Nome do cliente">
                     </form>
                   </div>
 
                   <div class="col-2">
-                    <form action="">
+                    <form method="post">
                       <select name="status" id="status" class="form-control">
                         <option value="">Status</option>
                         <option value="1">Ativo</option>
                         <option value="0">Inativo</option>
                       </select>
+                    </form>
                   </div>
                 </div>
               </div>

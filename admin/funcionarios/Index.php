@@ -77,44 +77,48 @@
                 <div class="row">
                   <!-- CAMPO DE BUSCA -->
                   <div class="col-4">
-                    <form action="">
+                    <form method="post">
                       <input type="search" name="pesquisa" id="pesquisa" class="form-control"  placeholder="Nome do funcionário">
                     </form>
                   </div>
 
                   <div class="col-2">
-                    <form action="">
+                    <form method="post">
                       <select name="status" id="status" class="form-control">
                         <option value="">Status</option>
                         <option value="1">Ativo</option>
                         <option value="0">Inativo</option>
                       </select>
+                    </form>
                   </div>
                   <div class="col-2">
-                    <form action="">
+                    <form method="post">
                       <select name="sexo" id="sexo" class="form-control">
                         <option value="T">Sexo</option>
                         <option value="N">Não Informado</option>
                         <option value="M">Masculino</option>
                         <option value="F">Feminino</option>
                       </select>
+                    </form>
                   </div>
                   <div class="col-2">
-                    <form action="">
+                    <form method="post">
                       <select name="tipo-acesso" id="tipo-acesso" class="form-control">
                         <option value="">Tipo de acesso</option>
                         <option value="administrador">Administrador</option>
                         <option value="normal">Normal</option>
                       </select>
+                    </form>
                   </div>
                   <div class="col-2">
-                    <form action="">
+                    <form method="post">
                       <select name="cargo" id="cargo" class="form-control">
                         <option value="">Cargo</option>
                         <option value="gerente">Gerente</option>
                         <option value="vendedor">Vendedor</option>
                         <option value="estoquista">Estoquista</option>
                       </select>
+                    </form>
                   </div>
                 </div>
               </div>

@@ -94,13 +94,13 @@
               <div class="card-body">
                 <div class="row">
                   <div class="col-4">
-                    <form action="">
+                    <form method="post">
                       <input type="search" name="pesquisa" id="pesquisa" class="form-control" placeholder="Nome da marca">
                     </form>
                   </div>
 
                   <div class="col-2">
-                    <form action="">
+                    <form method="post">
                       <select name="status" id="status" class="form-control">
                         <option value="">Status</option>
                         <option value="1">Ativo</option>
@@ -150,10 +150,11 @@
                             <i class="bi bi-pencil-square"></i>
                           </button>
 
-                          <a href="excluir.php?id_marca=<?php echo $marca['id']; ?>" 
-                             class="btn btn-outline-danger btn-sm" title="Excluir">
-                            <i class="bi bi-trash3"></i>
-                          </a>
+                          <form action="acoes.php" method="post" class="d-inline">
+                            <button type="submit" class="btn btn-outline-danger btn-sm" title="Excluir" name="excluir_marca" value="<?php echo $marca['id'] ?>" onclick="return confirm('Tem certeza que deseja excluir?')">
+                              <i class="bi bi-trash3"></i>
+                            </button>
+                          </form>
                         </td>
                       </tr>
                     <?php } ?>

@@ -88,6 +88,7 @@
                         <option value="1">Ativo</option>
                         <option value="0">Inativo</option>
                       </select>
+                    </form>
                   </div>
                 </div>
               </div>
@@ -134,9 +135,11 @@
                         <a href="edit.php?id=<?php echo $veiculo['id'] ?>" class="btn btn-outline-success btn-sm" title="Editar">
                           <i class="bi bi-pencil-square"></i>
                         </a>
-                        <a href="#" class="btn btn-outline-danger btn-sm" title="Excluir">
-                          <i class="bi bi-trash3"></i>
-                        </a>
+                        <form action="acoes.php" method="post" class="d-inline">
+                          <button type="submit" class="btn btn-outline-danger btn-sm" title="Excluir" name="excluir_veiculo" value="<?php echo $veiculo['id'] ?>" onclick="return confirm('Tem certeza que deseja excluir?')">
+                            <i class="bi bi-trash3"></i>
+                          </button>
+                        </form>
                       </td>
                     </tr>
                     <?php } ?>

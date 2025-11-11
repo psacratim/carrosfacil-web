@@ -162,5 +162,34 @@
         
         header('Location: Index.php');
     }
+
+    // EXCLUINDO CARGO
+    if (isset($_POST['excluir_funcionario'])) {
+        $id = $_POST['excluir_funcionario'];
+
+        try {
+            $sql = "DELETE FROM funcionario WHERE id = $id;";
+            if (mysqli_query($conexao, $sql)) {
+                $_SESSION['message_type'] = 'success';
+                $_SESSION['message_text'] = "Sucesso: O funcionario foi excluido com sucesso.";
+            } else {
+                throw new mysqli_sql_exception('Erro');
+            }
+        } catch (mysqli_sql_exception $e) {
+            if ($e->getCode() == 1451) {
+                $sql = "SELECT COUNT(id) AS total FROM venda WHERE id_funcionario = $id";
+                $query = mysqli_query($conexao, $sql);
+                $total = mysqli_fetch_assoc($query)['total'];
+
+                $_SESSION['message_type'] = 'info';
+                $_SESSION['message_text'] = "Falhou: Não foi possível excluir esse funcionario. Existem $total vendas que dependem dele.";
+            } else {
+                $_SESSION['message_type'] = 'error';
+                $_SESSION['message_text'] = "Erro: Não foi possível excluir esse funcionario.";
+            }
+        }
+
+        header('Location: Index.php');
+    }
 ?>
 

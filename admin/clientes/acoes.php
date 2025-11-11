@@ -127,7 +127,7 @@
         header('Location: Index.php');
     }
 
-        // EXCLUINDO CARGO
+    // EXCLUINDO CARGO
     if (isset($_POST['excluir_cliente'])) {
         $id = $_POST['excluir_cliente'];
 
@@ -153,7 +153,7 @@
             }
         }
 
-        // header('Location: Index.php');
+        header('Location: Index.php');
     }
 ?>
 
