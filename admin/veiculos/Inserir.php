@@ -263,6 +263,25 @@
                   </div>
                 </fieldset>
                 <hr>
+                
+                <fieldset class="form-fs row">
+                  <div class="title text-center">Foto Principal</div>
+                  <div class="col-md-12 mt-2 fs-container h-100">
+                    <div class="image-preview h-100 mx-auto d-flex flex-wrap justify-content-center align-content-center text-center">
+                      <div id="veiculo-foto-preview" class="image-preview-empty h-100">
+                        <i class="bi bi-card-image"></i>
+
+                        <h3 class="w-100">Adicionar foto do veículo</h3>
+                        <p class="w-100">Selecione uma imagem do veículo</p>
+                      </div>
+                      <img required id="foto-veiculo" style="display: none;" src="" alt="">
+                    </div>
+                    
+                    
+                    <input type="file" name="foto-veiculo-input" id="foto-veiculo-input" class="form-control mt-3 mx-auto w-50" accept="image/*" required>
+                  </div>
+                </fieldset>
+                <hr>
                 <fieldset class="form-fs row">
                   <div class="col-md-9 fs-container">
                     <input type="hidden" name="cadastrar" value="cadastrar_veiculo" class="btn btn-primary mt-3">
