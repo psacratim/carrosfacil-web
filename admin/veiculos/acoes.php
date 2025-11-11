@@ -66,13 +66,15 @@
         try {
             // Send to mysql.
             if (mysqli_query($conexao, $sql)) {
-                $_SESSION['mensagem'] = 'Veículo cadastrado com sucesso!';
+            $_SESSION['message_type'] = 'success';
+            $_SESSION['message_text'] = "Sucesso: Veículo cadastrado com sucesso.";
             } else {
                 throw new mysqli_sql_exception('Erro ao inserir no banco');
             }
 
         } catch (mysqli_sql_exception $e) {
-            $_SESSION['mensagem'] = 'Erro ao cadastrar o veículo!';
+            $_SESSION['message_type'] = 'error';
+            $_SESSION['message_text'] = "Erro: Não foi possível cadastrar esse veículo.";
         }
         
         header('Location: index.php');
@@ -137,13 +139,15 @@
         try {
             // Send to mysql.
             if (mysqli_query($conexao, $sql)) {
-                $_SESSION['mensagem'] = 'Veículo editado com sucesso!';
+            $_SESSION['message_type'] = 'success';
+            $_SESSION['message_text'] = "Sucesso: Veículo editado com sucesso!";
             } else {
                 throw new mysqli_sql_exception('Erro ao atualizar no banco');
             }
 
         } catch (mysqli_sql_exception $e) {
-            $_SESSION['mensagem'] = 'Erro ao atualizar o veículo!';
+            $_SESSION['message_type'] = 'error';
+            $_SESSION['message_text'] = "Erro: Não foi possível editar esse veículo.";
         }
 
         header('Location: index.php');

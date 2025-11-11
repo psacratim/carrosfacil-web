@@ -25,12 +25,14 @@
         try {
             // Send to mysql the query.
             if (mysqli_query($conexao, $sql)) {
-                $_SESSION['mensagem'] = 'Cargo cadastrado com sucesso!';
+                $_SESSION['message_type'] = 'success';
+                $_SESSION['message_text'] = 'Caracteristica cadastrada com sucesso!';
             } else {
                 throw new mysqli_sql_exception('Erro');
             }
         } catch (mysqli_sql_exception) {
-            $_SESSION['mensagem'] = 'Erro ao cadastrar o cargo!';
+            $_SESSION['message_type'] = 'error';
+            $_SESSION['message_text'] = "Erro: Não foi possível cadastrar essa caracteristica.";
         }
         
         header('Location: Index.php');
@@ -55,12 +57,14 @@
         try {
             // Send to mysql the query.
             if (mysqli_query($conexao, $sql)) {
-                $_SESSION['mensagem'] = 'Cargo cadastrado com sucesso!';
+                $_SESSION['message_type'] = 'success';
+                $_SESSION['message_text'] = 'Caracteristica editada com sucesso!';
             } else {
                 throw new mysqli_sql_exception('Erro');
             }
         } catch (mysqli_sql_exception) {
-            $_SESSION['mensagem'] = 'Erro ao cadastrar o cargo!';
+            $_SESSION['message_type'] = 'error';
+            $_SESSION['message_text'] = "Erro: Não foi possível editar essa caracteristica.";
         }
         
         header('Location: Index.php');

@@ -23,7 +23,7 @@
             }
         } catch (mysqli_sql_exception) {
             $_SESSION['message_type'] = 'error';
-            $_SESSION['message_text'] = "Erro: Não foi possível excluir esse cargo.";
+            $_SESSION['message_text'] = "Erro: Não foi possível cadastrar esse cargo.";
         }
         
         header('Location: Index.php');
@@ -47,7 +47,7 @@
             }
         } catch (mysqli_sql_exception) {
                 $_SESSION['message_type'] = 'error';
-                $_SESSION['message_text'] = "Erro: Não foi possível atualizar esse cargo.";
+                $_SESSION['message_text'] = "Erro: Não foi possível editar esse cargo.";
         }
         
         header('Location: Index.php');

@@ -16,12 +16,14 @@
             $sql = "INSERT INTO marca VALUES (0, '$nome', '$observacao', NOW(), 1);";
             
             if (mysqli_query($conexao, $sql)) {
-                $_SESSION['mensagem'] = 'Marca cadastrada com sucesso!';
+                $_SESSION['message_type'] = 'success';
+                $_SESSION['message_text'] = "Sucesso: Marca cadastrada com sucesso!";
             } else {
                 throw new mysqli_sql_exception('Erro');
             }
         } catch (mysqli_sql_exception) {
-            $_SESSION['mensagem'] = 'Erro ao cadastrar a marca!';
+            $_SESSION['message_type'] = 'error';
+            $_SESSION['message_text'] = "Erro: Não foi possível cadastrar essa marca.";
         }
     }
 
@@ -35,12 +37,14 @@
             $sql = "UPDATE marca SET nome = '$nome', observacao = '$observacao', status = $status WHERE id = $id;";
 
             if (mysqli_query($conexao, $sql)) {
-                $_SESSION['mensagem'] = 'Marca atualizada com sucesso!';
+                $_SESSION['message_type'] = 'success';
+                $_SESSION['message_text'] = "Sucesso: Marca editada com sucesso!";
             } else {
                 throw new mysqli_sql_exception('Erro');
             }
         } catch (mysqli_sql_exception) {
-            $_SESSION['mensagem'] = 'Erro ao atualizar a marca!';
+            $_SESSION['message_type'] = 'error';
+            $_SESSION['message_text'] = "Erro: Não foi possível editar essa marca.";
         }
     }
     header('Location: Index.php');

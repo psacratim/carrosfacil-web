@@ -43,13 +43,13 @@
 
             if (mysqli_query($conexao, $sql)) {
                 $_SESSION['message_type'] = 'success';
-                $_SESSION['message_text'] = 'Sucesso: Modelo atualizado com sucesso!';
+                $_SESSION['message_text'] = 'Sucesso: Modelo editado com sucesso!';
             } else {
                 throw new mysqli_sql_exception('Erro');
             }
         } catch (mysqli_sql_exception) {
             $_SESSION['message_type'] = 'error';
-            $_SESSION['message_text'] = "Erro: Não foi possível atualizar esse modelo.";
+            $_SESSION['message_text'] = "Erro: Não foi possível editar esse modelo.";
         }
 
         header('Location: Index.php');

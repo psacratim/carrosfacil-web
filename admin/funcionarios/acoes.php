@@ -73,12 +73,14 @@
             );";
 
             if (mysqli_query($conexao, $sql)) {
-                $_SESSION['mensagem'] = 'Funcionario cadastrado com sucesso!';
+                $_SESSION['message_type'] = 'success';
+                $_SESSION['message_text'] = "Sucesso: Funcionario cadastrado com sucesso!";
             } else {
                 throw new mysqli_sql_exception('Erro');
             }
         } catch (mysqli_sql_exception $ex) {
-            $_SESSION['mensagem'] = 'Erro ao cadastrar o funcionário!';
+            $_SESSION['message_type'] = 'error';
+            $_SESSION['message_text'] = "Erro: Não foi possível cadastrar esse funcionáro.";
         }
         
         header('Location: Index.php');
@@ -152,12 +154,14 @@
    
         try {
             if (mysqli_query($conexao, $sql)) {
-                $_SESSION['mensagem'] = 'Funcionario atualizar com sucesso!';
+                $_SESSION['message_type'] = 'success';
+                $_SESSION['message_text'] = 'Sucesso: Funcionario editado com sucesso!';
             } else {
                 throw new mysqli_sql_exception('Erro');
             }
         } catch (mysqli_sql_exception $ex) {
-            $_SESSION['mensagem'] = 'Erro ao atualizar o funcionário!';
+            $_SESSION['message_type'] = 'error';
+            $_SESSION['message_text'] = "Erro: Não foi possível editar esse funcionáro.";
         }
         
         header('Location: Index.php');

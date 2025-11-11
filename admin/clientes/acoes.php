@@ -55,13 +55,13 @@
         try {       
             if (mysqli_query($conexao, $sql)) {
                 $_SESSION['message_type'] = 'error';
-                $_SESSION['message_text'] = 'Cliente cadastrado com sucesso!';
+                $_SESSION['message_text'] = "Sucesso: Cargo cadastrado com sucesso.";
             } else {
                 throw new mysqli_sql_exception('Erro');
             }
         } catch (mysqli_sql_exception) {
             $_SESSION['message_type'] = 'error';
-            $_SESSION['message_text'] = "Erro: Não foi possível excluir esse cargo.";
+            $_SESSION['message_text'] = "Erro: Não foi possível cadastrar esse cargo.";
         }
         
         header('Location: Index.php');
@@ -115,13 +115,13 @@
         try {       
             if (mysqli_query($conexao, $sql)) {
                 $_SESSION['message_type'] = 'error';
-                $_SESSION['message_text'] = 'Sucesso: Cliente atualizado com sucesso!';
+                $_SESSION['message_text'] = 'Sucesso: Cliente editado com sucesso!';
             } else {
                 throw new mysqli_sql_exception('Erro');
             }
         } catch (mysqli_sql_exception) {
             $_SESSION['message_type'] = 'error';
-            $_SESSION['message_text'] = "Erro: Não foi possível excluir esse cargo.";
+            $_SESSION['message_text'] = "Erro: Não foi possível editar esse cargo.";
         }
         
         header('Location: Index.php');
