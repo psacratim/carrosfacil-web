@@ -114,7 +114,7 @@
 
         try {       
             if (mysqli_query($conexao, $sql)) {
-                $_SESSION['message_type'] = 'error';
+                $_SESSION['message_type'] = 'success';
                 $_SESSION['message_text'] = 'Sucesso: Cliente editado com sucesso!';
             } else {
                 throw new mysqli_sql_exception('Erro');

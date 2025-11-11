@@ -70,7 +70,7 @@
 
                         <div class="col-12 mb-3">
                           <label for="description"><strong class="text-danger">*</strong> Descrição:</label>
-                          <input type="text" name="description" id="description" class="form-control" maxlength="60" required>
+                          <input type="text" name="description" id="description" class="form-control" maxlength="250" required>
                         </div>
                       </div>
 

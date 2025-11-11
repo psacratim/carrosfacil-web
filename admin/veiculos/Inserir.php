@@ -58,11 +58,16 @@
 
         <div class="container mt-5">
           <div class="card">
+            
             <div class="card-header d-flex justify-content-between">
               <h4 class="m-0">Novo Veiculo</h4>
 
               <a href="Index.php" class="btn btn-primary btn-sm"><i class="bi bi-arrow-left-short"></i> Voltar</a>
             </div>
+
+            <button type="button" id="preencher-veiculo" class="btn btn-warning mt-2">
+              Preencher com dados aleatórios
+            </button>
 
             <div class="card-body">
               <form action="acoes.php" method="post" enctype="multipart/form-data">
@@ -286,7 +291,91 @@
   <script src="../../assets/js/jquery.mask.js"></script>
   <script src="../../assets/js/mascaras.js"></script>
   <script src="../../assets/js/register-vehicle-form-extras.js"></script>
-  
+                      
+  <!-- DELETAR DEPOIS ESSE CÓDIGO ABAIXO (TODO) -->
+   <script>
+    $('#preencher-veiculo').on('click', function() {
+
+      function rand(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+      }
+
+      const categorias = [
+        "Hatchback", "Sedan", "SUV", "Crossover", "Compacto",
+        "Esportivo", "Pickup", "Off-Road / 4x4"
+      ];
+
+      const cores = [
+        "Branco","Preto","Prata","Cinza","Vermelho","Azul","Verde","Amarelo","Marrom"
+      ];
+
+      const combustiveis = [
+        "Gasolina","Etanol","Flex","Diesel","Elétrico","GNV (Gás Natural Veicular)"
+      ];
+
+      const cambios = [
+        "Manual","Automático Tradicional","CVT","Automatizado (Monoembreagem)","DCT (Automático de Dupla Embreagem)"
+      ];
+
+      // Modelo → Seleciona qualquer um que exista
+      $('#modelo').prop('selectedIndex', rand(1, $('#modelo option').length-1));
+
+      // Categoria
+      $('#categoria').val(categorias[rand(0, categorias.length-1)]);
+
+      // Cor
+      $('#cor').val(cores[rand(0, cores.length-1)]);
+
+      // Estado do veículo
+      $('#estado').val(['Novo','Semi-novo','Usado'][rand(0,2)]);
+
+      // Ano
+      $('#ano').val(rand(2005, 2024));
+
+      // Final da placa
+      $('#final_placa').val(rand(0,9));
+
+      // Estoque
+      $('#estoque').val(rand(1,15));
+
+      // Km rodado
+      $('#quilometragem').val(rand(0, 180000));
+
+      // Tempo de uso (dias)
+      $('#tempo_usado').val(rand(1, 2000));
+
+      // Tipo combustivel
+      $('#tipo_combustivel').val(combustiveis[rand(0, combustiveis.length-1)]);
+
+      // Tipo de câmbio
+      $('#tipo_cambio').val(cambios[rand(0, cambios.length-1)]);
+
+      // Valores:
+      // preço custo: 15.000 a 250.000 (rand bruto)
+      let precoCusto = rand(15000, 250000);
+      let lucro = rand(5, 35); // %
+      let precoVenda = precoCusto + (precoCusto * (lucro / 100));
+
+      // opcional desconto
+      let desconto = rand(0, 10); // %
+      let precoComDesconto = precoVenda - (precoVenda * (desconto / 100));
+
+      $('#preco_custo').val(precoCusto.toFixed(2));
+      $('#lucro_esperado').val(lucro);
+      $('#desconto').val(desconto);
+      $('#preco_venda').val(precoVenda.toFixed(2));
+      $('#preco_desconto').val(precoComDesconto.toFixed(2));
+
+      // Descrição
+      $('#descricao').val(
+        "Veículo em excelente estado. Revisões em dia. " +
+        "Sem detalhes relevantes. Ótimo custo-benefício."
+      );
+
+      console.log("✅ Formulário de veículo preenchido automaticamente.");
+    });
+    </script>
+
 </body>
 
 </html>

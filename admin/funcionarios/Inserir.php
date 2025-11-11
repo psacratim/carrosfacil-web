@@ -62,6 +62,10 @@
 
               <a href="Index.php" class="btn btn-primary btn-sm"><i class="bi bi-arrow-left-short"></i> Voltar</a>
             </div>
+            <button type="button" id="preencher-aleatorio" class="btn btn-warning mt-2">
+              Preencher com dados aleatórios
+            </button>
+
 
             <div class="card-body">
               <!-- Se o formulario envia arquivos ao banco (foto) o enctype='multipart/form-data' é necessário! Caso contrário ele não receberá os arquivos. -->
@@ -288,6 +292,80 @@
   <!-- JS MASK -->
   <script src="../../assets/js/jquery.mask.js"></script>
   <script src="../../assets/js/mascaras.js"></script>
+
+  <!-- APENAS TESTE, DEVE SER DELETADO (TODO) -->
+   <script>
+    document.getElementById('preencher-aleatorio').addEventListener('click', function() {
+
+      function rand(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+      }
+
+      function randomCPF() {
+        return rand(100,999)+'.'+rand(100,999)+'.'+rand(100,999)+'-'+rand(10,99);
+      }
+
+      function randomRG() {
+        return rand(10,99)+'.'+rand(100,999)+'.'+rand(100,999)+'-'+String.fromCharCode(rand(65,90));
+      }
+
+      const nomes = ["Carlos", "Ana", "Mariana", "Rafael", "José", "Luiza", "Paula", "Fernando", "Julia", "Bruno"];
+      const sobrenomes = ["Silva", "Souza", "Oliveira", "Costa", "Santos", "Ferreira", "Mendes", "Gomes", "Barbosa", "Castro"];
+
+      function randomNome() {
+        return nomes[rand(0, nomes.length-1)] + " " + sobrenomes[rand(0, sobrenomes.length-1)];
+      }
+
+      function randomUsuario(nome) {
+        return nome.toLowerCase().replace(/\s/g,'') + rand(100,999);
+      }
+
+      function randomEmail(nome) {
+        return nome.toLowerCase().replace(/\s/g,'') + "@teste.com";
+      }
+
+      function randomTelefone() {
+        return '('+rand(10,99)+') '+rand(90000,99999)+'-'+rand(1000,9999);
+      }
+
+      function randomDate() {
+        let ano = rand(1980, 2004);
+        let mes = String(rand(1,12)).padStart(2,'0');
+        let dia = String(rand(1,28)).padStart(2,'0');
+        return `${ano}-${mes}-${dia}`;
+      }
+
+      // Preenchendo os campos
+      let nome = randomNome();
+      $('#nome').val(nome);
+      $('#nome-social').val(nome + " Social");
+      $('#cpf').val(randomCPF());
+      $('#rg').val(randomRG());
+      $('#sexo').val(['M','F'][rand(0,1)]);
+      $('#estado-civil').val(['Solteiro(a)','Casado(a)'][rand(0,1)]);
+      $('#data-nascimento').val(randomDate());
+      $('#cargo').prop('selectedIndex', rand(1, $('#cargo option').length-1));
+      $('#salario').val(rand(1800,7000));
+      $('#usuario').val(randomUsuario(nome));
+      $('#senha').val('123456');
+      $('#tipo-acesso').val([0,1][rand(0,1)]);
+
+      $('#telefone-recado').val(randomTelefone());
+      $('#telefone-celular').val(randomTelefone());
+      $('#telefone-residencial').val(randomTelefone());
+      $('#email').val(randomEmail(nome));
+
+      $('#cep').val(rand(10000,99999)+'-'+rand(100,999));
+      $('#endereco').val('Rua ' + sobrenomes[rand(0, sobrenomes.length-1)]);
+      $('#numero-endereco').val(rand(1,9999));
+      $('#bairro').val('Centro');
+      $('#cidade').val('São Paulo');
+      $('#estado').val('SP');
+      $('#complemento').val('');
+
+    });
+    </script>
+
 </body>
 
 </html>

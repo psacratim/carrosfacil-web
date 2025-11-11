@@ -57,7 +57,7 @@
             $sql = "DELETE FROM marca WHERE id = $id;";
             if (mysqli_query($conexao, $sql)) {
                 $_SESSION['message_type'] = 'success';
-                $_SESSION['message_text'] = "Sucesso: A marca foi excluido com sucesso.";
+                $_SESSION['message_text'] = "Sucesso: A marca foi excluida com sucesso.";
             } else {
                 throw new mysqli_sql_exception('Erro');
             }

@@ -63,6 +63,10 @@
               <a href="Index.php" class="btn btn-primary btn-sm"><i class="bi bi-arrow-left-short"></i> Voltar</a>
             </div>
 
+            <button type="button" id="preencher-cliente" class="btn btn-warning mt-2">
+              Preencher com dados aleatórios (4Devs)
+            </button>
+
             <div class="card-body">
               <form action="acoes.php" method="post">
                 <div class="form-row">
@@ -245,6 +249,75 @@
   <script src="../../assets/js/jquery.mask.js"></script>
   <script src="../../assets/js/mascaras.js"></script>
   
+  <!-- DELETAR DEPOIS (TODO) -->
+   <script>
+    $('#preencher-cliente').on('click', function() {
+
+      function rand(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+      }
+
+      // ---------- GERAÇÕES SIMPLES ----------
+      const nomes = ["Carlos","Ana","Mariana","Rafael","José","Luiza","Paula","Fernando","Julia","Bruno","Letícia","Pedro","Larissa","Hugo","Camila"];
+      const sobrenomes = ["Silva","Souza","Oliveira","Costa","Santos","Ferreira","Mendes","Gomes","Barbosa","Castro","Moraes","Cardoso"];
+      
+      function nomeCompleto() {
+        return nomes[rand(0,nomes.length-1)] + ' ' + sobrenomes[rand(0,sobrenomes.length-1)];
+      }
+
+      function cpfAleatorio() {
+        return `${rand(100,999)}.${rand(100,999)}.${rand(100,999)}-${rand(10,99)}`;
+      }
+
+      function rgAleatorio() {
+        return `${rand(10,99)}.${rand(100,999)}.${rand(100,999)}-${String.fromCharCode(rand(65,90))}`;
+      }
+
+      function telefone() {
+        return `(${rand(10,99)}) ${rand(90000,99999)}-${rand(1000,9999)}`;
+      }
+
+      function emailDe(nome) {
+        return nome.toLowerCase().replace(/\s/g,'') + rand(100,999) + "@teste.com";
+      }
+
+      function dataNascimento() {
+        let ano = rand(1975, 2005);
+        let mes = String(rand(1,12)).padStart(2,'0');
+        let dia = String(rand(1,28)).padStart(2,'0');
+        return `${ano}-${mes}-${dia}`;
+      }
+
+      const estados = ["SP","RJ","MG","BA","PR","PE","CE","RS","SC","GO"];
+
+      // ---------- PREENCHIMENTO ----------
+      let nome = nomeCompleto();
+      $('#nome-completo').val(nome);
+      $('#cpf').val(cpfAleatorio());
+      $('#rg').val(rgAleatorio());
+      $('#sexo').val(['M','F','N'][rand(0,2)]);
+      $('#estado-civil').val(['Solteiro(a)','Casado(a)','Divorciado(a)','Separado(a)'][rand(0,3)]);
+      $('#data-nascimento').val(dataNascimento());
+
+      $('#usuario').val(nome.toLowerCase().replace(/\s/g,'') + rand(10,99));
+      $('#senha').val('123456');
+
+      $('#telefone-1').val(telefone());
+      $('#telefone-2').val(telefone());
+      $('#email').val(emailDe(nome));
+
+      $('#cep').val(`${rand(10000,99999)}-${rand(100,999)}`);
+      $('#endereco').val("Rua " + sobrenomes[rand(0, sobrenomes.length-1)]);
+      $('#numero-endereco').val(rand(1, 9999));
+      $('#bairro').val("Centro");
+      $('#cidade').val("São Paulo");
+      $('#estado').val(estados[rand(0, estados.length-1)]);
+      $('#complemento').val("");
+
+      console.log("✅ Formulário de cliente preenchido automaticamente.");
+    });
+    </script>
+
 </body>
 
 </html>

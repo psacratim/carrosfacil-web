@@ -66,8 +66,8 @@
                         <input type="text" name="nome" id="nome" class="form-control" maxlength="80" required>
                       </div>
                       <div class="form-group">
-                        <label for="observacao"><strong class="text-danger">*</strong> Observação:</label>
-                        <textarea name="observacao" id="observacao" class="form-control" maxlength="250" required></textarea>
+                        <label for="observacao">Observação:</label>
+                        <textarea name="observacao" id="observacao" class="form-control" maxlength="250"></textarea>
                       </div>
                       <div class="form-group">
                         <label for="status"><strong class="text-danger">*</strong> Status:</label>
@@ -128,7 +128,7 @@
                       <tr>
                         <td><?php echo $marca['id']; ?></td>
                         <td><?php echo htmlspecialchars($marca['nome']); ?></td>
-                        <td><?php echo htmlspecialchars($marca['observacao']); ?></td>
+                        <td><?php echo ($marca['observacao'] == "" ? "Nenhuma observação" : $marca['observacao']) ?></td>
                         <td><?php echo date('d/m/Y', strtotime($marca['data_cadastro'])); ?></td>
                         <td>
                           <?php 
@@ -190,8 +190,8 @@
               <input type="text" name="nome" id="edit_nome" class="form-control" maxlength="80" required>
             </div>
             <div class="form-group">
-              <label for="edit_observacao"><strong class="text-danger">*</strong> Observação:</label>
-              <textarea name="observacao" id="edit_observacao" class="form-control" maxlength="250" required></textarea>
+              <label for="edit_observacao">Observação:</label>
+              <textarea name="observacao" id="edit_observacao" class="form-control" maxlength="250"></textarea>
             </div>
             <div class="form-group">
               <label for="edit_status"><strong class="text-danger">*</strong> Status:</label>

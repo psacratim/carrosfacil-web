@@ -41,18 +41,21 @@
     // EDITANDO CARGO
     if (isset($_POST['atualizar']) && $_POST['atualizar'] == "atualizar_caracteristicas") {
         // Get input data send by user.
+        $id = $_POST['id'];
         $name = mysqli_real_escape_string($conexao, $_POST['nome']);
-        $description = mysqli_real_escape_string($conexao, $_POST['description']);
+        $description = mysqli_real_escape_string($conexao, $_POST['descricao']);
         $status = $_POST['status'];
         
         // Save feature icon in server.
-        $iconName = basename($_FILES['icone-acessorio']['name']); // Get icon path send by client.
-        $iconTmp = $_FILES['icone-acessorio']['tmp_name']; // Get photo path in the temp file.
+        $iconName = basename($_FILES['edit_icone']['name']); // Get icon path send by client.
+        $iconTmp = $_FILES['edit_icone']['tmp_name']; // Get photo path in the temp file.
         $icon = '../../images/' . $iconName;
         move_uploaded_file($iconTmp, $icon);
 
+        $iconQuery = $iconName != null ? ", icone = '$iconName'" : '';
+
         // Create sql query string.
-        $sql = "UPDATE caracteristica SET nome = '$name', descricao = '$description', icone = '$iconName', NOW(), 1) WHERE id=$id";
+        $sql = "UPDATE caracteristica SET nome = '$name', descricao = '$description', status = $status $iconQuery WHERE id = $id";
         
         try {
             // Send to mysql the query.

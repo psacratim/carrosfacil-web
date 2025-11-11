@@ -196,13 +196,33 @@
                         <div class="col-lg-2 col-md-6 mt-3">
                           <label for="estado"><strong class="text-danger">*</strong> Estado</label>
                           <select name="estado" id="estado" class="form-control" required>
-                            <?php 
-                              $estados = ["AC","AL","AP","AM","BA","CE","DF","ES","GO","MA","MT","MS","MG","PA","PB","PR","PE","PI","RJ","RN","RS","RO","RR","SC","SP","SE","TO"];
-                              foreach ($estados as $uf) {
-                                $selected = ($cliente['estado'] == $uf) ? 'selected' : '';
-                                echo "<option value='$uf' $selected>$uf</option>";
-                              }
-                            ?>
+                            <option value="AC" <?php if ($cliente['estado'] == 'AC') { echo 'selected'; } ?> >Acre</option>
+                            <option value="AL" <?php if ($cliente['estado'] == 'AL') { echo 'selected'; } ?> >Alagoas</option>
+                            <option value="AP" <?php if ($cliente['estado'] == 'AP') { echo 'selected'; } ?> >Amapá</option>
+                            <option value="AM" <?php if ($cliente['estado'] == 'AM') { echo 'selected'; } ?> >Amazonas</option>
+                            <option value="BA" <?php if ($cliente['estado'] == 'BA') { echo 'selected'; } ?> >Bahia</option>
+                            <option value="CE" <?php if ($cliente['estado'] == 'CE') { echo 'selected'; } ?> >Ceará</option>
+                            <option value="DF" <?php if ($cliente['estado'] == 'DF') { echo 'selected'; } ?> >Distrito Federal</option>
+                            <option value="ES" <?php if ($cliente['estado'] == 'ES') { echo 'selected'; } ?> >Espírito Santo</option>
+                            <option value="GO" <?php if ($cliente['estado'] == 'GO') { echo 'selected'; } ?> >Goiás</option>
+                            <option value="MA" <?php if ($cliente['estado'] == 'MA') { echo 'selected'; } ?> >Maranhão</option>
+                            <option value="MT" <?php if ($cliente['estado'] == 'MT') { echo 'selected'; } ?> >Mato Grosso</option>
+                            <option value="MS" <?php if ($cliente['estado'] == 'MS') { echo 'selected'; } ?> >Mato Grosso do Sul</option>
+                            <option value="MG" <?php if ($cliente['estado'] == 'MG') { echo 'selected'; } ?> >Minas Gerais</option>
+                            <option value="PA" <?php if ($cliente['estado'] == 'PA') { echo 'selected'; } ?> >Pará</option>
+                            <option value="PB" <?php if ($cliente['estado'] == 'PB') { echo 'selected'; } ?> >Paraíba</option>
+                            <option value="PR" <?php if ($cliente['estado'] == 'PR') { echo 'selected'; } ?> >Paraná</option>
+                            <option value="PE" <?php if ($cliente['estado'] == 'PE') { echo 'selected'; } ?> >Pernambuco</option>
+                            <option value="PI" <?php if ($cliente['estado'] == 'PI') { echo 'selected'; } ?> >Piauí</option>
+                            <option value="RJ" <?php if ($cliente['estado'] == 'RJ') { echo 'selected'; } ?> >Rio de Janeiro</option>
+                            <option value="RN" <?php if ($cliente['estado'] == 'RN') { echo 'selected'; } ?> >Rio Grande do Norte</option>
+                            <option value="RS" <?php if ($cliente['estado'] == 'RS') { echo 'selected'; } ?> >Rio Grande do Sul</option>
+                            <option value="RO" <?php if ($cliente['estado'] == 'RO') { echo 'selected'; } ?> >Rondônia</option>
+                            <option value="RR" <?php if ($cliente['estado'] == 'RR') { echo 'selected'; } ?> >Roraima</option>
+                            <option value="SC" <?php if ($cliente['estado'] == 'SC') { echo 'selected'; } ?> >Santa Catarina</option>
+                            <option value="SP" <?php if ($cliente['estado'] == 'SP') { echo 'selected'; } ?> >São Paulo</option>
+                            <option value="SE" <?php if ($cliente['estado'] == 'SE') { echo 'selected'; } ?> >Sergipe</option>
+                            <option value="TO" <?php if ($cliente['estado'] == 'TO') { echo 'selected'; } ?> >Tocantins</option>
                           </select>
                         </div>
 

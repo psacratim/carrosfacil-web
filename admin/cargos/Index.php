@@ -106,6 +106,7 @@
                   <tr>
                     <th>#</th>
                     <th>Nome</th>
+                    <th>Observação</th>
                     <th>Data Cadastro</th>
                     <th>Status</th>
                     <th>Ações</th>
@@ -116,6 +117,7 @@
                     <tr>
                       <td><?php echo $cargo['id'] ?></td>
                       <td><?php echo htmlspecialchars($cargo['nome']); ?></td>
+                      <td><?php echo ($cargo['observacao'] == "" ? "Nenhuma observação" : $cargo['observacao']) ?></td>
                       <td><?php echo date('d/m/Y', strtotime($cargo['data_cadastro'])) ?></td>
                       <td>
                         <?php 
