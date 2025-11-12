@@ -261,7 +261,7 @@
                           <h3 class="w-100">Adicionar foto do veículo</h3>
                           <p class="w-100">Selecione uma imagem do veículo</p>
                         </div>
-                        <img required id="foto-veiculo" style="display: none;" <?php echo 'src="../../images/'. $veiculo['foto'] .'"' ?> alt="">
+                        <img required class="img-fluid" id="foto-veiculo" style="display: none;" <?php echo 'src="../../images/'. $veiculo['foto'] .'"' ?> alt="">
                       </div>
                       
                       

@@ -13,49 +13,49 @@
       </li>
 
       <li class="nav-item">
-        <a class="nav-link" href="/admin/cargos/index.php">
+        <a class="nav-link" href="../cargos/index.php">
           <i class="bi bi-person-fill-gear"></i>
           Cargos
         </a>
       </li>
 
       <li class="nav-item">
-        <a class="nav-link" href="/admin/funcionarios/index.php">
+        <a class="nav-link" href="../funcionarios/index.php">
           <i class="bi bi-person-vcard-fill"></i>
           Funcionários
         </a>
       </li>
       
       <li class="nav-item">
-        <a class="nav-link" href="/admin/caracteristicas/index.php">
+        <a class="nav-link" href="../caracteristicas/index.php">
           <i class="bi bi-stack"></i>
           Caracteristicas
         </a>
       </li>
       
       <li class="nav-item">
-        <a class="nav-link" href="/admin/modelos/index.php">
+        <a class="nav-link" href="../modelos/index.php">
           <i class="bi bi-stack"></i>
           Modelos
         </a>
       </li>
 
       <li class="nav-item">
-        <a class="nav-link" href="/admin/marcas/index.php">
+        <a class="nav-link" href="../marcas/index.php">
           <i class="bi bi-bag-fill"></i>
           Marcas
         </a>
       </li>
       
       <li class="nav-item">
-        <a class="nav-link" href="/admin/veiculos/index.php">
+        <a class="nav-link" href="../veiculos/index.php">
           <i class="bi bi-archive-fill"></i>
           Veículos
         </a>
       </li>
 
       <li class="nav-item">
-        <a class="nav-link" href="/admin/clientes/index.php">
+        <a class="nav-link" href="../clientes/index.php">
           <i class="bi bi-people-fill"></i>
           Clientes
         </a>

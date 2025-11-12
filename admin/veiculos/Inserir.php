@@ -1,10 +1,10 @@
-<?php 
-    // STARTING SESSION
-    if (!isset($_SESSION)){
-        session_start();
-    }
+<?php
+// STARTING SESSION
+if (!isset($_SESSION)) {
+  session_start();
+}
 
-  require_once("../../conexao/conecta.php")
+require_once("../../conexao/conecta.php")
 ?>
 
 <!doctype html>
@@ -32,6 +32,7 @@
 
   <!-- CSS -->
   <link rel="stylesheet" href="../../custom/css/style.css">
+  <link rel="stylesheet" href="../../custom/css/insert-vehicle.css">
 </head>
 
 <body>
@@ -52,13 +53,13 @@
 
       <main class="ml-auto col-lg-10 px-md-4">
         <?php
-          include('../LoggedUser.php');
-          include('../Mensagem.php');
+        include('../LoggedUser.php');
+        include('../Mensagem.php');
         ?>
 
         <div class="container mt-5">
           <div class="card">
-            
+
             <div class="card-header d-flex justify-content-between">
               <h4 class="m-0">Novo Veiculo</h4>
 
@@ -77,55 +78,55 @@
                     <label for="modelo">Modelo <strong class="text-danger">*</strong></label>
                     <select name="modelo" id="modelo" class="form-select" required>
                       <option value="none" selected>- Nenhum Selecionado -</option>
-                      <?php 
-                        $sql = 'SELECT id, nome FROM modelo;';
-                        $query = mysqli_execute_query($conexao, $sql);
+                      <?php
+                      $sql = 'SELECT id, nome FROM modelo;';
+                      $query = mysqli_execute_query($conexao, $sql);
 
-                        foreach ($query as $modelo) {
-                          echo '<option value="'. $modelo['id'] .'">'. $modelo['nome'] .'</option>';
-                        }
+                      foreach ($query as $modelo) {
+                        echo '<option value="' . $modelo['id'] . '">' . $modelo['nome'] . '</option>';
+                      }
                       ?>
                     </select>
                   </div>
                   <div class="col-md-5 mt-2 fs-container ">
                     <label for="categoria">Categoria <strong class="text-danger">*</strong></label>
                     <select required name="categoria" id="categoria" class="form-select">
-                        <option value="none" selected>- Nenhum Selecionado -</option>
-                        <option value="Hatchback">Hatchback</option>
-                        <option value="Sedan">Sedan</option>
-                        <option value="SUV">SUV</option>
-                        <option value="Crossover">Crossover</option>
-                        <option value="Cupê">Cupê</option>
-                        <option value="Conversível">Conversível</option>
-                        <option value="Perua / Station Wagon">Perua / Station Wagon</option>
-                        <option value="Roadster">Roadster</option>
-                        <option value="Esportivo">Esportivo</option>
-                        <option value="Compacto">Compacto</option>
-                        <option value="Minivan">Minivan</option>
-                        <option value="Pickup">Pickup</option>
+                      <option value="none" selected>- Nenhum Selecionado -</option>
+                      <option value="Hatchback">Hatchback</option>
+                      <option value="Sedan">Sedan</option>
+                      <option value="SUV">SUV</option>
+                      <option value="Crossover">Crossover</option>
+                      <option value="Cupê">Cupê</option>
+                      <option value="Conversível">Conversível</option>
+                      <option value="Perua / Station Wagon">Perua / Station Wagon</option>
+                      <option value="Roadster">Roadster</option>
+                      <option value="Esportivo">Esportivo</option>
+                      <option value="Compacto">Compacto</option>
+                      <option value="Minivan">Minivan</option>
+                      <option value="Pickup">Pickup</option>
 
-                        <option value="Van">Van</option>
-                        <option value="Furgão">Furgão</option>
-                        <option value="Caminhonete">Caminhonete</option>
+                      <option value="Van">Van</option>
+                      <option value="Furgão">Furgão</option>
+                      <option value="Caminhonete">Caminhonete</option>
 
-                        <option value="Superesportivo">Superesportivo</option>
-                        <option value="Luxo / Premium">Luxo / Premium</option>
-                        <option value="Gran Turismo (GT)">Gran Turismo (GT)</option>
-                        <option value="Conversível Esportivo">Conversível Esportivo</option>
+                      <option value="Superesportivo">Superesportivo</option>
+                      <option value="Luxo / Premium">Luxo / Premium</option>
+                      <option value="Gran Turismo (GT)">Gran Turismo (GT)</option>
+                      <option value="Conversível Esportivo">Conversível Esportivo</option>
 
-                        <option value="Caminhão Leve">Caminhão Leve</option>
-                        <option value="Caminhão Médio">Caminhão Médio</option>
-                        <option value="Caminhão Pesado">Caminhão Pesado</option>
-                        <option value="Carreta">Carreta</option>
+                      <option value="Caminhão Leve">Caminhão Leve</option>
+                      <option value="Caminhão Médio">Caminhão Médio</option>
+                      <option value="Caminhão Pesado">Caminhão Pesado</option>
+                      <option value="Carreta">Carreta</option>
 
-                        <option value="Motocicleta">Motocicleta</option>
-                        <option value="Scooter">Scooter</option>
-                        <option value="Triciclo">Triciclo</option>
-                        <option value="Quadriciclo">Quadriciclo</option>
+                      <option value="Motocicleta">Motocicleta</option>
+                      <option value="Scooter">Scooter</option>
+                      <option value="Triciclo">Triciclo</option>
+                      <option value="Quadriciclo">Quadriciclo</option>
 
-                        <option value="Buggy">Buggy</option>
-                        <option value="Off-Road / 4x4">Off-Road / 4x4</option>
-                        <option value="Motorhome">Motorhome</option>
+                      <option value="Buggy">Buggy</option>
+                      <option value="Off-Road / 4x4">Off-Road / 4x4</option>
+                      <option value="Motorhome">Motorhome</option>
                     </select>
                   </div>
                   <div class="col-md-3 mt-2 fs-container ">
@@ -197,7 +198,7 @@
                   </div>
                   <div class="col-md-3 mt-2 fs-container">
                     <label for="tipo_cambio">Tipo de câmbio <strong class="text-danger">*</strong></label>
-                    
+
                     <select required name="tipo_cambio" id="tipo_cambio" class="form-control">
                       <option value="Manual">Manual</option>
                       <option value="Automático Tradicional">Automático Tradicional</option>
@@ -244,7 +245,7 @@
                   </div>
                 </fieldset>
                 <hr>
-                
+
                 <fieldset class="form-fs row">
                   <div class="title text-center">Foto Principal</div>
                   <div class="col-md-12 mt-2 fs-container h-100">
@@ -257,38 +258,16 @@
                       </div>
                       <img required id="foto-veiculo" style="display: none;" src="" alt="">
                     </div>
-                    
-                    
-                    <input type="file" name="foto-veiculo-input" id="foto-veiculo-input" class="form-control mt-3 mx-auto w-50" accept="image/*" required>
-                  </div>
-                </fieldset>
-                <hr>
-                
-                <fieldset class="form-fs row">
-                  <div class="title text-center">Foto Principal</div>
-                  <div class="col-md-12 mt-2 fs-container h-100">
-                    <div class="image-preview h-100 mx-auto d-flex flex-wrap justify-content-center align-content-center text-center">
-                      <div id="veiculo-foto-preview" class="image-preview-empty h-100">
-                        <i class="bi bi-card-image"></i>
 
-                        <h3 class="w-100">Adicionar foto do veículo</h3>
-                        <p class="w-100">Selecione uma imagem do veículo</p>
-                      </div>
-                      <img required id="foto-veiculo" style="display: none;" src="" alt="">
-                    </div>
-                    
-                    
+
                     <input type="file" name="foto-veiculo-input" id="foto-veiculo-input" class="form-control mt-3 mx-auto w-50" accept="image/*" required>
                   </div>
                 </fieldset>
                 <hr>
                 <fieldset class="form-fs row">
-                  <div class="col-md-9 fs-container">
+                  <div class="col-md-12 fs-container">
                     <input type="hidden" name="cadastrar" value="cadastrar_veiculo" class="btn btn-primary mt-3">
                     <input type="submit" value="Cadastrar" class="btn btn-primary w-100">
-                  </div>
-                  <div class="col-md-3 fs-container">
-                    <button class="btn btn-outline-secondary w-100"><i class="bi bi-arrow-clockwise"></i> Limpar formulário</button>
                   </div>
                 </fieldset>
               </form>
@@ -305,14 +284,14 @@
   <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-  
+
   <!-- JS MASK -->
   <script src="../../assets/js/jquery.mask.js"></script>
   <script src="../../assets/js/mascaras.js"></script>
   <script src="../../assets/js/register-vehicle-form-extras.js"></script>
-                      
+
   <!-- DELETAR DEPOIS ESSE CÓDIGO ABAIXO (TODO) -->
-   <script>
+  <script>
     $('#preencher-veiculo').on('click', function() {
 
       function rand(min, max) {
@@ -325,37 +304,37 @@
       ];
 
       const cores = [
-        "Branco","Preto","Prata","Cinza","Vermelho","Azul","Verde","Amarelo","Marrom"
+        "Branco", "Preto", "Prata", "Cinza", "Vermelho", "Azul", "Verde", "Amarelo", "Marrom"
       ];
 
       const combustiveis = [
-        "Gasolina","Etanol","Flex","Diesel","Elétrico","GNV (Gás Natural Veicular)"
+        "Gasolina", "Etanol", "Flex", "Diesel", "Elétrico", "GNV (Gás Natural Veicular)"
       ];
 
       const cambios = [
-        "Manual","Automático Tradicional","CVT","Automatizado (Monoembreagem)","DCT (Automático de Dupla Embreagem)"
+        "Manual", "Automático Tradicional", "CVT", "Automatizado (Monoembreagem)", "DCT (Automático de Dupla Embreagem)"
       ];
 
       // Modelo → Seleciona qualquer um que exista
-      $('#modelo').prop('selectedIndex', rand(1, $('#modelo option').length-1));
+      $('#modelo').prop('selectedIndex', rand(1, $('#modelo option').length - 1));
 
       // Categoria
-      $('#categoria').val(categorias[rand(0, categorias.length-1)]);
+      $('#categoria').val(categorias[rand(0, categorias.length - 1)]);
 
       // Cor
-      $('#cor').val(cores[rand(0, cores.length-1)]);
+      $('#cor').val(cores[rand(0, cores.length - 1)]);
 
       // Estado do veículo
-      $('#estado').val(['Novo','Semi-novo','Usado'][rand(0,2)]);
+      $('#estado').val(['Novo', 'Semi-novo', 'Usado'][rand(0, 2)]);
 
       // Ano
       $('#ano').val(rand(2005, 2024));
 
       // Final da placa
-      $('#final_placa').val(rand(0,9));
+      $('#final_placa').val(rand(0, 9));
 
       // Estoque
-      $('#estoque').val(rand(1,15));
+      $('#estoque').val(rand(1, 15));
 
       // Km rodado
       $('#quilometragem').val(rand(0, 180000));
@@ -364,10 +343,10 @@
       $('#tempo_usado').val(rand(1, 2000));
 
       // Tipo combustivel
-      $('#tipo_combustivel').val(combustiveis[rand(0, combustiveis.length-1)]);
+      $('#tipo_combustivel').val(combustiveis[rand(0, combustiveis.length - 1)]);
 
       // Tipo de câmbio
-      $('#tipo_cambio').val(cambios[rand(0, cambios.length-1)]);
+      $('#tipo_cambio').val(cambios[rand(0, cambios.length - 1)]);
 
       // Valores:
       // preço custo: 15.000 a 250.000 (rand bruto)
@@ -393,7 +372,7 @@
 
       console.log("✅ Formulário de veículo preenchido automaticamente.");
     });
-    </script>
+  </script>
 
 </body>
 
