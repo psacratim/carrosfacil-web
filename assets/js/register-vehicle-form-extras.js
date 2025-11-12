@@ -35,7 +35,7 @@ $(document).ready(function() {
                 precoDescontoInput.toggleClass('error-input', true);
                 return;
             }
-        }
+        } else $('#preco_desconto').val('0')
 
         // Reseta a mensagem
         descontoInput[0].setCustomValidity('');
