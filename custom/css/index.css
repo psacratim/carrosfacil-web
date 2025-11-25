@@ -211,6 +211,10 @@ input {
 
     width: 32%;
     margin-bottom: 20px;
+
+    
+    display: flex;
+    flex-direction: column;
 }
 
 .vehicle-card .header {
@@ -265,8 +269,8 @@ input {
 .vehicle-card h4,
 .vehicle-card .infos,
 .vehicle-card .tags,
-.vehicle-card .description,
-.vehicle-card .price,
+.vehicle-card .price-discount,
+.vehicle-card .price-normal,
 .vehicle-card a {
     margin: 0 5%;
 } 
@@ -276,13 +280,14 @@ input {
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: space-between;
-
     
     font-size: 16px;
 }
 
 .vehicle-card .infos .info {
     width: 50%;
+
+    margin: auto 0;
 }
 
 .vehicle-card .tags {
@@ -307,15 +312,30 @@ input {
     padding: 0 5px;
 }
 
-.vehicle-card .price {
+
+.vehicle-card .price-discount,
+.vehicle-card .price-normal {
+    margin-top: 5px;
+    height: 66px;
+}
+
+.vehicle-card .price-discount {
     display: flex;
     flex-wrap: wrap;
     justify-content: end;
 
-    margin-top: 5px;
+    margin-top: auto;
 }
 
-.vehicle-card .price .discount {
+.vehicle-card .price-normal {
+    display: flex;
+    flex-wrap: wrap;
+    
+    text-align: center;
+    align-items: flex-end;
+}
+  
+.vehicle-card .price-discount .discount {
     width: 100%;
     text-align: right;
     text-decoration-line: line-through;
@@ -323,9 +343,13 @@ input {
     font-size: 18px;
 }
 
-.vehicle-card .price .current {
-    width: 100%;
+.vehicle-card .price-discount .current {
     text-align: right;
+}
+
+.vehicle-card .price-discount .current,
+.vehicle-card .price-normal .current {
+    width: 100%;
 
     font-size: 26px;
     font-weight: 600;
@@ -353,4 +377,33 @@ input {
 
 .vehicle-card a:hover {
     background-color: #144265;
+}
+
+/* DATA SECTION */
+#sect-data {
+    background-color: #2563EB;
+    padding: 40px;
+
+    text-align: center;
+    color: #fff;
+}
+
+#sect-data .data-item i {
+    display: block;
+
+    font-size: 40px;
+}
+
+#sect-data .data-item span {
+    display: block;
+    font-weight: 350;
+}
+
+.footer {
+    background-color: #111826;
+    text-align: center;
+
+    color: #fff;
+
+    padding: 40px 0;
 }

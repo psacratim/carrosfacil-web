@@ -201,10 +201,10 @@ require_once("../../conexao/conecta.php")
 
                     <select required name="tipo_cambio" id="tipo_cambio" class="form-control">
                       <option value="Manual">Manual</option>
-                      <option value="Automático Tradicional">Automático Tradicional</option>
+                      <option value="Automático T.">Automático Tradicional</option>
                       <option value="CVT">CVT</option>
-                      <option value="Automatizado (Monoembreagem)">Automatizado (Monoembreagem)</option>
-                      <option value="DCT (Automático de Dupla Embreagem)">DCT (Automático de Dupla Embreagem)</option>
+                      <option value="Automático Monoembreagem">Automatizado (Monoembreagem)</option>
+                      <option value="DCT">DCT (Automático de Dupla Embreagem)</option>
                     </select>
                   </div>
                 </fieldset>
@@ -312,7 +312,7 @@ require_once("../../conexao/conecta.php")
       ];
 
       const cambios = [
-        "Manual", "Automático Tradicional", "CVT", "Automatizado (Monoembreagem)", "DCT (Automático de Dupla Embreagem)"
+        "Manual", "Automático T.", "CVT", "Automático Monoembreagem", "DCT"
       ];
 
       // Modelo → Seleciona qualquer um que exista

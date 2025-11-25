@@ -206,10 +206,10 @@
                       
                       <select required name="tipo_cambio" id="tipo_cambio" class="form-control">
                         <option <?php if ($veiculo['tipo_cambio'] == 'Manual') echo 'selected'; ?> value="Manual">Manual</option>
-                        <option <?php if ($veiculo['tipo_cambio'] == 'Automático Tradicional') echo 'selected'; ?> value="Automático Tradicional">Automático Tradicional</option>
+                        <option <?php if ($veiculo['tipo_cambio'] == 'Automático T.') echo 'selected'; ?> value="Automático T.">Automático Tradicional</option>
                         <option <?php if ($veiculo['tipo_cambio'] == 'CVT') echo 'selected'; ?> value="CVT">CVT (Transmissão Continuamente Variável)</option>
-                        <option <?php if ($veiculo['tipo_cambio'] == 'Automatizado (Monoembreagem)') echo 'selected'; ?> value="Automatizado (Monoembreagem)">Automatizado (Monoembreagem)</option>
-                        <option <?php if ($veiculo['tipo_cambio'] == 'DCT (Automático de Dupla Embreagem)') echo 'selected'; ?> value="DCT (Automático de Dupla Embreagem)">DCT (Automático de Dupla Embreagem)</option>
+                        <option <?php if ($veiculo['tipo_cambio'] == 'Automático Monoembreagem') echo 'selected'; ?> value="Automático Monoembreagem">Automatizado (Monoembreagem)</option>
+                        <option <?php if ($veiculo['tipo_cambio'] == 'DCT') echo 'selected'; ?> value="DCT">DCT (Automático de Dupla Embreagem)</option>
                       </select>
                     </div>
                   </fieldset>
