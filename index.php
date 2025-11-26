@@ -96,7 +96,13 @@ require_once("./conexao/conecta.php")
                         <label for="category">Categoria</label>
                         <select class="form-select default" name="category" id="category">
                             <option selected>- Todas as categorias -</option>
-                            <option value="test">SUVs</option>
+                            <?php 
+                                $sql = "SELECT DISTINCT categoria FROM veiculo";
+                                $query = mysqli_query($conexao, $sql);
+                                foreach ($query as $veiculo){
+                                    echo "<option value='". $veiculo['categoria'] ."'>". $veiculo['categoria'] ."</option>";
+                                }
+                            ?>
                         </select>
                     </div>
 
@@ -104,7 +110,9 @@ require_once("./conexao/conecta.php")
                         <label for="condition">Condição</label>
                         <select class="form-select default" name="condition" id="condition">
                             <option selected>- Todas as condicoes -</option>
-                            <option value="test">SUVs</option>
+                            <option value="Novo">Novo</option>
+                            <option value="Semi-novo">Semi-novo</option>
+                            <option value="Usado">Usado</option>
                         </select>
                     </div>
 
@@ -112,7 +120,13 @@ require_once("./conexao/conecta.php")
                         <label for="brand">Marca</label>
                         <select class="form-select default" name="brand" id="brand">
                             <option selected>- Todas as marcas -</option>
-                            <option value="test">SUVs</option>
+                            <?php 
+                                $sql = "SELECT veiculo.id_marca, marca.nome 'nome_marca' FROM veiculo INNER JOIN marca ON marca.id = veiculo.id_marca;";
+                                $query = mysqli_query($conexao, $sql);
+                                foreach ($query as $veiculo){
+                                    echo "<option value='". $veiculo['id_marca'] ."'>". $veiculo['nome_marca'] ."</option>";
+                                }
+                            ?>
                         </select>
                     </div>
 

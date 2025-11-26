@@ -104,40 +104,23 @@ require_once("../../conexao/conecta.php");
             ?>
 
               <div class="card-body">
-                <form action="" method="get">
-                  <div class="row">
-                    <!-- CAMPO DE BUSCA -->
-                    <div class="col-4">
-                      <form method="post">
-                        <input <?php if ($pesquisa != "") { echo "value='$pesquisa'"; } ?> type="search" name="pesquisa" id="pesquisa" class="form-control" placeholder="Nome do funcionário">
-                      </form>
-                    </div>
-
-                    <div class="col-2">
-                      <select name="status" id="status" class="form-control" onchange="applyFilters()">
-                        <option value="-1" <?php if ($status == '-1') { echo 'selected'; }?>>(Desativado) Status</option>
-                        <option value="1" <?php if ($status == '1') { echo 'selected'; }?>>Ativo</option>
-                        <option value="0" <?php if ($status == '0') { echo 'selected'; }?>>Inativo</option>
-                      </select>
-                    </div>
+                <div class="row">
+                  <!-- CAMPO DE BUSCA -->
+                  <div class="col-4">
+                    <input onkeyup="applyFilters()" <?php if ($pesquisa != "") { echo "value='$pesquisa'"; } ?> type="search" name="pesquisa" id="pesquisa" class="form-control" placeholder="Nome do funcionário">
                   </div>
-                </form>
+
+                  <div class="col-2">
+                    <select name="status-filter" id="status-filter" class="form-control" onchange="applyFilters()">
+                      <option value="" <?php if ($status == '-1') { echo 'selected'; }?> >(Desativado) Status</option>
+                      <option value="1" <?php if ($status == '1') { echo 'selected'; }?> >Ativo</option>
+                      <option value="0" <?php if ($status == '0') { echo 'selected'; }?> >Inativo</option>
+                    </select>
+                  </div>
+                </div>
               </div>
 
-              <?php 
-              $sql = $baseSQL . ($extraQuery != " WHERE" ? $extraQuery : "");
-              $query = mysqli_query($conexao, $sql);
-
-              if (mysqli_num_rows($query) > 0) {
-              ?>
-                <div class="card-body p-0">
-                  <div id="listar"></div> <!-- ONDE SERÁ COLOCADA NOSSA TABELA DO AJAX -->
-                </div>
-            <?php
-            } else {
-              echo '<div class="alert alert-danger m-3" role="alert">Nenhum registro encontrado!</div>';
-            }
-            ?>
+              <div id="listar"></div>
           </div>
         </div>
       </main>
@@ -230,7 +213,7 @@ require_once("../../conexao/conecta.php");
     });
 
     // AJAX (FUNÇÃO PARA LISTAR OS FUNCIONÁRIOS)
-    function getTableWithFilters(nome, status){
+    function updateTableWithFilters(nome, status){
       $('#listar').text('Carregando...')
 
       $.ajax({
@@ -250,10 +233,15 @@ require_once("../../conexao/conecta.php");
     // AJAX (Função para aplicar o filtro)
     function applyFilters() {
       let nome = $("#pesquisa").val();
-      let status = $("#status").val();
+      let status = $("#status-filter").val();
 
       console.log(`${nome}.${status}`);
+      updateTableWithFilters(nome, status);
     }
+
+    $(document).ready(function(){
+      applyFilters();
+    });
   </script>
 </body>
 
