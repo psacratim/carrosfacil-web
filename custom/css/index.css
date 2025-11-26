@@ -26,6 +26,14 @@ a:visited, a:link{
     border: 2px solid #2563EB;
 }
 
+.btn-register:hover,
+.btn-login:hover,
+.nav-link:hover
+ {
+    background-color: #8584845f;
+    border-radius: 6px;
+}
+
 #search-bar {
     background-color: #2563EB;
 }
@@ -211,7 +219,6 @@ input {
 
     width: 32%;
     margin-bottom: 20px;
-
     
     display: flex;
     flex-direction: column;
@@ -376,7 +383,7 @@ input {
 }
 
 .vehicle-card a:hover {
-    background-color: #144265;
+    background-color: #0037ffcd;
 }
 
 /* DATA SECTION */

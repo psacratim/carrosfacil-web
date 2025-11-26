@@ -199,17 +199,13 @@ require_once("./conexao/conecta.php")
                                         <?php echo $veiculo['nome_modelo']?>
                                     </h4>
                                     <div class="infos">
-                                        <div class="info">
+                                        <div class="info w-25">
                                             <i class="bi bi-calendar3"></i>
                                             <?php echo $veiculo['ano'] ?>
                                         </div>
-                                        <div class="info text-end">
-                                            <i class="bi bi-speedometer"></i>
-                                            <?php 
-                                            if ($veiculo['kms_rodado'] > 0){
-                                            echo number_format($veiculo['kms_rodado'], 0, ',', '.');
-                                            } else echo 'Zero';
-                                            ?>
+                                        <div class="info w-75 text-end">
+                                            <i class="bi bi-gear"></i>
+                                            <?php echo $veiculo['tipo_cambio'] ?>
                                         </div>
                                         <div class="info">
                                             <i class="bi bi-fuel-pump text-start"></i>
@@ -217,8 +213,12 @@ require_once("./conexao/conecta.php")
                                         </div>
                                         <!-- <div class="info d-flex justify-content-between text-end align-items-center"> -->
                                         <div class="info text-end">
-                                            <i class="bi bi-gear text-end"></i>
-                                            <?php echo $veiculo['tipo_cambio'] ?>
+                                            <i class="bi bi-speedometer"></i>
+                                            <?php 
+                                            if ($veiculo['kms_rodado'] > 0){
+                                            echo number_format($veiculo['kms_rodado'], 0, ',', '.');
+                                            } else echo 'Zero';
+                                            ?>
                                         </div>
                                     </div>
 

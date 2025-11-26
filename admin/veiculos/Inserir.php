@@ -203,7 +203,7 @@ require_once("../../conexao/conecta.php")
                       <option value="Manual">Manual</option>
                       <option value="Automático T.">Automático Tradicional</option>
                       <option value="CVT">CVT</option>
-                      <option value="Automático Monoembreagem">Automatizado (Monoembreagem)</option>
+                      <option value="Auto. Mono-Emb.">Automatizado (Monoembreagem)</option>
                       <option value="DCT">DCT (Automático de Dupla Embreagem)</option>
                     </select>
                   </div>
@@ -312,7 +312,7 @@ require_once("../../conexao/conecta.php")
       ];
 
       const cambios = [
-        "Manual", "Automático T.", "CVT", "Automático Monoembreagem", "DCT"
+        "Manual", "Automático T.", "CVT", "Auto. Mono-Emb.", "DCT"
       ];
 
       // Modelo → Seleciona qualquer um que exista

@@ -208,7 +208,7 @@
                         <option <?php if ($veiculo['tipo_cambio'] == 'Manual') echo 'selected'; ?> value="Manual">Manual</option>
                         <option <?php if ($veiculo['tipo_cambio'] == 'Automático T.') echo 'selected'; ?> value="Automático T.">Automático Tradicional</option>
                         <option <?php if ($veiculo['tipo_cambio'] == 'CVT') echo 'selected'; ?> value="CVT">CVT (Transmissão Continuamente Variável)</option>
-                        <option <?php if ($veiculo['tipo_cambio'] == 'Automático Monoembreagem') echo 'selected'; ?> value="Automático Monoembreagem">Automatizado (Monoembreagem)</option>
+                        <option <?php if ($veiculo['tipo_cambio'] == 'Auto. Mono-Emb.') echo 'selected'; ?> value="Auto. Mono-Emb.">Automatizado (Monoembreagem)</option>
                         <option <?php if ($veiculo['tipo_cambio'] == 'DCT') echo 'selected'; ?> value="DCT">DCT (Automático de Dupla Embreagem)</option>
                       </select>
                     </div>
