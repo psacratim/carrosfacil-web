@@ -1,8 +1,8 @@
-<?php 
-    if (!isset($_SESSION)){
-        session_start();
-    }
-    require_once("../../conexao/conecta.php");
+<?php
+if (!isset($_SESSION)) {
+  session_start();
+}
+require_once("../../conexao/conecta.php");
 ?>
 <!doctype html>
 <html lang="pt-br">
@@ -30,8 +30,8 @@
 
       <main class="ml-auto col-lg-10 px-md-4">
         <?php
-          include('../LoggedUser.php');
-          include('../Mensagem.php');
+        include('../LoggedUser.php');
+        include('../Mensagem.php');
         ?>
 
         <div class="container mt-5">
@@ -83,78 +83,60 @@
               </div>
             </div>
 
-            <?php 
-              $sql = "SELECT id, nome, observacao, data_cadastro, status FROM cargo;";
+            <?php
+            $baseSQL = "SELECT id, nome, observacao, data_cadastro, status FROM cargo";
+            $extraQuery = " WHERE";
+            $status = isset($_GET['status']) ? $_GET['status'] : "-1";
+            $pesquisa = isset($_GET['pesquisa']) ? $_GET['pesquisa'] : "";
+
+            if ($status != "-1")
+            {
+              $extraQuery .= " status = $status";
+            } 
+            
+            if ($pesquisa != "") {
+              if ($extraQuery != " WHERE") {
+                $extraQuery .= " AND";
+              }
+
+              $extraQuery .= " nome LIKE '%$pesquisa%'";
+            }
+            ?>
+
+              <div class="card-body">
+                <form action="" method="get">
+                  <div class="row">
+                    <!-- CAMPO DE BUSCA -->
+                    <div class="col-4">
+                      <form method="post">
+                        <input <?php if ($pesquisa != "") { echo "value='$pesquisa'"; } ?> type="search" name="pesquisa" id="pesquisa" class="form-control" placeholder="Nome do funcionário">
+                      </form>
+                    </div>
+
+                    <div class="col-2">
+                      <select name="status" id="status" class="form-control" onchange="applyFilters()">
+                        <option value="-1" <?php if ($status == '-1') { echo 'selected'; }?>>(Desativado) Status</option>
+                        <option value="1" <?php if ($status == '1') { echo 'selected'; }?>>Ativo</option>
+                        <option value="0" <?php if ($status == '0') { echo 'selected'; }?>>Inativo</option>
+                      </select>
+                    </div>
+                  </div>
+                </form>
+              </div>
+
+              <?php 
+              $sql = $baseSQL . ($extraQuery != " WHERE" ? $extraQuery : "");
               $query = mysqli_query($conexao, $sql);
 
               if (mysqli_num_rows($query) > 0) {
-            ?>
-
-            <div class="card-body">
-              <div class="row">
-                <div class="col-4">
-                  <form action="">
-                    <input type="search" name="pesquisa" id="pesquisa" class="form-control" placeholder="Nome do cargo">
-                  </form>
+              ?>
+                <div class="card-body p-0">
+                  <div id="listar"></div> <!-- ONDE SERÁ COLOCADA NOSSA TABELA DO AJAX -->
                 </div>
-              </div>
-            </div>
-
-            <div class="card-body p-0">
-              <table class="table m-0">
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>Nome</th>
-                    <th>Observação</th>
-                    <th>Data Cadastro</th>
-                    <th>Status</th>
-                    <th>Ações</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <?php foreach($query as $cargo) { ?>
-                    <tr>
-                      <td><?php echo $cargo['id'] ?></td>
-                      <td><?php echo htmlspecialchars($cargo['nome']); ?></td>
-                      <td><?php echo ($cargo['observacao'] == "" ? "Nenhuma observação" : $cargo['observacao']) ?></td>
-                      <td><?php echo date('d/m/Y', strtotime($cargo['data_cadastro'])) ?></td>
-                      <td>
-                        <?php 
-                          if ($cargo['status'] == 0){
-                            echo '<span class="badge badge-pill badge-danger">Inativo</span>';
-                          } else {
-                            echo '<span class="badge badge-pill badge-success">Ativo</span>';
-                          }
-                        ?>
-                      </td>
-                      <td>
-                        <button type="button" 
-                                class="btn btn-outline-success btn-sm editar-btn d-inline"
-                                data-id="<?php echo $cargo['id']; ?>"
-                                data-nome="<?php echo htmlspecialchars($cargo['nome']); ?>"
-                                data-observacao="<?php echo htmlspecialchars($cargo['observacao']); ?>"
-                                data-icone="<?php echo htmlspecialchars($cargo['icone']); ?>"
-                                data-status="<?php echo $cargo['status']; ?>"
-                                title="Editar">
-                          <i class="bi bi-pencil-square"></i>
-                        </button>
-
-                        <form action="actions.php" method="post" class="d-inline">
-                          <button type="submit" class="btn btn-outline-danger btn-sm" title="Excluir" name="excluir_cargo" value="<?php echo $cargo['id'] ?>" onclick="return confirm('Tem certeza que deseja excluir?')">
-                            <i class="bi bi-trash3"></i>
-                          </button>
-                        </form>
-                      </td>
-                    </tr>
-                  <?php } ?>
-                </tbody>
-              </table>
-            </div>
             <?php
-              } else {
-                echo '<div class="alert alert-danger m-3" role="alert">Nenhum registro encontrado!</div>';
-              } 
+            } else {
+              echo '<div class="alert alert-danger m-3" role="alert">Nenhum registro encontrado!</div>';
+            }
             ?>
           </div>
         </div>
@@ -246,6 +228,33 @@
         reader.readAsDataURL(file);
       }
     });
+
+    // AJAX (FUNÇÃO PARA LISTAR OS FUNCIONÁRIOS)
+    function getTableWithFilters(nome, status){
+      $('#listar').text('Carregando...')
+
+      $.ajax({
+        url: 'table.php',
+        method: 'POST',
+        data: {
+          nome,
+          status
+        },
+        dataType: 'html',
+        success: function(response){
+          $("#listar").html(response);
+        }
+      })
+    }
+
+    // AJAX (Função para aplicar o filtro)
+    function applyFilters() {
+      let nome = $("#pesquisa").val();
+      let status = $("#status").val();
+
+      console.log(`${nome}.${status}`);
+    }
   </script>
 </body>
+
 </html>
