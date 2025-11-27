@@ -82,27 +82,6 @@ require_once("../../conexao/conecta.php");
                 </div>
               </div>
             </div>
-
-            <?php
-            $baseSQL = "SELECT id, nome, observacao, data_cadastro, status FROM cargo";
-            $extraQuery = " WHERE";
-            $status = isset($_GET['status']) ? $_GET['status'] : "-1";
-            $pesquisa = isset($_GET['pesquisa']) ? $_GET['pesquisa'] : "";
-
-            if ($status != "-1")
-            {
-              $extraQuery .= " status = $status";
-            } 
-            
-            if ($pesquisa != "") {
-              if ($extraQuery != " WHERE") {
-                $extraQuery .= " AND";
-              }
-
-              $extraQuery .= " nome LIKE '%$pesquisa%'";
-            }
-            ?>
-
               <div class="card-body">
                 <div class="row">
                   <!-- CAMPO DE BUSCA -->
@@ -214,8 +193,6 @@ require_once("../../conexao/conecta.php");
 
     // AJAX (FUNÇÃO PARA LISTAR OS FUNCIONÁRIOS)
     function updateTableWithFilters(nome, status){
-      $('#listar').text('Carregando...')
-
       $.ajax({
         url: 'table.php',
         method: 'POST',
@@ -235,7 +212,6 @@ require_once("../../conexao/conecta.php");
       let nome = $("#pesquisa").val();
       let status = $("#status-filter").val();
 
-      console.log(`${nome}.${status}`);
       updateTableWithFilters(nome, status);
     }
 

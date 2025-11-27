@@ -1,14 +1,15 @@
-<?php 
-    // STARTING SESSION
-    if (!isset($_SESSION)){
-        session_start();
-    }
+<?php
+// STARTING SESSION
+if (!isset($_SESSION)) {
+  session_start();
+}
 
-    require_once("../../conexao/conecta.php");
+require_once("../../conexao/conecta.php");
 ?>
 
 <!doctype html>
 <html lang="pt-br">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -23,15 +24,16 @@
   <!-- CUSTOMIZAÇÃO DO TEMPLATE -->
   <link rel="stylesheet" href="../../assets/css/dashboard.css">
   <link rel="stylesheet" href="../../assets/css/styles.css">
-  
+
   <!-- FAVICON -->
   <link rel="shortcut icon" href="../../assets/img/favicon.ico" type="image/x-icon">
 
   <!-- CSS -->
   <link rel="stylesheet" href="../../custom/css/style.css">
 </head>
+
 <body>
-    
+
   <?php include('../Topo.php'); ?>
 
   <div class="container-fluid">
@@ -40,8 +42,8 @@
 
       <main class="ml-auto col-lg-10 px-md-4">
         <?php
-          include('../LoggedUser.php');
-          include('../Mensagem.php');
+        include('../LoggedUser.php');
+        include('../Mensagem.php');
         ?>
 
         <div class="container mt-5">
@@ -85,86 +87,32 @@
               </div>
             </div>
 
-            <?php 
-              $sql = "SELECT * FROM marca";
-              $query = mysqli_query($conexao, $sql);
+            <?php
+            $sql = "SELECT * FROM marca";
+            $query = mysqli_query($conexao, $sql);
 
-              if (mysqli_num_rows($query) > 0) {
+            if (mysqli_num_rows($query) > 0) {
             ?>
               <div class="card-body">
                 <div class="row">
-                  <div class="col-4">
-                    <form method="post">
-                      <input type="search" name="pesquisa" id="pesquisa" class="form-control" placeholder="Nome da marca">
-                    </form>
+                  <div class="col-3">
+                    <input onkeyup="applyFilters()" type="text" name="nome-filter" id="nome-filter" class="form-control" placeholder="Nome da marca">
                   </div>
-
                   <div class="col-2">
-                    <form method="post">
-                      <select name="status" id="status" class="form-control">
-                        <option value="">Status</option>
-                        <option value="1">Ativo</option>
-                        <option value="0">Inativo</option>
-                      </select>
-                    </form>
+                    <select onchange="applyFilters()" name="status-filter" id="status-filter" class="form-control">
+                      <option value="">Status</option>
+                      <option value="1">Ativo</option>
+                      <option value="0">Inativo</option>
+                    </select>
                   </div>
                 </div>
               </div>
 
-              <div class="card-body p-0">
-                <table class="table m-0">
-                  <thead>
-                    <tr>
-                      <th>#</th>
-                      <th>Nome</th>
-                      <th>Observação</th>
-                      <th>Data Cadastro</th>
-                      <th>Status</th>
-                      <th>Ações</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <?php foreach ($query as $marca) { ?>
-                      <tr>
-                        <td><?php echo $marca['id']; ?></td>
-                        <td><?php echo htmlspecialchars($marca['nome']); ?></td>
-                        <td><?php echo ($marca['observacao'] == "" ? "Nenhuma observação" : $marca['observacao']) ?></td>
-                        <td><?php echo date('d/m/Y', strtotime($marca['data_cadastro'])); ?></td>
-                        <td>
-                          <?php 
-                            if ($marca['status'] == 0){
-                              echo '<span class="badge badge-pill badge-danger">Inativo</span>';
-                            } else {
-                              echo '<span class="badge badge-pill badge-success">Ativo</span>';
-                            }
-                          ?>
-                        </td>
-                        <td>
-                          <button type="button" 
-                                  class="btn btn-outline-success btn-sm editar-btn"
-                                  data-id="<?php echo $marca['id']; ?>"
-                                  data-nome="<?php echo htmlspecialchars($marca['nome']); ?>"
-                                  data-observacao="<?php echo htmlspecialchars($marca['observacao']); ?>"
-                                  data-status="<?php echo $marca['status']; ?>"
-                                  title="Editar">
-                            <i class="bi bi-pencil-square"></i>
-                          </button>
-
-                          <form action="acoes.php" method="post" class="d-inline">
-                            <button type="submit" class="btn btn-outline-danger btn-sm" title="Excluir" name="excluir_marca" value="<?php echo $marca['id'] ?>" onclick="return confirm('Tem certeza que deseja excluir?')">
-                              <i class="bi bi-trash3"></i>
-                            </button>
-                          </form>
-                        </td>
-                      </tr>
-                    <?php } ?>
-                  </tbody>
-                </table>
-              </div>
-            <?php 
+              <div id="listar"></div>
+            <?php
             } else {
               echo '<div class="alert alert-danger m-3" role="alert">Nenhum registro encontrado!</div>';
-            } 
+            }
             ?>
           </div>
         </div>
@@ -230,6 +178,35 @@
 
       $('#editarMarcaModal').modal('show');
     });
+
+    // AJAX (FUNÇÃO PARA LISTAR OS FUNCIONÁRIOS)
+    function updateTableWithFilters(nome, status){
+      $.ajax({
+        url: 'table.php',
+        method: 'POST',
+        data: {
+          nome,
+          status
+        },
+        dataType: 'html',
+        success: function(response){
+          $("#listar").html(response);
+        }
+      })
+    }
+
+    // AJAX (Função para aplicar o filtro)
+    function applyFilters() {
+      let nome = $("#nome-filter").val();
+      let status = $("#status-filter").val();
+
+      updateTableWithFilters(nome, status);
+    }
+
+    $(document).ready(function(){
+      applyFilters();
+    });
   </script>
-</body> 
+</body>
+
 </html>

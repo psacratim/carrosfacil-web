@@ -61,136 +61,38 @@
               <a href="Inserir.php" class="btn btn-primary btn-sm"><i class="bi bi-plus"></i> Adicionar</a>
             </div>
 
-            <?php 
-              $sql = "
-                SELECT funcionario.id, funcionario.nome AS nome_funcionario, cargo.nome AS nome_cargo, funcionario.cpf, funcionario.salario, funcionario.sexo, funcionario.data_nascimento, funcionario.tipo_acesso, funcionario.telefone_recado, funcionario.email, funcionario.foto, funcionario.data_cadastro, funcionario.status
-                FROM funcionario
-                INNER JOIN cargo ON cargo.id = funcionario.id_cargo
-                ;
-              ";
+            <div class="card-body">
+              <div class="row">
+                <div class="col-3">
+                  <input onkeyup="applyFilters()" type="text" name="nome" id="nome" class="form-control" placeholder="Nome do cliente">
+                </div>
+                <div class="col-2">
+                  <input onkeyup="applyFilters()" type="text" name="cpf" id="cpf" class="form-control" placeholder="000.000.000-00" maxlength="14" data-mask="000.000.000-00">
+                </div>
+                <div class="col-2">
+                  <input onchange="applyFilters()" type="date" name="data_nascimento" id="data_nascimento" class="form-control">
+                </div>
 
-              $query = mysqli_query($conexao, $sql);
-              if (mysqli_num_rows($query) > 0) {
-            ?>
+                <div class="col-2">
+                  <select onchange="applyFilters()" name="sexo" id="sexo" class="form-control">
+                    <option value="">Sexo</option>
+                    <option value="M">Masculino</option>
+                    <option value="F">Feminino</option>
+                    <option value="N">Não Informado</option>
+                  </select>
+                </div>
 
-              <div class="card-body">
-                <div class="row">
-                  <!-- CAMPO DE BUSCA -->
-                  <div class="col-4">
-                    <form method="post">
-                      <input type="search" name="pesquisa" id="pesquisa" class="form-control"  placeholder="Nome do funcionário">
-                    </form>
-                  </div>
-
-                  <div class="col-2">
-                    <form method="post">
-                      <select name="status" id="status" class="form-control">
-                        <option value="">Status</option>
-                        <option value="1">Ativo</option>
-                        <option value="0">Inativo</option>
-                      </select>
-                    </form>
-                  </div>
-                  <div class="col-2">
-                    <form method="post">
-                      <select name="sexo" id="sexo" class="form-control">
-                        <option value="T">Sexo</option>
-                        <option value="N">Não Informado</option>
-                        <option value="M">Masculino</option>
-                        <option value="F">Feminino</option>
-                      </select>
-                    </form>
-                  </div>
-                  <div class="col-2">
-                    <form method="post">
-                      <select name="tipo-acesso" id="tipo-acesso" class="form-control">
-                        <option value="">Tipo de acesso</option>
-                        <option value="administrador">Administrador</option>
-                        <option value="normal">Normal</option>
-                      </select>
-                    </form>
-                  </div>
-                  <div class="col-2">
-                    <form method="post">
-                      <select name="cargo" id="cargo" class="form-control">
-                        <option value="">Cargo</option>
-                        <option value="gerente">Gerente</option>
-                        <option value="vendedor">Vendedor</option>
-                        <option value="estoquista">Estoquista</option>
-                      </select>
-                    </form>
-                  </div>
+                <div class="col-2">
+                  <select onchange="applyFilters()" name="status" id="status" class="form-control">
+                    <option value="">Status</option>
+                    <option value="1">Ativo</option>
+                    <option value="0">Inativo</option>
+                  </select>
                 </div>
               </div>
+            </div>
 
-              <div class="card-body p-0">
-                <table class="table m-0">
-                  <thead>
-                    <tr>
-                      <th scope="col">#</th>
-                      <th scope="col">Nome</th>
-                      <th scope="col">Cargo</th>
-                      <th scope="col">CPF</th>
-                      <th scope="col">Salário</th>
-                      <th scope="col">Sexo</th>
-                      <th scope="col">Data Nascimento</th>
-                      <th scope="col">Tipo Acesso</th>
-                      <th scope="col">Data Cadastro</th>
-                      <th scope="col">Status</th>
-                      <th scope="col">Ações</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <?php 
-                    foreach($query as $funcionario) {
-                      ?>
-                    <tr>
-                      <td><?php echo $funcionario['id'] ?></td>
-                      <td><?php echo $funcionario['nome_funcionario'] ?></td>
-                      <td><?php echo $funcionario['nome_cargo'] ?></td>
-                      <td><?php echo $funcionario['cpf'] ?></td>
-                      <td><?php echo $funcionario['salario'] ?></td>
-                      <td><?php echo $funcionario['sexo'] ?></td>
-                      <td><?php echo date('d/m/Y', strtotime($funcionario['data_nascimento'])) ?></td>
-                      <td><?php 
-                        if ($funcionario['tipo_acesso'] == 0) {
-                      echo '<span class="badge badge-pill badge-success">Comum</span>';
-                        } else {
-                          echo '<span class="badge badge-pill badge-danger">Administrador</span>';
-                        }
-                      ?></td>
-                      <td><?php echo date('d/m/Y', strtotime($funcionario['data_cadastro'])) ?></td>
-                      <td>
-                        <?php 
-                          if ($funcionario['status'] == 0){
-                            echo '<span class="badge badge-pill badge-danger">Inativo</span>';
-                          } else {
-                            echo '<span class="badge badge-pill badge-success">Ativo</span>';
-                          }
-                        ?>
-                      </td>
-                      <td>
-                        <a href="editar.php?id=<?php echo $funcionario['id'] ?>" class="btn btn-outline-success btn-sm" title="Editar">
-                          <i class="bi bi-pencil-square"></i>
-                        </a>
-
-                        <form action="acoes.php" method="post" class="d-inline">
-                          <button type="submit" class="btn btn-outline-danger btn-sm" title="Excluir" name="excluir_funcionario" value="<?php echo $funcionario['id'] ?>" onclick="return confirm('Tem certeza que deseja excluir?')">
-                            <i class="bi bi-trash3"></i>
-                          </button>
-                        </form>
-                      </td>
-                    </tr>
-                    <?php } ?>
-                  </tbody>
-                </table>
-              </div>
-
-            <?php
-              } else {
-                echo '<div class="alert alert-danger m-3" role="alert">Nenhum registro encontrado!</div>';
-              } 
-            ?>
+            <div id="listar"></div>
           </div>
         </div>
 
@@ -202,5 +104,41 @@
   <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+  <script>
+    // AJAX (FUNÇÃO PARA LISTAR OS FUNCIONÁRIOS)
+    function updateTableWithFilters(cpf, nome, sexo, data_nascimento, status) {
+      $.ajax({
+        url: 'table.php',
+        method: 'POST',
+        data: {
+          cpf,
+          nome,
+          sexo,
+          data_nascimento,
+          status
+        },
+        dataType: 'html',
+        success: function(response) {
+          $("#listar").html(response);
+        }
+      })
+    }
+
+    // AJAX (Função para aplicar o filtro)
+    function applyFilters() {
+      let cpf = $("#cpf").val();
+      let nome = $("#nome").val();
+      let sexo = $("#sexo").val();
+      let data_nascimento = $("#data_nascimento").val();
+      let status = $("#status").val();
+
+      updateTableWithFilters(cpf, nome, sexo, data_nascimento, status);
+    }
+
+    $(document).ready(function() {
+      applyFilters();
+    });
+  </script>
 </body>
 </html>

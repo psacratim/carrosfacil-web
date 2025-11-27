@@ -1,10 +1,10 @@
-<?php 
-    // STARTING SESSION
-    if (!isset($_SESSION)){
-        session_start();
-    }
+<?php
+// STARTING SESSION
+if (!isset($_SESSION)) {
+  session_start();
+}
 
-  require_once("../../conexao/conecta.php")
+require_once("../../conexao/conecta.php")
 ?>
 <!doctype html>
 <html lang="pt-br">
@@ -51,8 +51,8 @@
 
       <main class="ml-auto col-lg-10 px-md-4">
         <?php
-          include('../LoggedUser.php');
-          include('../Mensagem.php');
+        include('../LoggedUser.php');
+        include('../Mensagem.php');
         ?>
 
         <div class="container mt-5">
@@ -77,36 +77,36 @@
                   <div class="modal-body">
                     <form action="acoes.php" method="post">
                       <div class="form-group">
-                          <div class="row">
-                            <div class="col-12">
-                              <label for="marca-modelo"><strong class="text-danger">*</strong> Marca do modelo:</label>
-                              <select name="marca-modelo" id="marca-modelo" class="form-control" required>
-                                <?php 
-                                  $sql = 'SELECT id, nome FROM marca WHERE status = 1;';
-                                  $query = mysqli_execute_query($conexao, $sql);
+                        <div class="row">
+                          <div class="col-12">
+                            <label for="marca-modelo"><strong class="text-danger">*</strong> Marca do modelo:</label>
+                            <select name="marca-modelo" id="marca-modelo" class="form-control" required>
+                              <?php
+                              $sql = 'SELECT id, nome FROM marca WHERE status = 1;';
+                              $query = mysqli_execute_query($conexao, $sql);
 
-                                  foreach ($query as $marca) {
-                                    echo '<option value="'. $marca['id'] .'">'. $marca['nome'] .'</option>';
-                                  }
-                                ?>
-                              </select>
-                            </div>
+                              foreach ($query as $marca) {
+                                echo '<option value="' . $marca['id'] . '">' . $marca['nome'] . '</option>';
+                              }
+                              ?>
+                            </select>
                           </div>
+                        </div>
                       </div>
                       <div class="form-group">
-                          <label for="nome-modelo"><strong class="text-danger">*</strong> Nome do modelo:</label>
-                          <input type="text" name="nome-modelo" id="nome-modelo" class="form-control" maxlength="80" placeholder="Hyundai HB20" required>
+                        <label for="nome-modelo"><strong class="text-danger">*</strong> Nome do modelo:</label>
+                        <input type="text" name="nome-modelo" id="nome-modelo" class="form-control" maxlength="80" placeholder="Hyundai HB20" required>
                       </div>
                       <div class="form-group">
-                          <label for="observacao">Observação:</label>
-                          <textarea type="text" name="observacao" id="observacao" class="form-control" maxlength="250"></textarea>
+                        <label for="observacao">Observação:</label>
+                        <textarea type="text" name="observacao" id="observacao" class="form-control" maxlength="250"></textarea>
                       </div>
                       <div class="form-group">
-                          <label for="status"><strong class="text-danger">*</strong> Status:</label>
-                          <select name="status" id="status" class="form-control" disabled>
-                            <option value="1">Ativo</option>
-                            <option value="0">Inativo</option>
-                          </select>
+                        <label for="status"><strong class="text-danger">*</strong> Status:</label>
+                        <select name="status" id="status" class="form-control" disabled>
+                          <option value="1">Ativo</option>
+                          <option value="0">Inativo</option>
+                        </select>
                       </div>
 
                       <input type="hidden" name="id-modelo" id="id-modelo">
@@ -129,85 +129,23 @@
 
             <div class="card-body">
               <div class="row">
-                <!-- CAMPO DE BUSCA -->
                 <div class="col-4">
-                  <form action="">
-                    <input type="search" name="pesquisa" id="pesquisa" class="form-control" placeholder="Nome da acessorio">
-                  </form>
+                  <input onkeyup="applyFilters()" type="text" name="nome-marca" id="nome-marca" class="form-control" placeholder="Nome da marca">
+                </div>
+                <div class="col-4">
+                  <input onkeyup="applyFilters()" type="text" name="nome-modelo-filter" id="nome-modelo-filter" class="form-control" placeholder="Nome do modelo">
+                </div>
+                <div class="col-2">
+                  <select onchange="applyFilters()" name="status-filter" id="status-filter" class="form-control">
+                    <option value="">Status</option>
+                    <option value="1">Ativo</option>
+                    <option value="0">Inativo</option>
+                  </select>
                 </div>
               </div>
             </div>
 
-            <?php 
-              $sql = "
-              SELECT modelo.id, modelo.id_marca, marca.nome AS nome_marca, modelo.nome AS nome_modelo, modelo.observacao, modelo.data_cadastro, modelo.status
-              FROM modelo
-              INNER JOIN marca ON marca.id = modelo.id_marca;
-              ";
-              $query = mysqli_query($conexao, $sql);
-
-              # O número de linhas retornado é > 0 ? Se sim, teve resultados.
-              if (mysqli_num_rows($query) > 0) { #Estranho, mas a gente vai fechar essa chave após o HTML, usando php novamente.
-            ?>
-              <div class="card-body p-0">
-                <table class="table m-0">
-                  <thead>
-                    <tr>
-                      <th scope="col">#</th>
-                      <th scope="col">Marca</th>
-                      <th scope="col">Nome do Modelo</th>
-                      <th scope="col">Observação</th>
-                      <th scope="col">Data Cadastro</th>
-                      <th scope="col">Status</th>
-                      <th scope="col">Ações</th>  
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <?php foreach ($query as $modelo) { ?>
-                    <tr>
-                      <td><?php echo  $modelo['id'] ?></td>
-                      <td><?php echo $modelo['nome_marca'] ?></td>
-                      <td><?php echo $modelo['nome_modelo'] ?></td>
-                      <td><?php echo $modelo['observacao'] ?></td>
-                      <td><?php echo date('d/m/Y', strtotime($modelo['data_cadastro'])) ?></td>
-                      <td>
-                        <?php 
-                          if ($modelo['status'] == 0){
-                            echo '<span class="badge badge-pill badge-danger">Inativo</span>';
-                          } else {
-                            echo '<span class="badge badge-pill badge-success">Ativo</span>';
-                          }
-                        ?>
-                      </td>
-                      <td>
-                        <a href="#" 
-                          class="btn btn-outline-success btn-sm btn-editar" 
-                          title="Editar"
-                          data-id="<?php echo $modelo['id'] ?>"
-                          data-id-marca="<?php echo $modelo['id_marca'] ?>"
-                          data-nome-modelo="<?php echo $modelo['nome_modelo'] ?>"
-                          data-observacao="<?php echo $modelo['observacao'] ?>"
-                          data-status="<?php echo $modelo['status'] ?>"
-                          data-bs-toggle="modal" 
-                          data-bs-target="#modelosModal">
-                          <i class="bi bi-pencil-square"></i>
-                        </a>
-                        <form action="acoes.php" method="post" class="d-inline">
-                          <button type="submit" class="btn btn-outline-danger btn-sm" title="Excluir" name="excluir_modelo" value="<?php echo $modelo['id'] ?>" onclick="return confirm('Tem certeza que deseja excluir?')">
-                            <i class="bi bi-trash3"></i>
-                          </button>
-                        </form>
-                      </td>
-                    </tr>
-                    <?php } ?>
-                  </tbody>
-                </table>
-              </div>
-            <?php
-              } else {
-                echo '<div class="alert alert-danger m-3" role="alert">Nenhum registro encontrado!</div>';
-              } 
-            ?>
+              <div id="listar"></div>
           </div>
         </div>
 
@@ -220,13 +158,13 @@
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js" integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y" crossorigin="anonymous"></script>
   <script>
-    function enableRegister(){
+    function enableRegister() {
       // Change modal title, disable status, hide save button and show register button.
       $("#modelosModalLabel").text("Cadastrar Modelo");
       $("#btnCadastrar").removeClass("d-none");
       $("#btnSalvar").addClass("d-none");
       $("#status").prop("disabled", true);
-      
+
       // Clear all fields.
       $("#id-modelo").val("");
       $("#marca-modelo").val("");
@@ -235,7 +173,7 @@
       $("#status").val("1");
     }
 
-    function enableEdit(btn){
+    function enableEdit(btn) {
       // Change modal title, enable status, show save button and hide register button.
       $("#modelosModalLabel").text("Editar Modelo");
       $("#btnCadastrar").addClass("d-none");
@@ -251,13 +189,45 @@
     }
 
     // Quando clicar no botão "Adicionar"
-    $("[data-bs-target='#modelosModal']").on("click", function(){
+    $("[data-bs-target='#modelosModal']").on("click", function() {
       enableRegister();
     });
 
     // Quando clicar no botão editar
-    $(document).on("click", ".btn-editar", function(){
+    $(document).on("click", ".btn-editar", function() {
       enableEdit(this);
+    });
+
+    // AJAX (FUNÇÃO PARA LISTAR OS FUNCIONÁRIOS)
+    function updateTableWithFilters(nome_marca, nome_modelo, status){
+      console.log(`${nome_marca}, ${nome_modelo}, ${status}`)
+      $.ajax({
+        url: 'table.php',
+        method: 'POST',
+        data: {
+          nome_marca,
+          nome_modelo,
+          status
+        },
+        dataType: 'html',
+        success: function(response){
+          $("#listar").html(response);
+        }
+      })
+    }
+
+    // AJAX (Função para aplicar o filtro)
+    function applyFilters() {
+      let nome_modelo = $("#nome-modelo-filter").val();
+      let nome_marca = $("#nome-marca").val();
+      let status = $("#status-filter").val();
+
+      console.log(`${$("#nome-marca").val()}`)
+      updateTableWithFilters(nome_marca, nome_modelo, status);
+    }
+
+    $(document).ready(function(){
+      applyFilters();
     });
   </script>
 
