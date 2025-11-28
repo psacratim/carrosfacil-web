@@ -84,81 +84,22 @@
               </div>
             </div>
 
-            <?php 
-              $sql = "SELECT id, nome, descricao, icone, data_cadastro, status FROM caracteristica;";
-              $query = mysqli_query($conexao, $sql);
-
-              if (mysqli_num_rows($query) > 0) {
-            ?>
-
             <div class="card-body">
               <div class="row">
                 <div class="col-4">
-                  <form action="">
-                    <input type="search" name="pesquisa" id="pesquisa" class="form-control" placeholder="Nome do acessório">
-                  </form>
+                  <input onkeyup="applyFilters()" type="text" name="nome-filter" id="nome-filter" class="form-control" placeholder="Nome da característica">
+                </div>
+                <div class="col-2">
+                  <select onchange="applyFilters()" name="status-filter" id="status-filter" class="form-control">
+                    <option value="">Status</option>
+                    <option value="1">Ativo</option>
+                    <option value="0">Inativo</option>
+                  </select>
                 </div>
               </div>
             </div>
 
-            <div class="card-body p-0">
-              <table class="table m-0">
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>Ícone</th>
-                    <th>Nome</th>
-                    <th>Descrição</th>
-                    <th>Status</th>
-                    <th>Ações</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <?php foreach($query as $caracteristica) { ?>
-                    <tr>
-                      <td><?php echo $caracteristica['id'] ?></td>
-                      <td>
-                        <img class="icone-tabela" src="../../images/<?php echo $caracteristica['icone']; ?>" alt="">
-                      </td>
-                      <td><?php echo htmlspecialchars($caracteristica['nome']); ?></td>
-                      <td><?php echo htmlspecialchars($caracteristica['descricao']); ?></td>
-                      <td>
-                        <?php 
-                          if ($caracteristica['status'] == 0){
-                            echo '<span class="badge badge-pill badge-danger">Inativo</span>';
-                          } else {
-                            echo '<span class="badge badge-pill badge-success">Ativo</span>';
-                          }
-                        ?>
-                      </td>
-                      <td>
-                        <button type="button" 
-                                class="btn btn-outline-success btn-sm editar-btn"
-                                data-id="<?php echo $caracteristica['id']; ?>"
-                                data-nome="<?php echo htmlspecialchars($caracteristica['nome']); ?>"
-                                data-descricao="<?php echo htmlspecialchars($caracteristica['descricao']); ?>"
-                                data-icone="<?php echo htmlspecialchars($caracteristica['icone']); ?>"
-                                data-status="<?php echo $caracteristica['status']; ?>"
-                                title="Editar">
-                          <i class="bi bi-pencil-square"></i>
-                        </button>
-
-                        <form action="actions.php" method="post" class="d-inline">
-                          <button type="submit" class="btn btn-outline-danger btn-sm" title="Excluir" name="excluir_caracteristica" value="<?php echo $caracteristica['id'] ?>" onclick="return confirm('Tem certeza que deseja excluir?')">
-                            <i class="bi bi-trash3"></i>
-                          </button>
-                        </form>
-                      </td>
-                    </tr>
-                  <?php } ?>
-                </tbody>
-              </table>
-            </div>
-            <?php
-              } else {
-                echo '<div class="alert alert-danger m-3" role="alert">Nenhum registro encontrado!</div>';
-              } 
-            ?>
+            <div id="listar"></div>
           </div>
         </div>
       </main>
@@ -255,6 +196,34 @@
         };
         reader.readAsDataURL(file);
       }
+    });    
+    
+    // AJAX (FUNÇÃO PARA LISTAR OS FUNCIONÁRIOS)
+    function updateTableWithFilters(nome, status){
+      $.ajax({
+        url: 'table.php',
+        method: 'POST',
+        data: {
+          nome,
+          status
+        },
+        dataType: 'html',
+        success: function(response){
+          $("#listar").html(response);
+        }
+      })
+    }
+
+    // AJAX (Função para aplicar o filtro)
+    function applyFilters() {
+      let nome = $("#nome-filter").val();
+      let status = $("#status-filter").val();
+
+      updateTableWithFilters(nome, status);
+    }
+
+    $(document).ready(function(){
+      applyFilters();
     });
   </script>
 </body>

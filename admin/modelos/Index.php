@@ -200,7 +200,6 @@ require_once("../../conexao/conecta.php")
 
     // AJAX (FUNÇÃO PARA LISTAR OS FUNCIONÁRIOS)
     function updateTableWithFilters(nome_marca, nome_modelo, status){
-      console.log(`${nome_marca}, ${nome_modelo}, ${status}`)
       $.ajax({
         url: 'table.php',
         method: 'POST',
@@ -222,7 +221,6 @@ require_once("../../conexao/conecta.php")
       let nome_marca = $("#nome-marca").val();
       let status = $("#status-filter").val();
 
-      console.log(`${$("#nome-marca").val()}`)
       updateTableWithFilters(nome_marca, nome_modelo, status);
     }
 

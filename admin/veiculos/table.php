@@ -2,34 +2,34 @@
 require_once("../../conexao/conecta.php");
 
 $sql = "
-SELECT funcionario.id, funcionario.nome AS nome_funcionario, cargo.nome AS nome_cargo, funcionario.cpf, funcionario.salario, funcionario.sexo, funcionario.data_nascimento, funcionario.tipo_acesso, funcionario.telefone_recado, funcionario.email, funcionario.foto, funcionario.data_cadastro, funcionario.status
-FROM funcionario
-INNER JOIN cargo ON cargo.id = funcionario.id_cargo
+SELECT veiculo.id, modelo.nome 'modelo', veiculo.categoria, veiculo.estado_do_veiculo, veiculo.preco_venda, veiculo.preco_desconto, veiculo.estoque, veiculo.data_cadastro, veiculo.status
+FROM veiculo
+INNER JOIN modelo ON modelo.id = veiculo.id_modelo
 ";
-$cpf = $_POST['cpf'] ?? "";
-$nome = $_POST['nome'];
-$sexo = $_POST['sexo'];
-$data_nascimento = $_POST['data_nascimento'] ?? "";
+$id = $_POST['id'] ?? "";
+$model = $_POST['model'];
+$category = $_POST['category'];
+$states = $_POST['states'] ?? "";
 $status = $_POST['status'];
 $conditions = [];
 
-if ($cpf !== "") {
-    $conditions[] = "cpf LIKE '%$cpf%'";
+if ($id !== "") {
+    $conditions[] = "veiculo.id = $id";
 }
 
-if ($nome !== "") {
-    $conditions[] = "funcionario.nome LIKE '%$nome%'";
+if ($model !== "") {
+    $conditions[] = "modelo.nome LIKE '%$model%'";
 }
 
-if ($sexo !== "") {
-    $conditions[] = "sexo = '$sexo'";
+if ($category !== "") {
+    $conditions[] = "veiculo.categoria = '$category'";
 }
 
-if ($data_nascimento !== "") {
-    $conditions[] = "data_nascimento = '$data_nascimento'";
+if ($states !== "") {
+    $conditions[] = "veiculo.estado_do_veiculo = '$states'";
 }
 if ($status !== "") {
-    $conditions[] = "funcionario.status = $status";
+    $conditions[] = "veiculo.status = $status";
 }
 
 if (!empty($conditions)) {
