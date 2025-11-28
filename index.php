@@ -68,7 +68,7 @@ require_once("./conexao/conecta.php")
                 <p>Veículos usados, semi-novos e novos com as melhores condições do mercado</p>
 
                 <form action="" id="form-search-car">
-                    <input class="input" type="text" name="search_value" id="search-value" placeholder="Digite a marca, modelo ou ano...">
+                    <input onkeydown="applyFilters()" class="input" type="text" name="search_value" id="search-value" placeholder="Digite a marca, modelo ou ano...">
                     <button class="button" type="submit">
                         <i class="bi bi-search"></i>
                         Buscar
@@ -89,27 +89,27 @@ require_once("./conexao/conecta.php")
 
                     <div class="filter-item">
                         <label for="search_value">Buscar</label>
-                        <input class="default" type="text" name="search_value" id="search_value" placeholder="Digite a marca, modelo ou ano...">
+                        <input onkeydown="applyFilters()" class="default" type="text" name="search_value" id="search_value" placeholder="Digite a marca, modelo ou ano...">
                     </div>
 
                     <div class="filter-item">
                         <label for="category">Categoria</label>
-                        <select class="form-select default" name="category" id="category">
-                            <option selected>- Todas as categorias -</option>
-                            <?php 
-                                $sql = "SELECT DISTINCT categoria FROM veiculo";
-                                $query = mysqli_query($conexao, $sql);
-                                foreach ($query as $veiculo){
-                                    echo "<option value='". $veiculo['categoria'] ."'>". $veiculo['categoria'] ."</option>";
-                                }
+                        <select onchange="applyFilters()" class="form-select default" name="category" id="category">
+                            <option value="" selected>- Todas as categorias -</option>
+                            <?php
+                            $sql = "SELECT DISTINCT categoria FROM veiculo";
+                            $query = mysqli_query($conexao, $sql);
+                            foreach ($query as $veiculo) {
+                                echo "<option value='" . $veiculo['categoria'] . "'>" . $veiculo['categoria'] . "</option>";
+                            }
                             ?>
                         </select>
                     </div>
 
                     <div class="filter-item">
                         <label for="condition">Condição</label>
-                        <select class="form-select default" name="condition" id="condition">
-                            <option selected>- Todas as condicoes -</option>
+                        <select onchange="applyFilters()" class="form-select default" name="condition" id="condition">
+                            <option value="" selected>- Todas as condicoes -</option>
                             <option value="Novo">Novo</option>
                             <option value="Semi-novo">Semi-novo</option>
                             <option value="Usado">Usado</option>
@@ -118,155 +118,66 @@ require_once("./conexao/conecta.php")
 
                     <div class="filter-item">
                         <label for="brand">Marca</label>
-                        <select class="form-select default" name="brand" id="brand">
-                            <option selected>- Todas as marcas -</option>
-                            <?php 
-                                $sql = "SELECT veiculo.id_marca, marca.nome 'nome_marca' FROM veiculo INNER JOIN marca ON marca.id = veiculo.id_marca;";
-                                $query = mysqli_query($conexao, $sql);
-                                foreach ($query as $veiculo){
-                                    echo "<option value='". $veiculo['id_marca'] ."'>". $veiculo['nome_marca'] ."</option>";
-                                }
+                        <select onchange="applyFilters()" class="form-select default" name="brand" id="brand">
+                            <option value="" selected>- Todas as marcas -</option>
+                            <?php
+                            $sql = "SELECT id, nome FROM marca WHERE status = 1";
+                            $query = mysqli_query($conexao, $sql);
+                            foreach ($query as $marca) {
+                                echo "<option value='" . $marca['id'] . "'>" . $marca['nome'] . "</option>";
+                            }
                             ?>
                         </select>
                     </div>
 
                     <div class="filter-item">
                         <label for="fuel">Tipo de combustível</label>
-                        <select class="form-select default" name="fuel" id="fuel">
-                            <option selected>- Todos os tipos -</option>
-                            <option value="test">SUVs</option>
+                        <select onchange="applyFilters()" class="form-select default" name="fuel" id="fuel">
+                            <option value="" selected>- Todos os tipos -</option>    
+                            <option value="Gasolina">Gasolina</option>
+                            <option value="Etanol">Etanol</option>
+                            <option value="Flex">Flex</option>
+                            <option value="Diesel">Diesel</option>
+                            <option value="Elétrico">Elétrico</option>
+                            <option value="GNV (Gás Natural Veicular)">GNV (Gás Natural Veicular)</option>
                         </select>
                     </div>
 
                     <div class="filter-item">
                         <label for="gearbox">Câmbio</label>
-                        <select class="form-select default" name="gearbox" id="gearbox">
-                            <option selected>- Todas os câmbios -</option>
-                            <option value="test">SUVs</option>
+                        <select onchange="applyFilters()" class="form-select default" name="gearbox" id="gearbox">
+                            <option value="" selected>- Todas os câmbios -</option>
+                            <option value="Manual">Manual</option>
+                            <option value="Automático T.">Automático Tradicional</option>
+                            <option value="CVT">CVT</option>
+                            <option value="Auto. Mono-Emb.">Automatizado (Monoembreagem)</option>
+                            <option value="DCT">DCT (Automático de Dupla Embreagem)</option>
                         </select>
                     </div>
 
                     <div class="filter-item">
                         <label for="mileage">Quilômetragem Máxima</label>
-                        <input class="default" type="text" name="mileage" id="mileage" placeholder="Ex: 50.000">
+                        <input onkeydown="applyFilters()" class="default" type="text" name="mileage" id="mileage" placeholder="Ex: 50.000">
+                    </div>
+
+                    <div class="filter-item">
+                        <label for="year">Ano</label>
+                        <input onkeydown="applyFilters()" class="default" type="text" name="ano" id="ano" placeholder="Ex: 2025">
                     </div>
 
                     <div class="filter-item">
                         <label for="price_range">Faixa de Preço</label>
-                        <input type="range" class="form-range" min="0" max="10.000.000" id="price_range">
+                        <input onkeydown="applyFilters()" type="range" class="form-range" min="0" max="10000000" value="10000000" id="price_range">
                         <div class="range-info">
                             <span>R$0</span>
                             <span>R$10.000.000</span>
                         </div>
                     </div>
-
-                    <div class="filter-item">
-                        <label for="year">Ano</label>
-                        <input type="range" class="form-range" min="1920" max="2025" id="year">
-                        <div class="range-info">
-                            <span>1920</span>
-                            <span>2025</span>
-                        </div>
-                    </div>
                 </aside>
-                <section id="sect-vehicles-list">
-                    <?php
-                    $sql = "
-                        SELECT veiculo.id, modelo.nome 'nome_modelo', veiculo.tem_desconto, veiculo.desconto, veiculo.ano, veiculo.kms_rodado, veiculo.tipo_combustivel, veiculo.tipo_cambio, veiculo.preco_venda, veiculo.preco_desconto, veiculo.foto, veiculo.status, veiculo.descricao FROM veiculo
-                        INNER JOIN modelo ON modelo.id = veiculo.id_modelo;
-                        ";
-                    $query = mysqli_query($conexao, $sql);
-                    $num_rows = mysqli_num_rows($query);
-                    ?>
-                    <div class="header">
-                        <h2>Nossos veículos</h2>
-                        <div class="vehicles-counter">
-                            <?php echo $num_rows ?> veículos encontrados
-                        </div>
-                    </div>
-
-                    <div class="list">
-                        <?php
-                        if ($num_rows > 0) {
-                            foreach ($query as $veiculo) {
-                        ?>
-                                <div class="vehicle-card col-4">
-                                    <div class="header">
-                                        <?php
-                                        if ($veiculo['status'] == 0) {
-                                            echo '<div class="status bg-danger">Indisponível</div>';
-                                        } else {
-                                            echo '<div class="status">Disponível</div>';
-                                        }
-                                        ?>
-                                        <?php
-                                        if ($veiculo['tem_desconto']) {
-                                            echo '<div class="discount"><i class="bi bi-tag"></i>-'. $veiculo['desconto'] .'%</div>';
-                                        }
-                                        ?>
-                                    </div>
-                                    <?php 
-                                    
-                                    ?>
-                                    <img src="./images/<?php echo $veiculo['foto'] ?>" class="img-fluid">
-                                    <h4>
-                                        <?php echo $veiculo['nome_modelo']?>
-                                    </h4>
-                                    <div class="infos">
-                                        <div class="info w-25">
-                                            <i class="bi bi-calendar3"></i>
-                                            <?php echo $veiculo['ano'] ?>
-                                        </div>
-                                        <div class="info w-75 text-end">
-                                            <i class="bi bi-gear"></i>
-                                            <?php echo $veiculo['tipo_cambio'] ?>
-                                        </div>
-                                        <div class="info">
-                                            <i class="bi bi-fuel-pump text-start"></i>
-                                            <?php echo $veiculo['tipo_combustivel'] ?>
-                                        </div>
-                                        <!-- <div class="info d-flex justify-content-between text-end align-items-center"> -->
-                                        <div class="info text-end">
-                                            <i class="bi bi-speedometer"></i>
-                                            <?php 
-                                            if ($veiculo['kms_rodado'] > 0){
-                                            echo number_format($veiculo['kms_rodado'], 0, ',', '.');
-                                            } else echo 'Zero';
-                                            ?>
-                                        </div>
-                                    </div>
-
-                                    <div class="tags">
-                                        <div class="tag">
-                                            USADO
-                                        </div>
-                                        <div class="tag">
-                                            SUV
-                                        </div>
-                                    </div>
-
-                                    <?php 
-                                    if ($veiculo['tem_desconto']) {
-                                        echo "<div class='price-discount'>";
-                                        echo "<span class='discount'>R$". number_format($veiculo['preco_venda'], 2, ',', '.') ."</span>";
-                                        echo "<span class='current'>R$". number_format($veiculo['preco_desconto'], 2, ',', '.') ."</span>";
-                                        echo "</div>";
-                                    } else {
-                                        echo "<div class='price-normal'>";
-                                        echo "<span class='current'>R$ ". number_format($veiculo['preco_venda'], 2, ',', '.') ."</span>";
-                                        echo "</div>";
-                                    }
-                                    ?>
-
-                                    <a href="#" class="view-more">Saber Mais</a>
-                                </div>
-                        <?php
-                            }
-                        }
-                        ?>
-                    </div>
-                </section>
+                <section id="sect-vehicles-list"></section>
             </div>
+        </section>
+        </div>
         </section>
         <div id="sect-data">
             <div class="row">
@@ -295,15 +206,53 @@ require_once("./conexao/conecta.php")
         </div>
     </footer>
     <!-- BOOTSTRAP -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js"
-        integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y"
-        crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+    <script>
+        // AJAX (FUNÇÃO PARA LISTAR OS FUNCIONÁRIOS)
+        function updateTableWithFilters(search_value, category, condition, brand, fuel, gearbox, mileage, price_range, year) {
+            $.ajax({
+                url: 'vehicle-list.php',
+                method: 'POST',
+                data: {
+                    search_value,
+                    category,
+                    condition,
+                    brand,
+                    fuel,
+                    gearbox,
+                    mileage,
+                    price_range,
+                    year
+                },
+                dataType: 'html',
+                success: function(response) {
+                    $("#sect-vehicles-list").html(response);
+                }
+            })
+        }
+
+        // AJAX (Função para aplicar o filtro)
+        function applyFilters() {
+            let search_value = $("#search_value").val();
+            let category = $("#category").val();
+            let condition = $("#condition").val();
+            let brand = $("#brand").val();
+            let fuel = $("#fuel").val();
+            let gearbox = $("#gearbox").val();
+            let mileage = $("#mileage").val();
+            let price_range = $("#price_range").val();
+            let year = $("#year").val();
+
+            updateTableWithFilters(search_value, category, condition, brand, fuel, gearbox, mileage, price_range, year);
+        }
+
+        $(document).ready(function() {
+            applyFilters();
+        });
+    </script>
 </body>
 
 </html>
