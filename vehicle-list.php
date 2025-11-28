@@ -46,6 +46,7 @@ if ($mileage !== "") {
 }
 if ($price_range !== "") {
     $conditions[] = "veiculo.preco_venda BETWEEN 0 AND $price_range";
+    $conditions[] = "veiculo.preco_desconto BETWEEN 0 AND $price_range";
 }
 if ($year !== "") {
     $conditions[] = "veiculo.ano = $year";
@@ -111,7 +112,7 @@ $num_rows = mysqli_num_rows($query);
                         <?php
                         if ($veiculo['kms_rodado'] > 0) {
                             echo number_format($veiculo['kms_rodado'], 0, ',', '.');
-                        } else echo 'Zero';
+                        } else echo 'Zero KM';
                         ?>
                     </div>
                 </div>

@@ -68,7 +68,7 @@ require_once("./conexao/conecta.php")
                 <p>Veículos usados, semi-novos e novos com as melhores condições do mercado</p>
 
                 <form action="" id="form-search-car">
-                    <input onkeydown="applyFilters()" class="input" type="text" name="search_value" id="search-value" placeholder="Digite a marca, modelo ou ano...">
+                    <input onkeyup="applyFilters()" class="input" type="text" name="search_value" id="search-value" placeholder="Digite a marca, modelo ou ano...">
                     <button class="button" type="submit">
                         <i class="bi bi-search"></i>
                         Buscar
@@ -89,7 +89,7 @@ require_once("./conexao/conecta.php")
 
                     <div class="filter-item">
                         <label for="search_value">Buscar</label>
-                        <input onkeydown="applyFilters()" class="default" type="text" name="search_value" id="search_value" placeholder="Digite a marca, modelo ou ano...">
+                        <input onkeyup="applyFilters()" class="default" type="text" name="search_value" id="search_value" placeholder="Digite a marca, modelo ou ano...">
                     </div>
 
                     <div class="filter-item">
@@ -157,17 +157,17 @@ require_once("./conexao/conecta.php")
 
                     <div class="filter-item">
                         <label for="mileage">Quilômetragem Máxima</label>
-                        <input onkeydown="applyFilters()" class="default" type="text" name="mileage" id="mileage" placeholder="Ex: 50.000">
+                        <input onkeyup="applyFilters()" class="default" type="text" name="mileage" id="mileage" placeholder="Ex: 50.000">
                     </div>
 
                     <div class="filter-item">
                         <label for="year">Ano</label>
-                        <input onkeydown="applyFilters()" class="default" type="text" name="ano" id="ano" placeholder="Ex: 2025">
+                        <input onkeyup="applyFilters()" class="default" type="text" name="year" id="year" placeholder="Ex: 2025">
                     </div>
 
                     <div class="filter-item">
                         <label for="price_range">Faixa de Preço</label>
-                        <input onkeydown="applyFilters()" type="range" class="form-range" min="0" max="10000000" value="10000000" id="price_range">
+                        <input onchange="applyFilters()" type="range" class="form-range" min="0" max="10000000" value="10000000" id="price_range">
                         <div class="range-info">
                             <span>R$0</span>
                             <span>R$10.000.000</span>
