@@ -3,7 +3,7 @@ require_once("../../conexao/conecta.php");
 require_once("../../Components/Table.php");
 
 // Query base que vai ser usada abaixo
-$query = "SELECT id, nome, observacao, icone, data_cadastro, status FROM caracteristica";
+$query = "SELECT id, nome 'name', observacao 'observation', icone 'icon', data_cadastro 'createdAt', status FROM caracteristica";
 
 $name = $_POST["name"] ?? "";
 $status = $_POST["status"] ?? "";
@@ -31,9 +31,9 @@ $result = mysqli_query($connection, $query);
 // Renderiza a tabela usando o componente padrão do sistema
 echo Table::render([
   "#" => "id",
-  "Ícone" => "icone",
-  "Nome" => "nome",
-  "Observação" => "observacao",
+  "Ícone" => "icon",
+  "Nome" => "name",
+  "Observação" => "observation",
   "Status" => "status"
 ], $result, [
   "entity" => "vitems",

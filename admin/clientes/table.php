@@ -9,7 +9,7 @@ if (!empty($_POST['name'])) $conditions[] = "nome LIKE '%".mysqli_real_escape_st
 if (!empty($_POST['cpf'])) $conditions[] = "cpf LIKE '%".mysqli_real_escape_string($connection, $_POST['cpf'])."%'";
 if (!empty($_POST['phone'])) $conditions[] = "telefone1 LIKE '%".mysqli_real_escape_string($connection, $_POST['phone'])."%'";
 if (!empty($_POST["gender"])) $conditions[] = "sexo = '".$_POST["gender"]."'";
-if (!empty($_POST['status']) && $_POST['status'] !== "") $conditions[] = "status = " . (int)$_POST['status'];
+if (isset($_POST['status']) && $_POST['status'] !== "") $conditions[] = "status = " . (int)$_POST['status'];
 
 if (!empty($conditions)) $query .= " WHERE " . implode(" AND ", $conditions);
 $query .= " ORDER BY id ASC";

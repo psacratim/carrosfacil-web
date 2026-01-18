@@ -3,6 +3,7 @@ if (!isset($_SESSION)) {
   session_start();
 }
 require_once("../../conexao/conecta.php");
+require_once('../../Components/Sidebar.php');
 
 $isEditing = false;
 $saleData = null;
@@ -52,7 +53,6 @@ if (isset($_GET['id'])) {
       'method' => $pay['metodo'],
       'amount' => (float)$pay['valor_final'],
       'installments' => $pay['parcelas'],
-      'discount' => $pay['desconto']
     ];
   }
   $paymentsJson = json_encode($paymentsList);
@@ -120,7 +120,7 @@ $mockVehicles = mysqli_fetch_all(mysqli_query($connection, "SELECT v.id, m.nome,
 <body>
   <div class="container-fluid">
     <div class="row">
-      <?php require_once('../../Components/Sidebar.php'); ?>
+      <?php echo Sidebar("sell"); ?>
 
       <main class="col-lg-10">
         <header id="main-header" class="py-3 d-flex align-items-center justify-content-between gap-2 px-3">
@@ -266,7 +266,7 @@ $mockVehicles = mysqli_fetch_all(mysqli_query($connection, "SELECT v.id, m.nome,
                   <div class="mb-3">
                     <label class="small">Desconto (%)</label>
                     <input type="text" maxlength="3" data-mask="##0" id="sale-discount" name="saleDiscount" class="form-control"
-                      value="<?php echo $isEditing ? ($paymentsList[0]['discount'] ?? '') : ''; ?>">
+                      value="<?php echo $isEditing ? ($saleData['desconto'] ?? '') : ''; ?>">
                   </div>
 
                   <hr>
@@ -325,41 +325,51 @@ $mockVehicles = mysqli_fetch_all(mysqli_query($connection, "SELECT v.id, m.nome,
       updateCalculations();
     });
 
-    function initSearch(inputId, resultsId, searchType) {
-      $(`#${inputId}`).on('keyup', function() {
-        let term = $(this).val();
-        if (term.length > 2) {
-          $.get('search.php', {
-            type: searchType,
-            q: term
-          }, function(data) {
-            $(`#${resultsId}`).html(data).show();
-          });
+function initSearch(inputId, resultsId, searchType) {
+    // Esse timeout é um teste, resumindo, se eu esquecer:
+    // Ele espera x tempo pra enviar a solicitação, isso evita enviar solicitações muitas vezes, qunado o usuário nem parou de digitar ainda.
+    let timeout = null;
+
+    $(`#${inputId}`).on('input', function() {
+        clearTimeout(timeout);
+        
+        const query = $(this).val().trim();
+        const results = $(`#${resultsId}`);
+
+        if (query.length > 2) {
+            timeout = setTimeout(() => {
+                $.get('search.php', { 
+                    type: searchType, 
+                    q: query 
+                }, function(response) {
+                    results.html(response).show();
+                });
+            }, 300);
         } else {
-          $(`#${resultsId}`).hide();
+            results.hide().html('');
         }
-      });
-    }
+    });
+}
 
-    initSearch('customer-search', 'customer-results', 'cliente');
-    initSearch('seller-search', 'seller-results', 'vendedor');
-    initSearch('vehicle-search', 'vehicle-results', 'veiculo');
+    initSearch('customer-search', 'customer-results', 'customer');
+    initSearch('seller-search', 'seller-results', 'employee');
+    initSearch('vehicle-search', 'vehicle-results', 'vehicle');
 
-    function selecionarCliente(id, name) {
+    function selectCustomer(id, name) {
       $('#customer-id-hidden').val(id);
       $('#customer-search').val(name).addClass('field-selected');
       $('#customer-icon').html('<i class="bi bi-check-lg text-success"></i>');
       $('#customer-results').hide();
     }
 
-    function selecionarVendedor(id, name) {
+    function selectEmployee(id, name) {
       $('#seller-id-hidden').val(id);
       $('#seller-search').val(name).addClass('field-selected');
       $('#seller-icon').html('<i class="bi bi-check-lg text-success"></i>');
       $('#seller-results').hide();
     }
 
-    function selecionarVeiculo(id, name, price, stock) {
+    function selectVehicle(id, name, price, stock) {
       currentVehicle = {
         id: id,
         name: name,
@@ -498,8 +508,8 @@ $mockVehicles = mysqli_fetch_all(mysqli_query($connection, "SELECT v.id, m.nome,
       const vehicles = <?php echo json_encode($mockVehicles); ?>;
       if (customers.length === 0 || employees.length === 0 || vehicles.length === 0) return;
 
-      selecionarCliente(customers[0].id, customers[0].nome);
-      selecionarVendedor(employees[0].id, employees[0].nome);
+      selectCustomer(customers[0].id, customers[0].nome);
+      selectEmployee(employees[0].id, employees[0].nome);
 
       selectedItems = [{
         id: vehicles[0].id,

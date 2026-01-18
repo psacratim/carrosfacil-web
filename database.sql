@@ -146,6 +146,8 @@ CREATE TABLE `venda` (
   `id_funcionario` INT(4) NOT NULL,
   `id_cliente` INT(8) NOT NULL,
   `valor_total` DECIMAL(12, 2) NOT NULL,
+  `valor_desconto` DECIMAL(12, 2) NOT NULL,
+  `desconto` INT(3) DEFAULT 0,
   `data_cadastro` DATETIME NOT NULL,
   `status` BIT,
 
@@ -170,9 +172,7 @@ CREATE TABLE `pagamento_venda` (
   `id_venda` INT(11) NOT NULL,
   `metodo` VARCHAR(16) NOT NULL,
   `valor_final` DECIMAL(12, 2) NOT NULL,
-  `valor_desconto` DECIMAL(12, 2) NOT NULL,
   `parcelas` INT(2) NOT NULL,
-  `desconto` INT(3) DEFAULT 0,
   `status` BIT,
 
   FOREIGN KEY (`id_venda`) REFERENCES `venda` (`id`)

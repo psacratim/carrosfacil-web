@@ -22,8 +22,8 @@ $(function () {
         ["vitems"]: function (modal, trigger, isEdit) {
             // Get data from clicked button. If exists.
             let id = $(trigger).attr("data-id") || "";
-            let name = $(trigger).attr("data-nome") || "";
-            let observation = $(trigger).attr("data-descricao") || "";
+            let name = $(trigger).attr("data-name") || "";
+            let observation = $(trigger).attr("data-observation") || "";
             let icon = $(trigger).attr("data-icone") || null;
             let status = $(trigger).attr("data-status") || 1;
 
@@ -56,8 +56,8 @@ $(function () {
         ["cargos"]: function (modal, trigger, isEdit) {
             // Get data from clicked button. If exists.
             let id = $(trigger).attr("data-id") || "";
-            let name = $(trigger).attr("data-nome") || "";
-            let observation = $(trigger).attr("data-observacao") || "";
+            let name = $(trigger).attr("data-name") || "";
+            let observation = $(trigger).attr("data-observation") || "";
             let status = $(trigger).attr("data-status") || 1;
 
             // Get components
@@ -81,9 +81,10 @@ $(function () {
             inputTitle.text(titles["cargos"][isEdit]);
         },
         ["marcas"]: function (modal, trigger, isEdit) {
+            console.log('boa pa nois')
             let id = $(trigger).attr("data-id") || "";
-            let name = $(trigger).attr("data-nome") || "";
-            let observation = $(trigger).attr("data-observacao") || "";
+            let name = $(trigger).attr("data-name") || "";
+            let observation = $(trigger).attr("data-observation") || "";
             let status = $(trigger).attr("data-status") || 1;
 
             const inputTitle = $(modal.find('.modal-title')[0]);
@@ -105,15 +106,18 @@ $(function () {
         },
         ["modelos"]: function (modal, trigger, isEdit) {
             let id = $(trigger).attr("data-id") || "";
-            let name = $(trigger).attr("data-nome") || "";
+            let name = $(trigger).attr("data-name") || "";
+            let observation = $(trigger).attr("data-observation") || "";
             let idMarca = $(trigger).attr("data-id_marca") || "";
             let status = $(trigger).attr("data-status") || 1;
 
             const inputTitle = $(modal.find('.modal-title')[0]);
             const inputName = modal.find("#name");
+            const inputObservation = modal.find("#observation");
             const inputMarca = modal.find("#id_marca");
 
             inputName.val(name);
+            inputObservation.val(observation);
             inputMarca.val(idMarca);
 
             if (isEdit) {
@@ -156,8 +160,6 @@ $(function () {
         const isEdit = clickedBtn.classList.contains("open-edit-modal");
         const entity = $(clickedBtn).attr('data-entity')
 
-        console.log(clickedBtn);
-        console.log(entity);
         loaders[entity]($(this), clickedBtn, isEdit)
     });
 });

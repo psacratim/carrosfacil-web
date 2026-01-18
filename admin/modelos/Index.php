@@ -6,6 +6,7 @@ if (!isset($_SESSION)) {
 require_once("../../conexao/conecta.php");
 require_once("../../Components/FormModal.php");
 require_once("../../Components/Table.php");
+require_once('../../Components/Sidebar.php');
 
 // Buscamos as marcas ativas para popular o select do modal de cadastro/edição
 $queryMarcas = "SELECT id, nome FROM marca WHERE status = 1 ORDER BY nome ASC";
@@ -34,7 +35,7 @@ while ($marca = mysqli_fetch_assoc($resultMarcas)) {
 <body>
   <div class="container-fluid">
     <div class="row">
-      <?php require_once('../../Components/Sidebar.php'); ?>
+      <?php echo Sidebar("model"); ?>
 
       <main class="col-lg-10">
         <header id="admin-header" class="py-3 d-flex align-items-center justify-content-between gap-2 px-3">
@@ -59,11 +60,14 @@ while ($marca = mysqli_fetch_assoc($resultMarcas)) {
 
             <div class="card-body">
               <div class="row g-3">
-                <div class="col-md-3">
-                  <input onkeyup="applyFilters()" type="text" id="name-brand-filter" class="form-control" placeholder="Filtrar por Marca">
+                <div class="col-md-2">
+                  <input onkeyup="applyFilters()" type="text" id="id-filter" class="form-control" placeholder="Filtrar por código">
                 </div>
-                <div class="col-md-3">
-                  <input onkeyup="applyFilters()" type="text" id="model-name-filter" class="form-control" placeholder="Filtrar por Modelo">
+                <div class="col-md-4">
+                  <input onkeyup="applyFilters()" type="text" id="brand-filter" class="form-control" placeholder="Filtrar por Marca">
+                </div>
+                <div class="col-md-4">
+                  <input onkeyup="applyFilters()" type="text" id="model-filter" class="form-control" placeholder="Filtrar por Modelo">
                 </div>
                 <div class="col-md-2">
                   <select onchange="applyFilters()" id="status-filter" class="form-control">
@@ -108,11 +112,11 @@ while ($marca = mysqli_fetch_assoc($resultMarcas)) {
   <script src="../../assets/js/components/sidebar.js"></script>
 
   <script>
-    function updateTableWithFilters(nameBrand, model_name, status) {
+    function updateTableWithFilters(id, nameBrand, nameModel, status) {
       $.ajax({
         url: 'table.php',
         method: 'POST',
-        data: { nameBrand, model_name, status },
+        data: { id, nameBrand, nameModel, status },
         success: function(response) {
           $("#table-target").html(response);
         }
@@ -121,8 +125,9 @@ while ($marca = mysqli_fetch_assoc($resultMarcas)) {
 
     function applyFilters() {
       updateTableWithFilters(
-        $("#name-brand-filter").val(),
-        $("#model-name-filter").val(),
+        $("#id-filter").val(),
+        $("#brand-filter").val(),
+        $("#model-filter").val(),
         $("#status-filter").val()
       );
     }

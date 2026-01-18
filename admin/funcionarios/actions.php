@@ -37,7 +37,7 @@
     $isEditing = ($id > 0);
 
     // Coleta e Sanitização baseada no banco PT-BR
-    $role = !empty($_POST['role']) ? (int)$_POST['role'] : "NULL";
+    $role = isset($_POST['role']) ? (int)$_POST['role'] : "NULL";
     $cpf = mysqli_real_escape_string($connection, $_POST['cpf']);
     $rg = mysqli_real_escape_string($connection, $_POST['rg']);
     $name = mysqli_real_escape_string($connection, $_POST["name"]);
@@ -60,7 +60,7 @@
     $city = mysqli_real_escape_string($connection, $_POST["city"]);
     $state = mysqli_real_escape_string($connection, $_POST["state"]);
     $email = mysqli_real_escape_string($connection, $_POST['email']);
-    $status = (int)$_POST['status'];
+    $status = (int) ($_POST['status'] ?? 1);
 
     // Lógica da Foto
     $photoQuery = "";
@@ -73,7 +73,7 @@
 
     if ($isEditing) {
         $query = "UPDATE funcionario SET 
-            id_cargo = $role, cpf = '$cpf', rg = '$rg', nome = '$name', socialName = '$socialName', 
+            id_cargo = $role, cpf = '$cpf', rg = '$rg', nome = '$name', nome_social = '$socialName', 
             senha = '$password', salario = $salary, sexo = '$gender', usuario = '$username', 
             estado_civil = '$maritalStatus', data_nascimento = '$birthDate', tipo_acesso = '$accessType', 
             telefone_celular = '$cellPhone', telefone_recado = '$messagesPhone', telefone_residencial = '$homePhone', 

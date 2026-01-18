@@ -3,6 +3,7 @@ if (!isset($_SESSION)) {
   session_start();
 }
 require_once("../../conexao/conecta.php");
+require_once('../../Components/Sidebar.php');
 ?>
 <!doctype html>
 <html lang="pt-br">
@@ -21,7 +22,7 @@ require_once("../../conexao/conecta.php");
 <body>
   <div class="container-fluid">
     <div class="row">
-      <?php require_once('../../Components/Sidebar.php'); ?>
+      <?php echo Sidebar("vehicle"); ?>
 
       <main class="col-lg-10">
         <header id="admin-header" class="py-3 d-flex align-items-center justify-content-between gap-2 px-3">
@@ -47,10 +48,10 @@ require_once("../../conexao/conecta.php");
             <div class="card-body">
               <div class="row g-2">
                 <div class="col-md-1">
-                  <input onkeyup="applyFilters()" type="text" id="id-filter" class="form-control" placeholder="ID">
+                  <input onkeyup="applyFilters()" type="text" id="id-filter" class="form-control" placeholder="Código">
                 </div>
                 <div class="col-md-3">
-                  <input onkeyup="applyFilters()" type="text" id="model-filter" class="form-control" placeholder="Modelo ou Marca">
+                  <input onkeyup="applyFilters()" type="text" id="model-filter" class="form-control" placeholder="Filtrar por modelo">
                 </div>
                 <div class="col-md-3">
                   <select onchange="applyFilters()" id="category-filter" class="form-select">
@@ -58,7 +59,7 @@ require_once("../../conexao/conecta.php");
                     <option value="Hatchback">Hatchback</option>
                     <option value="Sedan">Sedan</option>
                     <option value="SUV">SUV</option>
-                    <option value="Pickup">Pickup</option>
+                    <option value="Pickup">Picape</option>
                     </select>
                 </div>
                 <div class="col-md-3">

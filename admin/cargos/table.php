@@ -5,22 +5,25 @@ require_once("../../Components/Table.php");
 // Query base buscando os cargos
 $query = "SELECT id, nome 'name', observacao 'observation', data_cadastro 'createdAt', status FROM cargo";
 
+$id = (int) $_POST['id'] ?? 0;
 $name = $_POST['name'] ?? "";
 $status = $_POST['status'] ?? "";
 $conditions = [];
 
-// Filtro por nome do cargo
+if ($id > 0) {
+    $id = mysqli_real_escape_string($connection, $id);
+    $conditions[] = "id = '$id'";
+}
+
 if ($name !== "") {
     $name = mysqli_real_escape_string($connection, $name);
     $conditions[] = "nome LIKE '%$name%'";
 }
 
-// Filtro por status
 if ($status !== "") {
     $conditions[] = "status = " . (int)$status;
 }
 
-// Montagem dinâmica da clausula WHERE
 if (!empty($conditions)) {
     $query .= " WHERE " . implode(" AND ", $conditions);
 }

@@ -49,7 +49,7 @@
     }
 
     if ($isEditing) {
-        $query = "UPDATE caracteristica SET nome = '$name', descricao = '$observation', status = $status $iconQuery WHERE id = $id";
+        $query = "UPDATE caracteristica SET nome = '$name', observacao = '$observation', status = $status $iconQuery WHERE id = $id";
         $successMessage = "Característica editada com sucesso!";
     } else {
         $iconFinal = !empty($iconName) ? $iconName : 'default.png';
@@ -67,7 +67,7 @@
     } catch (mysqli_sql_exception $e) {
         $_SESSION['messageType'] = 'error';
         $_SESSION['messageText'] = ($e->getCode() == 1062) ? "Erro: Esse nome já existe." : "Erro: Não foi possível salvar os dados, tente novamente.";
-    }
+        }
 
     header('Location: Index.php');
     exit;

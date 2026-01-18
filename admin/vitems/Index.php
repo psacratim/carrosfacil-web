@@ -7,6 +7,7 @@ if (!isset($_SESSION)) {
 require_once("../../conexao/conecta.php");
 require_once("../../Components/FormModal.php");
 require_once("../../Components/Table.php");
+require_once('../../Components/Sidebar.php');
 ?>
 <!doctype html>
 <html lang="pt-br">
@@ -26,7 +27,7 @@ require_once("../../Components/Table.php");
 <body>
   <div class="container-fluid">
     <div class="row">
-      <?php require_once('../../Components/Sidebar.php'); ?>
+      <?php echo Sidebar("items"); ?>
 
       <main class="col-lg-10">
         <header id="admin-header" class="py-3 d-flex align-items-center justify-content-between gap-2 px-3">

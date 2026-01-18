@@ -61,7 +61,7 @@ textarea {
 }
 
 .icone-preview,
-.icone-tabela {
+.table-icon {
     width: 100%;
     max-width: 128px;
     height: auto;
@@ -69,7 +69,7 @@ textarea {
     border-radius: 6px;
 }
 
-.icone-tabela {
+.table-icon {
     max-width: 32px;
 }
 
@@ -101,6 +101,24 @@ textarea {
 .error-input {
     border-color: red !important;
     box-shadow: 0 0 0 0.2rem rgba(253, 13, 13, 0.25) !important;
+}
+
+/* INDEX */
+.image-wrapper {
+    width: 100%;
+    height: 200px;
+    background-color: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: 8px 8px 0 0;
+}
+
+.image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 /* ADMIN HEADER */
@@ -181,9 +199,13 @@ textarea {
 
 
 .nav-custom-link:hover, 
-.nav-custom-link.active {
+.nav-custom-link.active,
+.submenu-link:hover, 
+.submenu-link.active {
     background-color: rgba(255, 255, 255, 0.1);
     color: white;
+
+    border-radius: 6;
 }
 
 
@@ -610,10 +632,39 @@ textarea {
 }
 
 /* Extra small devices (phones, 600px and down) */
-@media only screen and (max-width: 600px) {}
+@media only screen and (max-width: 600px) {
+    
+}
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (min-width: 600px) {}
+
+/* 990px é o máximo que o bootstrap aparece o "=", por isso é esse número */
+@media only screen and (max-width: 991px){
+    /* Quando o menu expande, forçamos um fundo sólido */
+    .navbar-collapse {
+        background-color: #ffffff !important; /* Ou a cor do seu site */
+        padding: 1rem;
+        border-radius: 10px;
+        margin-top: 10px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        z-index: 999;
+    }
+
+    /* Garante que os textos dos links fiquem visíveis sobre o fundo branco */
+    .navbar-nav .nav-link {
+        color: #333 !important;
+        text-align: center;
+        padding: 10px 0;
+    }
+    
+    /* Ajuste para os botões não ficarem colados no mobile */
+    .auth-content {
+        padding-top: 10px;
+        border-top: 1px solid #eee;
+        margin-top: 10px;
+    }
+}
 
 /* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (min-width: 768px) {

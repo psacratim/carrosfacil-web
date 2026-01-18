@@ -25,8 +25,8 @@ class Table
                                     <td>
                                         <?php
                                         // Lógica especial para tipos específicos
-                                        if ($field == 'icone') {
-                                            echo '<img class="icone-tabela" src="../../images/' . $row['icone'] . '" style="width:30px">';
+                                        if ($field == 'icon') {
+                                            echo '<img class="table-icon" src="../../images/' . $row['icon'] . '" style="width:30px">';
                                         } elseif ($field == 'status') {
                                             echo $row['status'] == 1
                                                 ? '<span class="badge text-bg-success">Ativo</span>'
@@ -60,7 +60,7 @@ class Table
                                     }
                                     ?>
                                     <form action="actions.php" method="post" class="d-inline">
-                                        <button type="submit" class="btn btn-outline-danger btn-sm" name="excluir" value="<?= $row['id'] ?>" onclick="return confirm('Excluir?')">
+                                        <button type="submit" class="btn btn-outline-danger btn-sm" name="delete" value="<?= $row['id'] ?>" onclick="return confirm('Excluir?')">
                                             <i class="bi bi-trash3"></i>
                                         </button>
                                     </form>

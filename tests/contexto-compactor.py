@@ -3,7 +3,7 @@ from pathlib import Path
 
 def gerar_contexto_ia():
     # Caminho relativo: saindo de /test/ para /admin/
-    diretorio_alvo = Path("../admin")
+    diretorio_alvo = Path("../")
     arquivo_saida = "CONTEXTO_GERAL.txt"
     
     # Extensões que queremos capturar

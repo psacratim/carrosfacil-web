@@ -11,7 +11,7 @@ if (!empty($_POST['id'])) $conditions[] = "v.id = " . (int)$_POST['id'];
 if (!empty($_POST['model'])) $conditions[] = "m.nome LIKE '%".mysqli_real_escape_string($connection, $_POST['model'])."%'";
 if (!empty($_POST['category'])) $conditions[] = "v.categoria = '".$_POST['category']."'";
 if (!empty($_POST['conditions'])) $conditions[] = "v.estado_do_veiculo = '".$_POST['conditions']."'";
-if (!empty($_POST['status']) && $_POST['status'] !== "") $conditions[] = "v.status = " . (int)$_POST['status'];
+if (isset($_POST['status']) && $_POST['status'] !== "") $conditions[] = "v.status = " . (int)$_POST['status'];
 
 if (!empty($conditions)) $query .= " WHERE " . implode(" AND ", $conditions);
 $query .= " ORDER BY v.id";

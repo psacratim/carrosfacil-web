@@ -1,5 +1,6 @@
 <?php
-require_once("./conexao/conecta.php")
+require_once("./conexao/conecta.php");
+require_once('./Components/Header.php');
 ?>
 
 <!DOCTYPE html>
@@ -28,9 +29,10 @@ require_once("./conexao/conecta.php")
 </head>
 
 <!-- A página é pequena, essas classes é pra ela ter o tamanho mínimo igual da tela, pro footer ficar certo. -->
+
 <body class="d-flex flex-column min-vh-100 m-0">
     <?php
-    include_once('./Components/Header.php');
+    echo HeaderComponent('login');
     ?>
 
     <div class="container flex-fill p-0 p-sm-3">
@@ -60,7 +62,7 @@ require_once("./conexao/conecta.php")
                         </div>
                     </div>
 
-                                        <div class="form-group mt-3">
+                    <div class="form-group mt-3">
                         <label for="input-confirm-password" class="text-c1 fw-bold mb-1">Confirmar senha</label>
                         <div class="input-group position-relative">
                             <div class="input-icon"><i class="bi bi-lock"></i></div>
@@ -89,12 +91,10 @@ require_once("./conexao/conecta.php")
     ?>
 
     <!-- BOOTSTRAP -->
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
-
         $(function() {
             $(".show-password").on('click', function() {
                 let passwordInput = $(this).parent().find('.input-password')[0];

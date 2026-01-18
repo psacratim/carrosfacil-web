@@ -3,9 +3,16 @@ require_once("../../conexao/conecta.php");
 require_once("../../Components/Table.php");
 
 $query = "SELECT id, nome 'name', observacao 'observation', data_cadastro 'createdAt', status FROM marca";
+
+$id = (int) $_POST['id'] ?? 0;
 $name = $_POST["name"] ?? "";
 $status = $_POST['status'] ?? "";
 $conditions = [];
+
+if ($id > 0) {
+    $id = mysqli_real_escape_string($connection, $id);
+    $conditions[] = "id = '$id'";
+}
 
 if ($name !== "") {
     $name = mysqli_real_escape_string($connection, $name);

@@ -3,6 +3,7 @@ if (!isset($_SESSION)) {
   session_start();
 }
 require_once("../../conexao/conecta.php");
+require_once('../../Components/Sidebar.php');
 require_once("../../Components/FormModal.php");
 ?>
 <!doctype html>
@@ -23,11 +24,11 @@ require_once("../../Components/FormModal.php");
 <body>
   <div class="container-fluid">
     <div class="row">
-      <?php require_once('../../Components/Sidebar.php'); ?>
+      <?php echo Sidebar("role"); ?>
 
       <main class="col-lg-10">
         <header id="admin-header" class="py-3 d-flex align-items-center justify-content-between gap-2 px-3">
-          <div id="left-info">GERENCIANDO - CARACTERÍSTICAS</div>
+          <div id="left-info">GERENCIANDO - CARGOS</div>
           <div id="right-info">
             <div id="current-time">AGORA</div>
           </div>
@@ -49,14 +50,17 @@ require_once("../../Components/FormModal.php");
 
             <div class="card-body">
               <div class="row">
-                <!-- CAMPO DE BUSCA -->
-                <div class="col-4">
-                  <input onkeyup="applyFilters()" type="search" name="search-filter" id="search-filter" class="form-control" placeholder="Nome do funcionário">
+                <div class="col-md-2">
+                  <input onkeyup="applyFilters()" type="text" name="id-filter" id="id-filter" class="form-control" placeholder="Filtrar por código">
                 </div>
 
-                <div class="col-2">
+                <div class="col-7">
+                  <input onkeyup="applyFilters()" type="search" name="search-filter" id="search-filter" class="form-control" placeholder="Filtrar por cargo">
+                </div>
+
+                <div class="col-3">
                   <select name="status-filter" id="status-filter" class="form-control" onchange="applyFilters()">
-                    <option value="">(Desativado) Status</option>
+                    <option value="">Status</option>
                     <option value="1">Ativo</option>
                     <option value="0">Inativo</option>
                   </select>
@@ -64,9 +68,7 @@ require_once("../../Components/FormModal.php");
               </div>
             </div>
 
-            <div id="table-target">
-                </div>
-            
+            <div id="table-target"></div>
           </div>
         </div>
       </main>
@@ -100,11 +102,12 @@ require_once("../../Components/FormModal.php");
   <!-- CUSTOM SCRIPTS -->
   <script>
     // AJAX (FUNÇÃO PARA LISTAR OS FUNCIONÁRIOS)
-    function updateTableWithFilters(name, status) {
+    function updateTableWithFilters(id, name, status) {
       $.ajax({
         url: './table.php',
         method: 'POST',
         data: {
+          id,
           name,
           status
         },
@@ -117,10 +120,7 @@ require_once("../../Components/FormModal.php");
 
     // AJAX (Função para aplicar o filtro)
     function applyFilters() {
-      let name = $("#search-filter").val();
-      let status = $("#status-filter").val();
-
-      updateTableWithFilters(name, status);
+      updateTableWithFilters($("#id-filter").val(), $("#search-filter").val(), $("#status-filter").val());
     }
 
     $(document).ready(function() {

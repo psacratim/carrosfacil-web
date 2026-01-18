@@ -16,7 +16,7 @@ $price_range = $_POST['price_range'] ?? "";
 $year = $_POST['year'] ?? "";
 $conditions = [];
 
-if ($search_value !== ""){    
+if ($search_value !== "") {
     $conditions[] = "(
         modelo.nome LIKE '%$search_value%' 
         OR marca.nome LIKE '%$search_value%' 
@@ -53,96 +53,94 @@ if ($year !== "") {
 }
 
 if (!empty($conditions)) {
-    $query .= " WHERE " . implode(" AND ", $conditions); // O implode é igual o String.join do java. Pega uma lista e converte pra string com um separator, sendo o 'AND' nesse caso.
+    $query .= " WHERE " . implode(" AND ", $conditions);
 }
 
 $result = mysqli_query($connection, $query);
 $num_rows = mysqli_num_rows($result);
 ?>
-<div class="header">
-    <h2>Nossos veículos</h2>
-    <div class="vehicles-counter">
-        <?php echo $num_rows ?> veículos encontrados
+
+<div class="col-12 mb-2">
+    <div class="d-flex justify-content-between align-items-center bg-white p-3 rounded shadow-sm">
+        <h5 class="fw-bold mb-0">Nossos veículos</h5>
+        <span class="badge bg-primary rounded-pill"><?php echo $num_rows ?> veículos</span>
     </div>
 </div>
 
-<div class="list">
-    <?php
-    if ($num_rows > 0) {
-        foreach ($result as $veiculo) {
-    ?>
-            <div class="vehicle-card col-4">
-                <div class="header">
-                    <?php
-                    if ($veiculo['status'] == 0) {
-                        echo '<div class="status bg-danger">Indisponível</div>';
-                    } else {
-                        echo '<div class="status">Disponível</div>';
-                    }
-                    ?>
-                    <?php
-                    if ($veiculo['tem_desconto']) {
-                        echo '<div class="discount"><i class="bi bi-tag"></i>-' . $veiculo['desconto'] . '%</div>';
-                    }
-                    ?>
-                </div>
-                <?php
+<?php
+if ($num_rows > 0) {
+    foreach ($result as $veiculo) {
+        $caminho_imagem = "./images/" . $veiculo['foto'];
+        $placeholder = './assets/img/placeholder-veiculo.avif';
+        $foto_final = (!empty($veiculo['foto']) && file_exists($caminho_imagem)) ? $caminho_imagem : $placeholder;
+?>
+        <div class="col-12 col-md-6 col-xl-4 d-flex align-items-stretch">
+            <div class="card w-100 border-0 shadow-sm vehicle-card-modern position-relative">
+                
+                <div class="position-absolute top-0 start-0 m-2 d-flex flex-column gap-1" style="z-index: 3;">
+                    <?php if ($veiculo['status'] == 0): ?>
+                        <span class="badge bg-danger">Indisponível</span>
+                    <?php else: ?>
+                        <span class="badge bg-success">Disponível</span>
+                    <?php endif; ?>
 
-                ?>
-                <img src="./images/<?php echo $veiculo['foto'] ?>" class="img-fluid">
-                <h4>
-                    <?php echo $veiculo['nome_modelo'] ?>
-                </h4>
-                <div class="infos">
-                    <div class="info w-25">
-                        <i class="bi bi-calendar3"></i>
-                        <?php echo $veiculo['ano'] ?>
-                    </div>
-                    <div class="info w-75 text-end">
-                        <i class="bi bi-gear"></i>
-                        <?php echo $veiculo['tipo_cambio'] ?>
-                    </div>
-                    <div class="info">
-                        <i class="bi bi-fuel-pump text-start"></i>
-                        <?php echo $veiculo['tipo_combustivel'] ?>
-                    </div>
-                    <!-- <div class="info d-flex justify-content-between text-end align-items-center"> -->
-                    <div class="info text-end">
-                        <i class="bi bi-speedometer"></i>
-                        <?php
-                        if ($veiculo['quilometragem'] > 0) {
-                            echo number_format($veiculo['quilometragem'], 0, ',', '.');
-                        } else echo 'Zero KM';
-                        ?>
-                    </div>
+                    <?php if ($veiculo['tem_desconto']): ?>
+                        <span class="badge bg-warning text-dark">
+                            <i class="bi bi-tag-fill"></i> -<?php echo $veiculo['desconto']; ?>%
+                        </span>
+                    <?php endif; ?>
                 </div>
 
-                <div class="tags">
-                    <div class="tag">
-                        USADO
-                    </div>
-                    <div class="tag">
-                        SUV
-                    </div>
+                <div class="vehicle-image-container">
+                    <img src="<?php echo $foto_final; ?>" class="card-img-top" alt="<?php echo htmlspecialchars($veiculo['nome_modelo']); ?>">
                 </div>
 
-                <?php
-                if ($veiculo['tem_desconto']) {
-                    echo "<div class='price-discount'>";
-                    echo "<span class='discount'>R$" . number_format($veiculo['preco_venda'], 2, ',', '.') . "</span>";
-                    echo "<span class='current'>R$" . number_format($veiculo['preco_desconto'], 2, ',', '.') . "</span>";
-                    echo "</div>";
-                } else {
-                    echo "<div class='price-normal'>";
-                    echo "<span class='current'>R$ " . number_format($veiculo['preco_venda'], 2, ',', '.') . "</span>";
-                    echo "</div>";
-                }
-                ?>
+                <div class="card-body p-3 d-flex flex-column">
+                    <div class="text-primary fw-bold small text-uppercase mb-1"><?php echo $veiculo['nome']; ?></div>
+                    <h5 class="card-title fw-bold text-dark mb-3"><?php echo $veiculo['nome_modelo'] ?></h5>
 
-                <a href="#" class="view-more">Saber Mais</a>
+                    <div class="row g-2 mb-3">
+                        <div class="col-6 small text-muted">
+                            <i class="bi bi-calendar3 text-primary me-1"></i> <?php echo $veiculo['ano'] ?>
+                        </div>
+                        <div class="col-6 small text-muted text-end">
+                            <i class="bi bi-gear text-primary me-1"></i> <?php echo $veiculo['tipo_cambio'] ?>
+                        </div>
+                        <div class="col-6 small text-muted">
+                            <i class="bi bi-fuel-pump text-primary me-1"></i> <?php echo $veiculo['tipo_combustivel'] ?>
+                        </div>
+                        <div class="col-6 small text-muted text-end">
+                            <i class="bi bi-speedometer text-primary me-1"></i> 
+                            <?php echo ($veiculo['quilometragem'] > 0) ? number_format($veiculo['quilometragem'], 0, ',', '.') . ' km' : 'Zero KM'; ?>
+                        </div>
+                    </div>
+
+                    <div class="mt-auto pt-3 border-top">
+                        <div class="price-section-container mb-3">
+                            <?php if ($veiculo['tem_desconto']): ?>
+                                <small class="text-muted text-decoration-line-through d-block old-price-height">
+                                    R$ <?php echo number_format($veiculo['preco_venda'], 2, ',', '.') ?>
+                                </small>
+                                <span class="h4 fw-bold text-success mb-0 d-block">
+                                    R$ <?php echo number_format($veiculo['preco_desconto'], 2, ',', '.') ?>
+                                </span>
+                            <?php else: ?>
+                                <small class="text-muted d-block old-price-height invisible">Placeholder</small>
+                                <span class="h4 fw-bold text-dark mb-0 d-block">
+                                    R$ <?php echo number_format($veiculo['preco_venda'], 2, ',', '.') ?>
+                                </span>
+                            <?php endif; ?>
+                        </div>
+                        <a href="Product.php?id=<?= $veiculo['id'] ?>" class="btn btn-primary w-100 fw-bold rounded-pill">
+                            Ver Detalhes
+                        </a>
+                    </div>
+                </div>
             </div>
-    <?php
-        }
+        </div>
+<?php
     }
-    ?>
-</div>
+} else {
+    echo '<div class="col-12 text-center py-5"><h4 class="text-muted">Nenhum veículo encontrado.</h4></div>';
+}
+?>

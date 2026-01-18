@@ -1,9 +1,14 @@
-<?php 
-if (!isset($_SESSION)) { session_start(); }
+<?php
+if (!isset($_SESSION)) {
+  session_start();
+}
+
 require_once("../../conexao/conecta.php");
+require_once('../../Components/Sidebar.php');
 ?>
 <!doctype html>
 <html lang="pt-br">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -14,15 +19,16 @@ require_once("../../conexao/conecta.php");
   <link rel="shortcut icon" href="../../assets/img/favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="../../custom/css/style.css">
 </head>
+
 <body>
-    
+
   <div class="container-fluid">
     <div class="row">
-      <?php require_once('../../Components/Sidebar.php'); ?>
+      <?php echo Sidebar("employee"); ?>
 
       <main class="col-lg-10">
         <header id="admin-header" class="py-3 d-flex align-items-center justify-content-between gap-2 px-3">
-          <div id="left-info">GERENCIANDO - QUADRO DE FUNCIONÁRIOS</div>
+          <div id="left-info">GERENCIANDO - FUNCIONÁRIOS</div>
           <div id="right-info">
             <div id="current-time">AGORA</div>
           </div>
@@ -58,7 +64,17 @@ require_once("../../conexao/conecta.php");
                   </select>
                 </div>
                 <div class="col-md-3">
-                  <input onchange="applyFilters()" type="date" id="birthDate-filter" class="form-control">
+                  <select onchange="applyFilters()" id="role-filter" class="form-select">
+                    <option value="">Cargo</option>
+                    <?php
+                    $query = "SELECT id, nome FROM cargo WHERE status = 1";
+                    $result = mysqli_execute_query($connection, $query);
+
+                    foreach ($result as $role) {
+                      echo '<option value="' . $role['id'] . '">' . $role['nome'] . '</option>';
+                    }
+                    ?>
+                  </select>
                 </div>
                 <div class="col-md-2">
                   <select onchange="applyFilters()" id="status-filter" class="form-select">
@@ -71,7 +87,7 @@ require_once("../../conexao/conecta.php");
             </div>
 
             <div id="table-target">
-                </div>
+            </div>
           </div>
         </div>
       </main>
@@ -93,7 +109,7 @@ require_once("../../conexao/conecta.php");
           name: $("#name-filter").val(),
           cpf: $("#cpf-filter").val(),
           gender: $("#gender-filter").val(),
-          nascimento: $("#birthDate-filter").val(),
+          role: $("#role-filter").val(),
           status: $("#status-filter").val()
         },
         success: function(response) {
@@ -107,4 +123,5 @@ require_once("../../conexao/conecta.php");
     });
   </script>
 </body>
+
 </html>

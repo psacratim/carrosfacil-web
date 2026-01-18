@@ -7,10 +7,16 @@ $query = "SELECT m.id, ma.nome 'nameBrand', m.nome 'name', m.observacao 'observa
         FROM modelo m 
         INNER JOIN marca ma ON m.id_marca = ma.id";
 
+$id = (int) $_POST['id'] ?? 0;
 $nameBrand = $_POST['nameBrand'] ?? "";
 $nameModel = $_POST['nameModel'] ?? "";
 $status = $_POST['status'] ?? "";
 $conditions = [];
+
+if ($id > 0) {
+    $id = mysqli_real_escape_string($connection, $id);
+    $conditions[] = "m.id = '$id'";
+}
 
 if ($nameBrand !== "") {
     $nameBrand = mysqli_real_escape_string($connection, $nameBrand);

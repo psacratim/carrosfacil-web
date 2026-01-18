@@ -3,6 +3,7 @@ if (!isset($_SESSION)) {
   session_start();
 }
 require_once("../../conexao/conecta.php");
+require_once('../../Components/Sidebar.php');
 ?>
 <!doctype html>
 <html lang="pt-br">
@@ -21,7 +22,7 @@ require_once("../../conexao/conecta.php");
 <body>
   <div class="container-fluid">
     <div class="row">
-      <?php require_once('../../Components/Sidebar.php'); ?>
+      <?php echo Sidebar("sell"); ?>
 
       <main class="col-lg-10">
         <header id="admin-header" class="py-3 d-flex align-items-center justify-content-between gap-2 px-3">

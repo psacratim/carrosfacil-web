@@ -6,6 +6,7 @@ if (!isset($_SESSION)) {
 require_once("../../conexao/conecta.php");
 require_once("../../Components/FormModal.php");
 require_once("../../Components/Table.php");
+require_once('../../Components/Sidebar.php');
 ?>
 <!doctype html>
 <html lang="pt-br">
@@ -25,7 +26,7 @@ require_once("../../Components/Table.php");
 <body>
   <div class="container-fluid">
     <div class="row">
-      <?php require_once('../../Components/Sidebar.php'); ?>
+      <?php echo Sidebar("brand"); ?>
 
       <main class="col-lg-10">
         <header id="admin-header" class="py-3 d-flex align-items-center justify-content-between gap-2 px-3">
@@ -50,10 +51,13 @@ require_once("../../Components/Table.php");
 
             <div class="card-body">
               <div class="row g-3">
-                <div class="col-md-4">
-                  <input onkeyup="applyFilters()" type="text" name="name-filter" id="name-filter" class="form-control" placeholder="Nome da marca">
-                </div>
                 <div class="col-md-2">
+                  <input onkeyup="applyFilters()" type="text" name="id-filter" id="id-filter" class="form-control" placeholder="Filtrar por código">
+                </div>
+                <div class="col-md-7">
+                  <input onkeyup="applyFilters()" type="text" name="name-filter" id="name-filter" class="form-control" placeholder="Filtrar por marca">
+                </div>
+                <div class="col-md-3">
                   <select onchange="applyFilters()" name="status-filter" id="status-filter" class="form-control">
                     <option value="">Status</option>
                     <option value="1">Ativo</option>
@@ -66,7 +70,7 @@ require_once("../../Components/Table.php");
             <div id="table-target">
                 <?php
                 // Listagem inicial
-                $query = "SELECT id, nome, observacao, data_cadastro, status FROM marca";
+                $query = "SELECT id, nome 'name', observacao 'observation', data_cadastro 'createdAt', status FROM marca";
                 $result = mysqli_query($connection, $query);
                 
                 echo Table::render([
@@ -111,11 +115,11 @@ require_once("../../Components/Table.php");
   <script src="../../assets/js/components/sidebar.js"></script>
 
   <script>
-    function updateTableWithFilters(name, status) {
+    function updateTableWithFilters(id, name, status) {
       $.ajax({
         url: 'table.php',
         method: 'POST',
-        data: { name, status },
+        data: { id, name, status },
         success: function(response) {
           $("#table-target").html(response);
         }
@@ -123,7 +127,7 @@ require_once("../../Components/Table.php");
     }
 
     function applyFilters() {
-      updateTableWithFilters($("#name-filter").val(), $("#status-filter").val());
+      updateTableWithFilters($("#id-filter").val(), $("#name-filter").val(), $("#status-filter").val());
     }
 
     $(document).ready(function() {

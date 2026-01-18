@@ -1,9 +1,13 @@
 <?php
-if (!isset($_SESSION)) { session_start(); }
+if (!isset($_SESSION)) {
+  session_start();
+}
 require_once("../../conexao/conecta.php");
+require_once('../../Components/Sidebar.php');
 ?>
 <!doctype html>
 <html lang="pt-br">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -14,10 +18,11 @@ require_once("../../conexao/conecta.php");
   <link rel="shortcut icon" href="../../assets/img/favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="../../custom/css/style.css">
 </head>
+
 <body>
   <div class="container-fluid">
     <div class="row">
-      <?php require_once('../../Components/Sidebar.php'); ?>
+      <?php echo Sidebar("customer"); ?>
 
       <main class="col-lg-10">
         <header id="admin-header" class="py-3 d-flex align-items-center justify-content-between gap-2 px-3">
@@ -35,9 +40,9 @@ require_once("../../conexao/conecta.php");
           <div class="card shadow-sm">
             <div class="card-header d-flex justify-content-between align-items-center">
               <h4 class="m-0">Base de Clientes</h4>
-<a href="manage.php" id="btn-abrir-modal" class="btn btn-primary">
-    <i class="bi bi-plus-lg"></i> Adicionar
-</a>
+              <a href="manage.php" id="btn-abrir-modal" class="btn btn-primary">
+                <i class="bi bi-plus-lg"></i> Adicionar
+              </a>
             </div>
 
             <div class="card-body">
@@ -70,7 +75,7 @@ require_once("../../conexao/conecta.php");
             </div>
 
             <div id="table-target">
-                </div>
+            </div>
           </div>
         </div>
       </main>
@@ -95,11 +100,16 @@ require_once("../../conexao/conecta.php");
           gender: $("#gender-filter").val(),
           status: $("#status-filter").val()
         },
-        success: function(response) { $("#table-target").html(response); }
+        success: function(response) {
+          $("#table-target").html(response);
+        }
       });
     }
 
-    $(document).ready(function() { applyFilters(); });
+    $(document).ready(function() {
+      applyFilters();
+    });
   </script>
 </body>
+
 </html>

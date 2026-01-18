@@ -3,6 +3,7 @@ if (!isset($_SESSION)) {
   session_start();
 }
 require_once("../../conexao/conecta.php");
+require_once('../../Components/Sidebar.php');
 
 $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 $customer = null;
@@ -30,18 +31,20 @@ $pageTitle = $customer ? "Editar Cliente: " . $customer['nome'] : "Novo Cliente"
 <body>
   <div class="container-fluid">
     <div class="row">
-      <?php require_once('../../Components/Sidebar.php'); ?>
+      <?php echo Sidebar("customer"); ?>
 
       <main class="col-lg-10">
-        <header id="admin-header" class="py-3 d-flex align-items-center justify-content-between gap-2 px-3">
+        <header id="admin-header" class="py-2 d-flex align-items-center justify-content-between gap-2 px-3">
           <div id="left-info"><?php echo mb_strtoupper($pageTitle); ?></div>
-          <div class="d-flex gap-2">
-            <button type="button" id="fillCustomer" class="btn btn-warning btn-sm">
+          <div id="right-info">
+            <button type="button" id="fillCustomer" class="btn btn-warning btn-sm py-2">
               <i class="bi bi-magic"></i> Mock Data
             </button>
-            <a href="Index.php" class="btn btn-outline-secondary btn-sm">Voltar</a>
+            <a href="Index.php" class="py-2 btn btn-outline-secondary btn-sm"><i class="bi bi-arrow-left"></i> Voltar</a>
           </div>
         </header>
+
+        <hr class="m-0">
 
         <div class="container mt-4 mb-5">
           <form action="actions.php" method="post">
@@ -99,37 +102,37 @@ $pageTitle = $customer ? "Editar Cliente: " . $customer['nome'] : "Novo Cliente"
                 </div>
               </div>
 
-              <div class="col-md-6">
+              <div class="col-md-5">
                 <div class="card shadow-sm h-100">
                   <div class="card-header bg-light"><strong>Acesso e Segurança</strong></div>
                   <div class="card-body row g-3">
-                    <div class="col-md-6">
+                    <div class="col-md-5">
                       <label class="form-label">Usuário <span class="text-danger">*</span></label>
                       <input maxlength="20" type="text" name="username" id="username" class="form-control" value="<?php echo $customer["usuario"] ?? ''; ?>" required>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-7">
                       <label class="form-label">Senha <span class="text-danger">*</span></label>
                       <input maxlength="255" type="password" name="password" id="password" class="form-control" value="<?php echo $customer["senha"] ?? ''; ?>" required>
-                    </div>
-                    <div class="col-md-12">
-                      <label class="form-label">E-mail</label>
-                      <input maxlength="100" type="email" name="email" id="email" class="form-control" value="<?php echo $customer['email'] ?? ''; ?>">
                     </div>
                   </div>
                 </div>
               </div>
 
-              <div class="col-md-6">
+              <div class="col-md-7">
                 <div class="card shadow-sm h-100">
                   <div class="card-header bg-light"><strong>Contatos</strong></div>
                   <div class="card-body row g-3">
-                    <div class="col-md-6">
+                    <div class="col-md-3">
                       <label class="form-label">Telefone 1 <span class="text-danger">*</span></label>
-                      <input maxlength="15" type="text" name="phone-1" id="phone-1" class="form-control" data-mask="(00) 00000-0000" value="<?php echo $customer['telefone1'] ?? ''; ?>" required>
+                      <input maxlength="15" type="text" name="phone1" id="phone1" class="form-control" data-mask="(00) 00000-0000" value="<?php echo $customer['telefone1'] ?? ''; ?>" required>
+                    </div>
+                    <div class="col-md-3">
+                      <label class="form-label">Telefone 2</label>
+                      <input maxlength="15" type="text" name="phone2" id="phone2" class="form-control" data-mask="(00) 00000-0000" value="<?php echo $customer['telefone2'] ?? ''; ?>">
                     </div>
                     <div class="col-md-6">
-                      <label class="form-label">Telefone 2</label>
-                      <input maxlength="15" type="text" name="phone-2" id="phone-2" class="form-control" data-mask="(00) 00000-0000" value="<?php echo $customer['telefone2'] ?? ''; ?>">
+                      <label class="form-label">E-mail</label>
+                      <input maxlength="100" type="email" name="email" id="email" class="form-control" value="<?php echo $customer['email'] ?? ''; ?>">
                     </div>
                   </div>
                 </div>
@@ -141,13 +144,13 @@ $pageTitle = $customer ? "Editar Cliente: " . $customer['nome'] : "Novo Cliente"
                   <div class="card-body row g-3">
                     <div class="col-md-2">
                       <label class="form-label">CEP</label>
-                      <input maxlength="9"="text" name="zipcode" id="zipcode" class="form-control" data-mask="00000-000" value="<?php echo $customer['cep'] ?? ''; ?>">
+                      <input maxlength="9" type="text" name="zipcode" id="zipcode" class="form-control" data-mask="00000-000" value="<?php echo $customer['cep'] ?? ''; ?>">
                     </div>
-                    <div class="col-md-8">
+                    <div class="col-md-5">
                       <label class="form-label">Endereço <span class="text-danger">*</span></label>
-                      <input maxlength="60" type="text" name=address id=address class="form-control" value="<?php echo $customer['endereco'] ?? ''; ?>" required>
+                      <input maxlength="60" type="text" name="address" id="address" class="form-control" value="<?php echo $customer['endereco'] ?? ''; ?>" required>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-1">
                       <label class="form-label">Número <span class="text-danger">*</span></label>
                       <input maxlength="5" type="text" name="number" id="number" class="form-control" value="<?php echo $customer['numero'] ?? ''; ?>" required>
                     </div>
@@ -159,11 +162,43 @@ $pageTitle = $customer ? "Editar Cliente: " . $customer['nome'] : "Novo Cliente"
                       <label class="form-label">Cidade <span class="text-danger">*</span></label>
                       <input maxlength="50" type="text" name="city" id="city" class="form-control" value="<?php echo $customer['cidade'] ?? ''; ?>" required>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-2">
                       <label class="form-label">Estado <span class="text-danger">*</span></label>
                       <select name="state" id="state" class="form-select" required>
-                        <option value="SP">São Paulo</option>
+                        <option value="" disabled <?= empty($customer['estado']) ? "selected" : "" ?>>Selecione um estado</option>
+                        <option value="AC" <?= $customer && $customer['estado'] == 'AC' ? "selected" : "" ?>>Acre</option>
+                        <option value="AL" <?= $customer && $customer['estado'] == 'AL' ? "selected" : "" ?>>Alagoas</option>
+                        <option value="AP" <?= $customer && $customer['estado'] == 'AP' ? "selected" : "" ?>>Amapá</option>
+                        <option value="AM" <?= $customer && $customer['estado'] == 'AM' ? "selected" : "" ?>>Amazonas</option>
+                        <option value="BA" <?= $customer && $customer['estado'] == 'BA' ? "selected" : "" ?>>Bahia</option>
+                        <option value="CE" <?= $customer && $customer['estado'] == 'CE' ? "selected" : "" ?>>Ceará</option>
+                        <option value="DF" <?= $customer && $customer['estado'] == 'DF' ? "selected" : "" ?>>Distrito Federal</option>
+                        <option value="ES" <?= $customer && $customer['estado'] == 'ES' ? "selected" : "" ?>>Espírito Santo</option>
+                        <option value="GO" <?= $customer && $customer['estado'] == 'GO' ? "selected" : "" ?>>Goiás</option>
+                        <option value="MA" <?= $customer && $customer['estado'] == 'MA' ? "selected" : "" ?>>Maranhão</option>
+                        <option value="MT" <?= $customer && $customer['estado'] == 'MT' ? "selected" : "" ?>>Mato Grosso</option>
+                        <option value="MS" <?= $customer && $customer['estado'] == 'MS' ? "selected" : "" ?>>Mato Grosso do Sul</option>
+                        <option value="MG" <?= $customer && $customer['estado'] == 'MG' ? "selected" : "" ?>>Minas Gerais</option>
+                        <option value="PA" <?= $customer && $customer['estado'] == 'PA' ? "selected" : "" ?>>Pará</option>
+                        <option value="PB" <?= $customer && $customer['estado'] == 'PB' ? "selected" : "" ?>>Paraíba</option>
+                        <option value="PR" <?= $customer && $customer['estado'] == 'PR' ? "selected" : "" ?>>Paraná</option>
+                        <option value="PE" <?= $customer && $customer['estado'] == 'PE' ? "selected" : "" ?>>Pernambuco</option>
+                        <option value="PI" <?= $customer && $customer['estado'] == 'PI' ? "selected" : "" ?>>Piauí</option>
+                        <option value="RJ" <?= $customer && $customer['estado'] == 'RJ' ? "selected" : "" ?>>Rio de Janeiro</option>
+                        <option value="RN" <?= $customer && $customer['estado'] == 'RN' ? "selected" : "" ?>>Rio Grande do Norte</option>
+                        <option value="RS" <?= $customer && $customer['estado'] == 'RS' ? "selected" : "" ?>>Rio Grande do Sul</option>
+                        <option value="RO" <?= $customer && $customer['estado'] == 'RO' ? "selected" : "" ?>>Rondônia</option>
+                        <option value="RR" <?= $customer && $customer['estado'] == 'RR' ? "selected" : "" ?>>Roraima</option>
+                        <option value="SC" <?= $customer && $customer['estado'] == 'SC' ? "selected" : "" ?>>Santa Catarina</option>
+                        <option value="SP" <?= $customer && $customer['estado'] == 'SP' ? "selected" : "" ?>>São Paulo</option>
+                        <option value="SE" <?= $customer && $customer['estado'] == 'SE' ? "selected" : "" ?>>Sergipe</option>
+                        <option value="TO" <?= $customer && $customer['estado'] == 'TO' ? "selected" : "" ?>>Tocantins</option>
                       </select>
+                    </div>
+
+                    <div class="col-md-6">
+                      <label class="form-label">Complemento</label>
+                      <input maxlength="200" type="text" name="complement" class="form-control" value="<?= $customer ? $customer['complemento'] : '' ?? ''; ?>">
                     </div>
                   </div>
                 </div>
@@ -227,8 +262,8 @@ $pageTitle = $customer ? "Editar Cliente: " . $customer['nome'] : "Novo Cliente"
         $('#email').val(person.email);
 
         // Contatos (Telefone 1 e 2 aleatórios)
-        $('#phone-1').val(generatePhoneNumber());
-        $('#phone-2').val(generatePhoneNumber());
+        $('#phone1').val(generatePhoneNumber());
+        $('#phone2').val(generatePhoneNumber());
 
         // Localização
         $('#zipcode').val(person.location.postcode);
