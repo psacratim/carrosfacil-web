@@ -60,7 +60,7 @@ try {
             <div class="row">
                 <section id="galery" class="col-12 col-lg-8 p-0 pe-lg-4 align-self-start">
                     <div id="main-container">
-                        <img id="main-image" class="img-fluid" src="../images/<?= $vehicle['foto'] ?>" alt="">
+                        <img id="main-image" class="w-100 h-100" src="../images/<?= $vehicle['foto'] ?>" alt="">
                     </div>
                     <div id="pictures" class="d-flex align-items-center">
                         <ul class="list-unstyled m-0 p-0">
@@ -120,7 +120,7 @@ try {
                             <i class="bi bi-whatsapp"></i>
                             Falar com Consultor
                         </a>
-                        <a href="https://wa.me/5519999999999?text=<?= htmlspecialchars($testMessage) ?>" id="test-drive" class="w-100 d-flex justify-content-center align-items-center">
+                        <a href="https://wa.me/5519999999999?text=<?= htmlspecialchars($testMessage) ?>" target="_blank" id="test-drive" class="w-100 d-flex justify-content-center align-items-center">
                             <i class="icon-life-buoy"></i>
                             Agendar Test-Drive
                         </a>

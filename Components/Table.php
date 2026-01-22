@@ -14,8 +14,12 @@ class Table
                         <tr>
                             <?php foreach (array_keys($columns) as $label): ?>
                                 <th><?= $label ?></th>
-                            <?php endforeach; ?>
-                            <th class="text-end">Ações</th>
+                            <?php endforeach;
+
+                            if ($_SESSION['type'] == 1) {
+                                echo '<th class="text-end">Ações</th>';
+                            }
+                            ?>
                         </tr>
                     </thead>
                     <tbody>
@@ -36,7 +40,10 @@ class Table
                                         }
                                         ?>
                                     </td>
-                                <?php endforeach; ?>
+                                <?php endforeach; 
+
+                                if ($_SESSION['type'] == 1) {
+                                ?>
                                 <td class="text-end">
                                     <?php
                                     if (isset($config['modalTarget'])) {
@@ -52,18 +59,20 @@ class Table
                                     <?php
                                     } else {
                                     ?>
-                                        <a href="<?php echo $config['editUrl'].$row['id'] ?>" class="btn btn-outline-success btn-sm" title="Editar">
+                                        <a href="<?php echo $config['editUrl'] . $row['id'] ?>" class="btn btn-outline-success btn-sm" title="Editar">
                                             <i class="bi bi-pencil-square"></i>
                                         </a>
-                                    <?php
 
+
+                                        <form action="actions.php" method="post" class="d-inline">
+                                            <button type="submit" class="btn btn-outline-danger btn-sm" name="delete" value="<?= $row['id'] ?>" onclick="return confirm('Excluir?')">
+                                                <i class="bi bi-trash3"></i>
+                                            </button>
+                                        </form>
+                                    <?php
                                     }
+                                }   
                                     ?>
-                                    <form action="actions.php" method="post" class="d-inline">
-                                        <button type="submit" class="btn btn-outline-danger btn-sm" name="delete" value="<?= $row['id'] ?>" onclick="return confirm('Excluir?')">
-                                            <i class="bi bi-trash3"></i>
-                                        </button>
-                                    </form>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

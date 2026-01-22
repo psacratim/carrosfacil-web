@@ -6,25 +6,25 @@ if (!isset($_SESSION)) {
     session_start();
 }
 
-// 1. Coleta de Estatísticas (Lógica em EN / Banco em PT-BR)
+if (empty($_SESSION['id'])) {
+  $_SESSION['messageType'] = 'error';
+  $_SESSION['messageText'] = "Por favor, faça login no sistema.";
 
-// Total de Vendas (Soma do valor_total)
+  header('Location: index.php');
+}
+
 $salesQuery = mysqli_query($connection, "SELECT SUM(valor_total) AS total FROM venda");
 $totalSales = mysqli_fetch_assoc($salesQuery)['total'] ?? 0;
 
-// Total de Clientes
 $customersQuery = mysqli_query($connection, "SELECT COUNT(id) AS total FROM cliente");
 $totalCustomers = mysqli_fetch_assoc($customersQuery)['total'] ?? 0;
 
-// Total de Veículos em Estoque
 $stockQuery = mysqli_query($connection, "SELECT SUM(estoque) AS total FROM veiculo");
 $totalStock = mysqli_fetch_assoc($stockQuery)['total'] ?? 0;
 
-// Total de Funcionários
 $employeesQuery = mysqli_query($connection, "SELECT COUNT(id) AS total FROM funcionario");
 $totalEmployees = mysqli_fetch_assoc($employeesQuery)['total'] ?? 0;
 
-// 2. Vendas Recentes (Join para pegar o nome do cliente)
 $recentSalesQuery = mysqli_query($connection, "
         SELECT v.id, c.nome AS cliente_nome, v.valor_total, v.data_cadastro 
         FROM venda v 
@@ -32,7 +32,6 @@ $recentSalesQuery = mysqli_query($connection, "
         ORDER BY v.data_cadastro DESC LIMIT 5
     ");
 
-// 3. Alerta de Estoque Baixo (Menos de 3 unidades)
 $lowStockQuery = mysqli_query($connection, "
         SELECT m.nome AS modelo, v.cor, v.estoque 
         FROM veiculo v 
@@ -52,7 +51,8 @@ $lowStockQuery = mysqli_query($connection, "
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
 
 
-    <link rel="stylesheet" href="../../custom/css/style.css">
+    <link rel="stylesheet" href="../custom/css/style.css">
+      <link rel="stylesheet" href="../../custom/css/style.css">
     <style>
         .stat-card {
             transition: transform 0.2s;
@@ -211,8 +211,8 @@ $lowStockQuery = mysqli_query($connection, "
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- CUSTOM JS -->
-    <script src="../../assets/js/components/admin-header.js"></script>
-    <script src="../../assets/js/components/sidebar.js"></script>
+    <script src="../assets/js/components/admin-header.js"></script>
+    <script src="../assets/js/components/sidebar.js"></script>
 </body>
 
 </html>
