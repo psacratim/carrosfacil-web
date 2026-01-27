@@ -1,7 +1,9 @@
 <?php
+
 namespace Database\Entities;
 
-class Role {
+class Role
+{
     private int $id;
     private string $name;
     private string $observation;
@@ -17,23 +19,77 @@ class Role {
         $this->status = $status;
     }
 
-    
-    public function __get(string $property)
+    public static function fromArray(array $row): Role
     {
-        if (!property_exists($this, $property)) {
-            throw new \Exception("Propriedade {$property} não existe");
-        }
-
-        return $this->$property;
+        return new Role(
+            (int) $row['id'],
+            $row['name'],
+            $row['observation'],
+            $row['createdAt'],
+            (bool) $row['status']
+        );
     }
 
-    public function __set(string $property, $value): void
+    public static function fromNewRegister(string $name, string $observation): Role
     {
-        if (!property_exists($this, $property)) {
-            throw new \Exception("Propriedade {$property} não existe");
-        }
+        // Cria um registro padrão que é identificavel como: CRIAÇÃO. Ele ignora os atributos na hora de cadastrar, sendo os atributos ignorados: ID, STATUS e DATA CADASTRO.
 
-        $this->$property = $value;
+        return new Role(
+            0,
+            $name,
+            $observation,
+            "", 
+            1
+        );
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
+
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    public function getObservation(): ?string
+    {
+        return $this->observation;
+    }
+
+    public function setObservation(?string $observation): void
+    {
+        $this->observation = $observation;
+    }
+
+    public function getCreatedAt(): string
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(string $createdAt): void
+    {
+        $this->createdAt = $createdAt;
+    }
+
+    public function isStatus(): bool
+    {
+        return $this->status;
+    }
+
+    public function setStatus(bool $status): void
+    {
+        $this->status = $status;
     }
 }
-?>

@@ -129,7 +129,6 @@ CREATE TABLE `foto_veiculo` (
   `ordem` INT(2) NOT NULL,
   `data_cadastro` DATE NOT NULL,
   `status` BIT,
-
   FOREIGN KEY (`id_veiculo`) REFERENCES `veiculo` (`id`)
 );
 
