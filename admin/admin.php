@@ -1,5 +1,19 @@
+<?php
+if (!isset($_SESSION)) {
+  session_start();
+}
+
+if (empty($_SESSION['id'])) {
+  $_SESSION['messageType'] = 'error';
+  $_SESSION['messageText'] = "Por favor, faça login no sistema.";
+
+  header('Location: index.php');
+}
+?>
+
 <!doctype html>
 <html lang="pt-br">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -16,27 +30,28 @@
   <!-- CUSTOMIZAÇÃO DO TEMPLATE -->
   <link rel="stylesheet" href="../assets/css/dashboard.css">
   <link rel="stylesheet" href="../assets/css/styles.css">
-  
+
   <!-- FAVICON -->
   <link rel="shortcut icon" href="../assets/img/favicon.ico" type="image/x-icon">
 
   <!-- CSS -->
   <link rel="stylesheet" href="../custom/css/style.css">
 </head>
+
 <body>
-    
+
   <?php
-    #Início TOPO
-    // include('Topo.php');
-    #Final TOPO
+  #Início TOPO
+  // include('Topo.php');
+  #Final TOPO
   ?>
 
   <div class="container-fluid">
     <div class="row">
       <?php
-        #Início MENU
-        include('Components/SideNavbar.php');
-        #Final MENU
+      #Início MENU
+      include('Components/SideNavbar.php');
+      #Final MENU
       ?>
 
       <main class="ml-auto col-lg-10 px-md-4">
@@ -58,4 +73,5 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 </body>
+
 </html>

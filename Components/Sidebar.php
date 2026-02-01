@@ -45,8 +45,8 @@ function Sidebar(string $pageName)
     <div class="sidebar-footer">
       <div class="avatar-circle">PH</div>
       <div class="user-info">
-        <p class="user-name">Pedro Henrique</p>
-        <a href="#" class="logout-link">Sair do sistema</a>
+        <p class="user-name"><?= $_SESSION['name'] ?></p>
+        <a id="logout-button">Sair do sistema</a>
       </div>
     </div>
   </aside>

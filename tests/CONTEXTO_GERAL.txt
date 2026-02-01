@@ -1633,10 +1633,10 @@ $lowStockQuery = mysqli_query($connection, "
     header("Access-Control-Allow-Origin: *");
     header("Access-Control-Allow-Methods: POST");
     header("Access-Control-Allow-Headers: Content-Type");
-
-    if (isset($_FILES["foto"])) {
-        $image = basename($_FILES['foto']['name']);
-        $tempImagePath = $_FILES['foto']['tmp_name'];
+    
+    if (isset($_FILES["image"])) {
+        $image = basename($_FILES['image']['name']);
+        $tempImagePath = $_FILES['image']['tmp_name'];
         $final = '../images/' . $image;
         
         if (move_uploaded_file($tempImagePath, $final)){
@@ -4590,12 +4590,15 @@ echo Table::render([
 
 --- START_FILE: ..\admin\clientes\Index.php ---
 <?php
-if (!isset($_SESSION)) { session_start(); }
+if (!isset($_SESSION)) {
+  session_start();
+}
 require_once("../../conexao/conecta.php");
 require_once('../../Components/Sidebar.php');
 ?>
 <!doctype html>
 <html lang="pt-br">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -4606,6 +4609,7 @@ require_once('../../Components/Sidebar.php');
   <link rel="shortcut icon" href="../../assets/img/favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="../../custom/css/style.css">
 </head>
+
 <body>
   <div class="container-fluid">
     <div class="row">
@@ -4627,9 +4631,9 @@ require_once('../../Components/Sidebar.php');
           <div class="card shadow-sm">
             <div class="card-header d-flex justify-content-between align-items-center">
               <h4 class="m-0">Base de Clientes</h4>
-<a href="manage.php" id="btn-abrir-modal" class="btn btn-primary">
-    <i class="bi bi-plus-lg"></i> Adicionar
-</a>
+              <a href="manage.php" id="btn-abrir-modal" class="btn btn-primary">
+                <i class="bi bi-plus-lg"></i> Adicionar
+              </a>
             </div>
 
             <div class="card-body">
@@ -4662,7 +4666,7 @@ require_once('../../Components/Sidebar.php');
             </div>
 
             <div id="table-target">
-                </div>
+            </div>
           </div>
         </div>
       </main>
@@ -4687,13 +4691,18 @@ require_once('../../Components/Sidebar.php');
           gender: $("#gender-filter").val(),
           status: $("#status-filter").val()
         },
-        success: function(response) { $("#table-target").html(response); }
+        success: function(response) {
+          $("#table-target").html(response);
+        }
       });
     }
 
-    $(document).ready(function() { applyFilters(); });
+    $(document).ready(function() {
+      applyFilters();
+    });
   </script>
 </body>
+
 </html>
 --- END_FILE: ..\admin\clientes\Index.php ---
 ------------------------------
@@ -5412,7 +5421,7 @@ $pageTitle = $employee ? "Editar: " . $employee['nome'] : "Novo Funcionário";
                       <input maxlength="9" type="text" name="zipcode" class="form-control" data-mask="00000-000" value="<?php echo $employee['cep'] ?? ''; ?>">
                     </div>
                     <div class="col-md-7">
-                      <label class="form-label">Logradouro</label>
+                      <label class="form-label">Endereço</label>
                       <input maxlength="60" type="text" name="address" class="form-control" value="<?php echo $employee['endereco'] ?? ''; ?>" required>
                     </div>
                     <div class="col-md-2">
@@ -6680,7 +6689,10 @@ $pageTitle = $vehicle ? "Editar Veículo #" . $vehicle['id'] : "Novo Veículo";
                       <label class="form-label">Câmbio</label>
                       <select name="transmissionType" id="transmissionType" class="form-select">
                         <option value="Manual" <?php if ($vehicle && $vehicle["tipo_cambio"] == 'Manual') echo 'selected'; ?>>Manual</option>
-                        <option value="Automático" <?php if ($vehicle && $vehicle["tipo_cambio"] == 'Automático') echo 'selected'; ?>>Automático</option>
+                        <option value="Auto Trad." <?php if ($vehicle && $vehicle["tipo_cambio"] == 'Auto Trad.') echo 'selected'; ?>>Automático Tradicional</option>
+                        <option value="CVT" <?php if ($vehicle && $vehicle["tipo_cambio"] == 'CVT') echo 'selected'; ?>>(CVT) Transmissão Continuamente Variável</option>
+                        <option value="Auto Mono." <?php if ($vehicle && $vehicle["tipo_cambio"] == 'Auto Mono.') echo 'selected'; ?>>Automático Tradicional</option>
+                        <option value="DCT" <?php if ($vehicle && $vehicle["tipo_cambio"] == 'DCT') echo 'selected'; ?>>Automático de Dupla Embreagem</option>
                       </select>
                     </div>
                     <div class="col-md-6">
@@ -6689,6 +6701,8 @@ $pageTitle = $vehicle ? "Editar Veículo #" . $vehicle['id'] : "Novo Veículo";
                         <option value="Flex" <?php if ($vehicle && $vehicle["tipo_combustivel"] == 'Flex') echo 'selected'; ?>>Flex</option>
                         <option value="Gasolina" <?php if ($vehicle && $vehicle["tipo_combustivel"] == 'Gasolina') echo 'selected'; ?>>Gasolina</option>
                         <option value="Diesel" <?php if ($vehicle && $vehicle["tipo_combustivel"] == 'Diesel') echo 'selected'; ?>>Diesel</option>
+                        <option value="Etanol" <?php if ($vehicle && $vehicle["tipo_combustivel"] == 'Etanol') echo 'selected'; ?>>Etanol</option>
+                        <option value="GNV" <?php if ($vehicle && $vehicle["tipo_combustivel"] == 'GNV') echo 'selected'; ?>>(GNV) Gás Natural Veicular</option>
                       </select>
                     </div>
                     <div class="col-md-12">

@@ -2,6 +2,10 @@
 require_once("../../conexao/conecta.php");
 require_once("../../Components/Table.php");
 
+if (!isset($_SESSION)) {
+    session_start();
+}
+
 // Query base que vai ser usada abaixo
 $query = "SELECT id, nome 'name', observacao 'observation', icone 'icon', data_cadastro 'createdAt', status FROM caracteristica";
 
