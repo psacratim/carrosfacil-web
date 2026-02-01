@@ -170,8 +170,8 @@ CREATE TABLE `item_venda` (
 CREATE TABLE `pagamento_venda` (
   `id` INT(11) PRIMARY KEY AUTO_INCREMENT,
   `id_venda` INT(11) NOT NULL,
-  `metodo` VARCHAR(16) NOT NULL,
-  `valor_final` DECIMAL(12, 2) NOT NULL,
+  `metodo` VARCHAR(26) NOT NULL,
+  `valor_final` DECIMAL(12, 2) NOT NULL, -- 9,999,999,999.99
   `parcelas` INT(2) NOT NULL,
   `status` BIT,
 
