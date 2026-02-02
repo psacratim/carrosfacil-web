@@ -15,8 +15,9 @@ try {
     }
 
     $vehiclePhotos = mysqli_execute_query($connection, "SELECT caminho, ordem FROM foto_veiculo WHERE id_veiculo = " . $vehicleId . ";");
+    $usePlaceholderPhoto = false;
     if (!$vehiclePhotos || $vehiclePhotos->num_rows === 0) {
-        throw new Exception("Failed to get vehicle photos.");
+        $usePlaceholderPhoto = true;
     }
 
     $vehicleItems = mysqli_execute_query($connection, "SELECT caracteristica.id, caracteristica.nome, caracteristica.icone FROM caracteristica_carro INNER JOIN caracteristica ON caracteristica.id = caracteristica_carro.id_caracteristica WHERE caracteristica_carro.id_veiculo = " . $vehicleId . ";");
@@ -26,6 +27,7 @@ try {
 
     $vehicle = $vehicleResult->fetch_assoc();
 } catch (Exception $e) {
+    echo $e->getMessage();
     header('Location: Index.php');
     exit;
 }

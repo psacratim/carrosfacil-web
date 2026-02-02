@@ -7,10 +7,6 @@ ob_start();
 $counterResult = mysqli_query($connection, "SELECT id FROM veiculo WHERE status = 1");
 $sqlCount = mysqli_num_rows($counterResult); // quantidade
 
-var_dump($sqlCount);
-echo '<br>';
-
-var_dump($_POST['page'] );
 $currentPage = $_POST['page'] ?? 1;
 $url = "?page=";
 
@@ -20,9 +16,6 @@ $maxPages = ceil($sqlCount / $viewAmountPerPage);
 
 $nextPage = $currentPage + 1;
 $previousPage = $currentPage - 1;
-
-echo '<br>';
-var_dump($maxPages);
 
 $query = "
 SELECT veiculo.id, modelo.nome 'nome_modelo', veiculo.tem_desconto, veiculo.desconto, veiculo.ano, veiculo.quilometragem, veiculo.tipo_combustivel, veiculo.tipo_cambio, veiculo.preco_venda, veiculo.preco_desconto, veiculo.foto, veiculo.status, veiculo.descricao, marca.nome FROM veiculo INNER JOIN modelo ON modelo.id = veiculo.id_modelo
