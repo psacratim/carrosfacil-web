@@ -35,15 +35,15 @@ require_once('./Components/Header.php');
                 <div class="col-lg-8">
                     <h1 class="display-5 fw-bold mb-3">Encontre o seu veículo ideal</h1>
                     <p class="lead mb-4">Veículos usados, semi-novos e novos com as melhores condições do mercado</p>
-<form action="" id="form-search-car" class="row g-2 justify-content-center align-items-stretch">
+                    <form action="" id="form-search-car" class="row g-2 justify-content-center align-items-stretch">
                         <div class="col-md-9">
                             <div class="search-input-container">
-                                <input onkeyup="applyFilters()" 
-                                       class="form-control form-control-lg search-input-field" 
-                                       type="text" 
-                                       name="search_value" 
-                                       id="search-value" 
-                                       placeholder="Digite a marca, modelo ou ano...">
+                                <input onkeyup="applyFilters()"
+                                    class="form-control form-control-lg search-input-field"
+                                    type="text"
+                                    name="search_value"
+                                    id="search-value"
+                                    placeholder="Digite a marca, modelo ou ano...">
                             </div>
                         </div>
                         <div class="col-md-3">
@@ -163,6 +163,36 @@ require_once('./Components/Header.php');
             <section class="col-lg-9">
                 <div id="sect-vehicles-list" class="row g-4">
                 </div>
+
+                <nav aria-label="paginacao">
+                    <ul class="pagination justify-content-center">
+
+                        <li class="page-item">
+                            <button class="page-link" id="gotoFirstPage" onclick="gotoPage('first')">Início</button>
+                        </li>
+
+
+
+                        <li class="page-item">
+                            <button class="page-link" onclick="gotoPage('previous')" aria-label="Previous" id="gotoPreviousPage">
+                                <span aria-hidden="true">&laquo;</span>
+                            </button>
+                        </li>
+
+
+
+                        <li class="page-item">
+                            <button class="page-link" onclick="gotoPage('next')" aria-label="Previous" id="gotoNextPage">
+                                <span aria-hidden="true">&raquo;</span>
+                            </button>
+                        </li>
+
+                        <li class="page-item">
+                            <button class="page-link" id="gotoLastPage" onclick="gotoPage('last')">Final</button>
+                        </li>
+
+                    </ul>
+                </nav>
             </section>
         </div>
     </main>
@@ -234,9 +264,12 @@ require_once('./Components/Header.php');
         });
 
         // AJAX (FUNÇÃO PARA LISTAR OS VEÍCULOS)
-        function updateTableWithFilters(search_value, category, condition, brand, fuel, gearbox, mileage, price_range, year) {
+        var currentPage = 1;
+        var maxPages = 1;
+
+        function updateTableWithFilters(search_value, category, condition, brand, fuel, gearbox, mileage, price_range, year, page) {
             $.ajax({
-                url: 'vehicle-list.php',
+                url: 'vehicle-list.php?',
                 method: 'POST',
                 data: {
                     search_value,
@@ -247,14 +280,17 @@ require_once('./Components/Header.php');
                     gearbox,
                     mileage,
                     price_range,
-                    year
+                    year,
+                    page
                 },
-                dataType: 'html',
+                dataType: 'json',
                 beforeSend: function() {
                     $("#sect-vehicles-list").css('opacity', '0.5');
                 },
                 success: function(response) {
-                    $("#sect-vehicles-list").html(response).css('opacity', '1');
+                    console.log(response);
+                    $("#sect-vehicles-list").html(response.html).css('opacity', '1');
+                    maxPages = response.maxPages;
                 }
             })
         }
@@ -271,7 +307,7 @@ require_once('./Components/Header.php');
             let price_range = $("#price_range").val();
             let year = $("#year").val();
 
-            updateTableWithFilters(search_value, category, condition, brand, fuel, gearbox, mileage, price_range, year);
+            updateTableWithFilters(search_value, category, condition, brand, fuel, gearbox, mileage, price_range, year, currentPage);
         }
 
         $("#form-search-car").on("submit", function(e) {
@@ -284,6 +320,41 @@ require_once('./Components/Header.php');
         $(document).ready(function() {
             applyFilters();
         });
+
+        // Page system
+        function gotoPage(action) {
+            switch (action.toLowerCase()) {
+                case "next":
+                    currentPage++;
+                    console.log('oi ' + currentPage);
+                    break;
+                case "previous":
+                    currentPage--;
+                    break;
+                case "last":
+                    currentPage = maxPages;
+                    break;
+                default: // "first"
+                    currentPage = 1;
+                    break;
+            }
+
+            if (currentPage < 1) currentPage = 1;
+            if (currentPage > maxPages) currentPage = maxPages;
+
+            // 🔄 Atualiza listagem
+            applyFilters();
+
+            // 🎛️ Controle dos botões
+            const isFirstPage = currentPage === 1;
+            const isLastPage = currentPage === maxPages;
+
+            $("#gotoFirstPage").prop("disabled", isFirstPage);
+            $("#gotoPreviousPage").prop("disabled", isFirstPage);
+
+            $("#gotoNextPage").prop("disabled", isLastPage);
+            $("#gotoLastPage").prop("disabled", isLastPage);
+        }
     </script>
 </body>
 

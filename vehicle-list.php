@@ -1,6 +1,29 @@
 <?php
 require_once("./conexao/conecta.php");
 
+header('Content-Type: application/json; charset=utf-8');
+ob_start();
+
+$counterResult = mysqli_query($connection, "SELECT id FROM veiculo WHERE status = 1");
+$sqlCount = mysqli_num_rows($counterResult); // quantidade
+
+var_dump($sqlCount);
+echo '<br>';
+
+var_dump($_POST['page'] );
+$currentPage = $_POST['page'] ?? 1;
+$url = "?page=";
+
+$viewAmountPerPage = 2;  // paginaQtdd
+$startLimit = ($currentPage * $viewAmountPerPage) - $viewAmountPerPage; // valorInicial
+$maxPages = ceil($sqlCount / $viewAmountPerPage);
+
+$nextPage = $currentPage + 1;
+$previousPage = $currentPage - 1;
+
+echo '<br>';
+var_dump($maxPages);
+
 $query = "
 SELECT veiculo.id, modelo.nome 'nome_modelo', veiculo.tem_desconto, veiculo.desconto, veiculo.ano, veiculo.quilometragem, veiculo.tipo_combustivel, veiculo.tipo_cambio, veiculo.preco_venda, veiculo.preco_desconto, veiculo.foto, veiculo.status, veiculo.descricao, marca.nome FROM veiculo INNER JOIN modelo ON modelo.id = veiculo.id_modelo
 INNER JOIN marca ON marca.id = modelo.id_marca
@@ -55,11 +78,14 @@ if ($year !== "") {
 if (!empty($conditions)) {
     $query .= " WHERE " . implode(" AND ", $conditions);
 }
+$query .= " " . "LIMIT $startLimit, $viewAmountPerPage";
 
 $result = mysqli_query($connection, $query);
 $num_rows = mysqli_num_rows($result);
 ?>
 
+<?php
+?>
 <div class="col-12 mb-2">
     <div class="d-flex justify-content-between align-items-center bg-white p-3 rounded shadow-sm">
         <h5 class="fw-bold mb-0">Nossos veículos</h5>
@@ -76,7 +102,7 @@ if ($num_rows > 0) {
 ?>
         <div class="col-12 col-md-6 col-xl-4 d-flex align-items-stretch">
             <div class="card w-100 border-0 shadow-sm vehicle-card-modern position-relative">
-                
+
                 <div class="position-absolute top-0 start-0 m-2 d-flex flex-column gap-1" style="z-index: 3;">
                     <?php if ($veiculo['status'] == 0): ?>
                         <span class="badge bg-danger">Indisponível</span>
@@ -110,7 +136,7 @@ if ($num_rows > 0) {
                             <i class="bi bi-fuel-pump text-primary me-1"></i> <?php echo $veiculo['tipo_combustivel'] ?>
                         </div>
                         <div class="col-6 small text-muted text-end">
-                            <i class="bi bi-speedometer text-primary me-1"></i> 
+                            <i class="bi bi-speedometer text-primary me-1"></i>
                             <?php echo ($veiculo['quilometragem'] > 0) ? number_format($veiculo['quilometragem'], 0, ',', '.') . ' km' : 'Zero KM'; ?>
                         </div>
                     </div>
@@ -138,9 +164,17 @@ if ($num_rows > 0) {
                 </div>
             </div>
         </div>
+    <?php } ?>
+
 <?php
-    }
 } else {
     echo '<div class="col-12 text-center py-5"><h4 class="text-muted">Nenhum veículo encontrado.</h4></div>';
 }
+
+$html = ob_get_clean();
+
+echo json_encode([
+    "html" => $html,
+    "maxPages" => (string) $maxPages
+]);
 ?>
