@@ -10,7 +10,7 @@ $sqlCount = mysqli_num_rows($counterResult); // quantidade
 $currentPage = $_POST['page'] ?? 1;
 $url = "?page=";
 
-$viewAmountPerPage = 2;  // paginaQtdd
+$viewAmountPerPage = 6;  // paginaQtdd
 $startLimit = ($currentPage * $viewAmountPerPage) - $viewAmountPerPage; // valorInicial
 $maxPages = ceil($sqlCount / $viewAmountPerPage);
 

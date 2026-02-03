@@ -7,7 +7,8 @@ class Table
         // $config: ['entity' => 'vendas', 'modalTarget' => '#vendasModal']
 
         if (mysqli_num_rows($query) > 0) {
-            ob_start(); ?>
+            ob_start(); 
+            ?> 
             <div class="card-body p-0">
                 <table class="table table-hover m-0">
                     <thead>
@@ -62,15 +63,15 @@ class Table
                                         <a href="<?php echo $config['editUrl'] . $row['id'] ?>" class="btn btn-outline-success btn-sm" title="Editar">
                                             <i class="bi bi-pencil-square"></i>
                                         </a>
-
-
-                                        <form action="actions.php" method="post" class="d-inline">
+                                    <?php
+                                    }
+                                    ?>
+                                                                            <form action="actions.php" method="post" class="d-inline">
                                             <button type="submit" class="btn btn-outline-danger btn-sm" name="delete" value="<?= $row['id'] ?>" onclick="return confirm('Excluir?')">
                                                 <i class="bi bi-trash3"></i>
                                             </button>
                                         </form>
                                     <?php
-                                    }
                                 }   
                                     ?>
                                 </td>

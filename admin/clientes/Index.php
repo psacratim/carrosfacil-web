@@ -2,6 +2,9 @@
 if (!isset($_SESSION)) {
   session_start();
 }
+
+
+require_once("../usuario_comum.php");
 require_once("../../conexao/conecta.php");
 require_once('../../Components/Sidebar.php');
 ?>
