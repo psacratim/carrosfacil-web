@@ -45,7 +45,7 @@ $pageTitle = $employee ? "Editar: " . $employee['nome'] : "Novo Funcionário";
             <a href="Index.php" class="py-2 btn btn-outline-secondary btn-sm"><i class="bi bi-arrow-left"></i> Voltar</a>
           </div>
         </header>
-        
+
         <hr class="m-0 mb-4">
 
         <div class="container-fluid p-0">
@@ -140,27 +140,27 @@ $pageTitle = $employee ? "Editar: " . $employee['nome'] : "Novo Funcionário";
                   <div class="card-body row g-3">
                     <div class="col-md-3">
                       <label class="form-label">CEP</label>
-                      <input maxlength="9" type="text" name="zipcode" class="form-control" data-mask="00000-000" value="<?php echo $employee['cep'] ?? ''; ?>">
+                      <input maxlength="9" type="text" name="zipcode" id="zipcode" class="form-control" data-mask="00000-000" value="<?php echo $employee['cep'] ?? ''; ?>">
                     </div>
                     <div class="col-md-7">
                       <label class="form-label">Endereço</label>
-                      <input maxlength="60" type="text" name="address" class="form-control" value="<?php echo $employee['endereco'] ?? ''; ?>" required>
+                      <input maxlength="60" type="text" name="address" id="address" class="form-control" value="<?php echo $employee['endereco'] ?? ''; ?>" required>
                     </div>
                     <div class="col-md-2">
                       <label class="form-label">Número</label>
-                      <input type="text" name="number" class="form-control" data-mask="####0" value="<?php echo $employee['numero'] ?? ''; ?>" required>
+                      <input type="text" name="number" class="form-control" id="number" data-mask="####0" value="<?php echo $employee['numero'] ?? ''; ?>" required>
                     </div>
                     <div class="col-md-6">
                       <label class="form-label">Complemento</label>
-                      <input maxlength="200" type="text" name="complement" class="form-control" value="<?php echo $employee['complemento'] ?? ''; ?>">
+                      <input maxlength="200" type="text" name="complement" id="complement" class="form-control" value="<?php echo $employee['complemento'] ?? ''; ?>">
                     </div>
                     <div class="col-md-6">
                       <label class="form-label">Bairro</label>
-                      <input maxlength="50" type="text" name="neighborhood" class="form-control" value="<?php echo $employee['bairro'] ?? ''; ?>" required>
+                      <input maxlength="50" type="text" name="neighborhood" id="neighborhood" class="form-control" value="<?php echo $employee['bairro'] ?? ''; ?>" required>
                     </div>
                     <div class="col-md-8">
                       <label class="form-label">Cidade</label>
-                      <input maxlength="50" type="text" name="city" class="form-control" value="<?php echo $employee['cidade'] ?? ''; ?>" required>
+                      <input maxlength="50" type="text" name="city" id="city" class="form-control" value="<?php echo $employee['cidade'] ?? ''; ?>" required>
                     </div>
                     <div class="col-md-4">
                       <label class="form-label">Estado <span class="text-danger">*</span></label>
@@ -375,6 +375,33 @@ $pageTitle = $employee ? "Editar: " . $employee['nome'] : "Novo Funcionário";
         btn.html(originalHtml).prop('disabled', false);
       }
     });
+
+    $(function() {
+      const cepInput = $('#zipcode')
+
+      cepInput.on('blur', function() {
+        const cep = $(this).val().replace(/\D/g, '')
+
+        if (cep.length !== 8) return
+
+        fetch(`https://viacep.com.br/ws/${cep}/json/`)
+          .then(res => res.json())
+          .then(data => {
+            console.log(data);
+            if (data.erro) return
+
+            $('#address').val(data.logradouro)
+            $('#neighborhood').val(data.bairro)
+            $('#city').val(data.localidade)
+            $('#state').val(data.uf)
+
+            $('#number').focus()
+
+            console.log(data);
+          })
+          .catch(() => {})
+      })
+    })
   </script>
 </body>
 

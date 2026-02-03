@@ -152,7 +152,7 @@ $pageTitle = $customer ? "Editar Cliente: " . $customer['nome'] : "Novo Cliente"
                     </div>
                     <div class="col-md-1">
                       <label class="form-label">Número <span class="text-danger">*</span></label>
-                      <input maxlength="5" type="text" name="number" id="number" class="form-control" value="<?php echo $customer['numero'] ?? ''; ?>" required>
+                      <input maxlength="5" data-mask="00000" type="text" name="number" id="number" class="form-control" value="<?php echo $customer['numero'] ?? ''; ?>" required>
                     </div>
                     <div class="col-md-4">
                       <label class="form-label">Bairro <span class="text-danger">*</span></label>
@@ -281,6 +281,30 @@ $pageTitle = $customer ? "Editar Cliente: " . $customer['nome'] : "Novo Cliente"
         btn.html('<i class="bi bi-magic"></i> Mock Data').prop('disabled', false);
       }
     });
+
+    $(function() {
+      const cepInput = $('#zipcode')
+
+      cepInput.on('blur', function() {
+        const cep = $(this).val().replace(/\D/g, '')
+
+        if (cep.length !== 8) return
+
+        fetch(`https://viacep.com.br/ws/${cep}/json/`)
+          .then(res => res.json())
+          .then(data => {
+            if (data.erro) return
+
+            $('#address').val(data.logradouro)
+            $('#neighborhood').val(data.bairro)
+            $('#city').val(data.localidade)
+            $('#state').val(data.uf)
+
+            $('#number').focus()
+          })
+          .catch(() => {})
+      })
+    })
   </script>
 </body>
 
