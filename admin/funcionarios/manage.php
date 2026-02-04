@@ -75,7 +75,7 @@ $pageTitle = $employee ? "Editar: " . $employee['nome'] : "Novo Funcionário";
                     </div>
                     <div class="col-md-3">
                       <label class="form-label">Nascimento</label>
-                      <input type="date" name="birthDate" class="form-control" value="<?php echo $employee['data_nascimento'] ?? ''; ?>" required>
+                      <input type="date" id="birthDate" name="birthDate" class="form-control" value="<?php echo $employee['data_nascimento'] ?? ''; ?>" required>
                     </div>
                     <div class="col-3">
                       <label class="form-label">Salário (R$)</label>
@@ -294,6 +294,16 @@ $pageTitle = $employee ? "Editar: " . $employee['nome'] : "Novo Funcionário";
         reader.readAsDataURL(input.files[0]);
       }
     }
+
+    $("#birthDate").on('change', function() {
+      let year = parseInt(this.value.split("-")[0]);
+
+      this.setCustomValidity('');
+      if (year > new Date().getFullYear()) {
+        this.setCustomValidity('Falha: O ano não pode ser maior que o atual.');
+        this.reportValidity();
+      }
+    });
 
     $('#mock-funcionario').on('click', async function() {
       const btn = $(this);

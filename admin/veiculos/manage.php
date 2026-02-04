@@ -357,7 +357,7 @@ $pageTitle = $vehicle ? "Editar Veículo #" . $vehicle['id'] : "Novo Veículo";
                     <input type="text" data-mask="####0" name="stock" class="form-control mb-3" value="<?= $vehicle ? $vehicle['estoque'] : ''; ?>">
 
                     <button type="submit" name="actionSave" class="btn btn-primary w-100 py-2 mt-4">
-                      <i class="bi bi-check-circle"></i> <?= $vehicle ? "Atualizar Dados" : "Cadastrar Veículo"; ?>
+                      <i class="bi bi-reportValidity();-circle"></i> <?= $vehicle ? "Atualizar Dados" : "Cadastrar Veículo"; ?>
                     </button>
                   </div>
                 </div>
@@ -444,6 +444,14 @@ $pageTitle = $vehicle ? "Editar Veículo #" . $vehicle['id'] : "Novo Veículo";
       }
     });
 
+    function tryParseInt(str, defaultValue) {
+  const parsed = parseInt(str, 10);
+  if (Number.isNaN(parsed)) {
+    return defaultValue;
+  }
+  return parsed;
+}
+
     $(function() {
       function parseCurrency(value) {
         if (!value) return 0;
@@ -478,9 +486,9 @@ $pageTitle = $vehicle ? "Editar Veículo #" . $vehicle['id'] : "Novo Veículo";
         discountInput.setCustomValidity('');
 
         if (sellPrice < cost && cost > 0) {
-          profitInput.setCustomValidity('Atenção: O preço de venda não pode ser inferior ao preço de custo. Aumente a margem de lucro.');
+          profitInput.setCustomValidity('Falha: O preço de venda não pode ser inferior ao preço de custo. Aumente a margem de lucro.');
         } else if (discountedPrice < cost && cost > 0) {
-          discountInput.setCustomValidity('Aviso: O preço de desconto está abaixo do preço de custo, diminua o desconto ou aumente o lucro.');
+          discountInput.setCustomValidity('Falha: O preço de desconto está abaixo do preço de custo, diminua o desconto ou aumente o lucro.');
         }
       }
 
@@ -491,6 +499,17 @@ $pageTitle = $vehicle ? "Editar Veículo #" . $vehicle['id'] : "Novo Veículo";
       if ($('#costPrice').val()) {
         calculatePrices();
       }
+
+      $("#year").on('keyup', function(event) {
+        let year = tryParseInt(this.value, -1);
+        if (year < 0) return;
+
+        this.setCustomValidity('');
+        if (year > new Date().getFullYear()){
+          this.setCustomValidity('Falha: O ano não pode ser maior que o atual.');
+          this.reportValidity();
+        }
+      });
     });
 
     $('#mock-veiculo').on('click', function() {

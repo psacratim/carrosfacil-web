@@ -221,6 +221,16 @@ $pageTitle = $customer ? "Editar Cliente: " . $customer['nome'] : "Novo Cliente"
 
   <script src="../../assets/js/components/sidebar.js"></script>
   <script>
+    $("#birthDate").on('change', function() {
+      let year = parseInt(this.value.split("-")[0]);
+
+      this.setCustomValidity('');
+      if (year > new Date().getFullYear()) {
+        this.setCustomValidity('Falha: O ano não pode ser maior que o atual.');
+        this.reportValidity();
+      }
+    });
+
     $('#fillCustomer').on('click', async function() {
       const btn = $(this);
       // Feedback visual de carregamento
