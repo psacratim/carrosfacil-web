@@ -49,13 +49,21 @@
         $successMessage = "Modelo cadastrado com sucesso!";
     }
 
+try {
     if (mysqli_query($connection, $query)) {
         $_SESSION['messageType'] = 'success';
-        $_SESSION['messageText'] = 'Sucesso: '. $successMessage;
+        $_SESSION['messageText'] = 'Sucesso: ' . $successMessage;
     } else {
-        $_SESSION['messageType'] = 'error';
-        $_SESSION['messageText'] = "Erro: Não foi possível salvar os dados, tente novamente.";
+        throw new mysqli_sql_exception();
     }
+} catch (mysqli_sql_exception $e) {
+    $_SESSION['messageType'] = 'error';
+    if ($e->getCode() == 1062) {
+        $_SESSION['messageText'] = "Erro: Modelo já cadastrado.";
+    } else {
+        $_SESSION['messageText'] = "Erro: Não foi possível salvar a marca, tente novamente.";
+    }
+}
 
     header('Location: Index.php');
     exit;
