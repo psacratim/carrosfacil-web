@@ -48,7 +48,7 @@ require_once("../../Components/FormModal.php");
             <div class="card-body">
               <div class="row">
                 <div class="col-md-2">
-                  <input onkeyup="applyFilters()" type="text" name="id-filter" id="id-filter" class="form-control" placeholder="Filtrar por código">
+                  <input onkeyup="applyFilters()" type="text" data-mask="00000" name="id-filter" id="id-filter" class="form-control" placeholder="Filtrar por código">
                 </div>
 
                 <div class="col-7">
@@ -95,6 +95,7 @@ require_once("../../Components/FormModal.php");
   <script src="../../assets/js/components/form-modal.js"></script>
   <script src="../../assets/js/components/admin-header.js"></script>
   <script src="../../assets/js/components/sidebar.js"></script>
+  <script src="../../assets/js/jquery.mask.js"></script>
   
   <!-- CUSTOM SCRIPTS -->
   <script>

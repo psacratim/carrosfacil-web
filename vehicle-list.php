@@ -32,6 +32,7 @@ $price_range = $_POST['price_range'] ?? "";
 $year = $_POST['year'] ?? "";
 $conditions = [];
 
+$conditions[] = "veiculo.estoque > 0";
 if ($search_value !== "") {
     $conditions[] = "(
         modelo.nome LIKE '%$search_value%' 

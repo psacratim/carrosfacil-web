@@ -97,6 +97,7 @@ require_once('../../Components/Sidebar.php');
   <script src="../../assets/js/components/form-modal.js"></script>
   <script src="../../assets/js/components/admin-header.js"></script>
   <script src="../../assets/js/components/sidebar.js"></script>
+  <script src="../../assets/js/jquery.mask.js"></script>
 
   <script>
 

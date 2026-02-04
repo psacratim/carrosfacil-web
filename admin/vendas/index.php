@@ -48,7 +48,7 @@ require_once('../../Components/Sidebar.php');
             <div class="card-body">
               <div class="row g-2">
                 <div class="col-md-1">
-                  <input onkeyup="applyFilters()" type="text" id="id-filter" class="form-control" placeholder="ID">
+                  <input onkeyup="applyFilters()" data-mask="00000" type="text" id="id-filter" class="form-control" placeholder="Código">
                 </div>
                 <div class="col-md-3">
                   <input onkeyup="applyFilters()" type="text" id="client-filter" class="form-control" placeholder="Cliente">
@@ -81,6 +81,7 @@ require_once('../../Components/Sidebar.php');
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="../../assets/js/components/admin-header.js"></script>
   <script src="../../assets/js/components/sidebar.js"></script>
+  <script src="../../assets/js/jquery.mask.js"></script>
 
   <script>
     function applyFilters() {

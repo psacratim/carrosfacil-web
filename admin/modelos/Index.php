@@ -62,7 +62,7 @@ while ($marca = mysqli_fetch_assoc($resultMarcas)) {
             <div class="card-body">
               <div class="row g-3">
                 <div class="col-md-2">
-                  <input onkeyup="applyFilters()" type="text" id="id-filter" class="form-control" placeholder="Filtrar por código">
+                  <input onkeyup="applyFilters()" type="text" id="id-filter" class="form-control" placeholder="Código" data-mask="00000">
                 </div>
                 <div class="col-md-4">
                   <input onkeyup="applyFilters()" type="text" id="brand-filter" class="form-control" placeholder="Filtrar por Marca">
@@ -111,6 +111,7 @@ while ($marca = mysqli_fetch_assoc($resultMarcas)) {
   <script src="../../assets/js/components/form-modal.js"></script>
   <script src="../../assets/js/components/admin-header.js"></script>
   <script src="../../assets/js/components/sidebar.js"></script>
+  <script src="../../assets/js/jquery.mask.js"></script>
 
   <script>
     function updateTableWithFilters(id, nameBrand, nameModel, status) {
