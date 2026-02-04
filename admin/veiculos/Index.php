@@ -57,11 +57,65 @@ require_once('../../Components/Sidebar.php');
                 <div class="col-md-3">
                   <select onchange="applyFilters()" id="category-filter" class="form-select">
                     <option value="">Todas Categorias</option>
-                    <option value="Hatchback">Hatchback</option>
-                    <option value="Sedan">Sedan</option>
-                    <option value="SUV">SUV</option>
-                    <option value="Pickup">Picape</option>
-                    </select>
+                    <?php
+                    $categories = [
+                      // Hatch
+                      "Hatch Compacto",
+                      "Hatch Médio",
+
+                      // Sedan
+                      "Sedan Compacto",
+                      "Sedan Médio",
+                      "Sedan Premium",
+
+                      // SUV
+                      "SUV Compacto",
+                      "SUV Médio",
+                      "SUV de Luxo",
+                      "SUV 7 Lugares",
+
+                      // Picape
+                      "Picape Compacta",      // Fiat Strada
+                      "Picape Média",
+                      "Picape Full-size",
+
+                      // Caminhões / Utilitários
+                      "Caminhão Leve",
+                      "Caminhão Médio",       // Mercedes-Benz 1113
+                      "Utilitário / Carga",
+
+                      // Esportivos e motos
+                      "Esportivo",            // BMW S1000 (moto esportiva)
+                      "Superesportivo",
+
+                      // Outros tipos
+                      "Off-Road / 4x4",
+                      "Minivan",
+                      "Perua (SW)",
+                      "Van de Passageiros",
+
+                      // Clássicos
+                      "Antigo / Colecionador", // Mercedes-Benz 1113
+
+                      // Energia
+                      "Híbrido",
+                      "Elétrico",
+
+                      // ➕ Categorias extras comuns (novas)
+                      "Popular / Entrada",    // Gol, Onix
+                      "Executivo",
+                      "Uso Urbano"
+                    ];
+
+                    foreach ($categories as $category) {
+                    ?>
+                      <option value="<?= $category; ?>" <?php if (isset($vehicle) && $vehicle["categoria"] == $category) echo 'selected'; ?>>
+                        <?= $category; ?>
+                      </option>
+                    <?php
+                    }
+                    ?>
+                  </select>
                 </div>
                 <div class="col-md-3">
                   <select onchange="applyFilters()" id="conditions-filter" class="form-select">
@@ -82,7 +136,7 @@ require_once('../../Components/Sidebar.php');
             </div>
 
             <div id="table-target">
-              </div>
+            </div>
           </div>
         </div>
       </main>
@@ -118,4 +172,5 @@ require_once('../../Components/Sidebar.php');
     });
   </script>
 </body>
+
 </html>

@@ -103,31 +103,54 @@ $pageTitle = $vehicle ? "Editar Veículo #" . $vehicle['id'] : "Novo Veículo";
 
                         <?php
                         $categories = [
+                          // Hatch
                           "Hatch Compacto",
                           "Hatch Médio",
+
+                          // Sedan
                           "Sedan Compacto",
                           "Sedan Médio",
                           "Sedan Premium",
+
+                          // SUV
                           "SUV Compacto",
                           "SUV Médio",
                           "SUV de Luxo",
                           "SUV 7 Lugares",
-                          "Picape Compacta",
+
+                          // Picape
+                          "Picape Compacta",      // Fiat Strada
                           "Picape Média",
                           "Picape Full-size",
-                          "Coupé",
-                          "Conversível",
-                          "Esportivo",
+
+                          // Caminhões / Utilitários
+                          "Caminhão Leve",
+                          "Caminhão Médio",       // Mercedes-Benz 1113
+                          "Utilitário / Carga",
+
+                          // Esportivos e motos
+                          "Esportivo",            // BMW S1000 (moto esportiva)
                           "Superesportivo",
+
+                          // Outros tipos
                           "Off-Road / 4x4",
                           "Minivan",
                           "Perua (SW)",
-                          "Utilitário / Carga",
                           "Van de Passageiros",
-                          "Antigo / Colecionador",
+
+                          // Clássicos
+                          "Antigo / Colecionador", // Mercedes-Benz 1113
+
+                          // Energia
                           "Híbrido",
-                          "Elétrico"
+                          "Elétrico",
+
+                          // ➕ Categorias extras comuns (novas)
+                          "Popular / Entrada",    // Gol, Onix
+                          "Executivo",
+                          "Uso Urbano"
                         ];
+
                         foreach ($categories as $category) {
                         ?>
                           <option value="<?= $category; ?>" <?php if (isset($vehicle) && $vehicle["categoria"] == $category) echo 'selected'; ?>>
@@ -235,7 +258,7 @@ $pageTitle = $vehicle ? "Editar Veículo #" . $vehicle['id'] : "Novo Veículo";
                           <option value="">Selecione uma característica...</option>
                           <?php
                           $featuresQuery = mysqli_query($connection, "SELECT * FROM caracteristica WHERE status = 1 ORDER BY nome ASC");
-                          while($f = mysqli_fetch_assoc($featuresQuery)) {
+                          while ($f = mysqli_fetch_assoc($featuresQuery)) {
                             echo "<option value='{$f['id']}' data-nome='{$f['nome']}'>{$f['nome']}</option>";
                           }
                           ?>
@@ -261,7 +284,7 @@ $pageTitle = $vehicle ? "Editar Veículo #" . $vehicle['id'] : "Novo Veículo";
                             $currentFeatures = mysqli_query($connection, "SELECT c.id, c.nome FROM caracteristica c 
                               INNER JOIN caracteristica_carro cc ON c.id = cc.id_caracteristica 
                               WHERE cc.id_veiculo = $id");
-                            while($cf = mysqli_fetch_assoc($currentFeatures)) {
+                            while ($cf = mysqli_fetch_assoc($currentFeatures)) {
                               echo "<tr id='feature-row-{$cf['id']}'>
                                       <td class='align-middle'>{$cf['nome']} <input type='hidden' name='features[]' value='{$cf['id']}'></td>
                                       <td class='text-center'><button type='button' class='btn btn-danger btn-sm' onclick='removeFeature({$cf['id']})'><i class='bi bi-trash'></i></button></td>
@@ -381,7 +404,7 @@ $pageTitle = $vehicle ? "Editar Veículo #" . $vehicle['id'] : "Novo Veículo";
       const nome = select.options[select.selectedIndex].getAttribute('data-nome');
 
       if (!id) return;
-      
+
       if (document.getElementById('feature-row-' + id)) {
         alert('Esta característica já foi adicionada.');
         return;
@@ -397,7 +420,7 @@ $pageTitle = $vehicle ? "Editar Veículo #" . $vehicle['id'] : "Novo Veículo";
           </td>
         </tr>
       `;
-      
+
       $('#features-table-body').append(html);
       select.value = "";
     }
@@ -445,12 +468,12 @@ $pageTitle = $vehicle ? "Editar Veículo #" . $vehicle['id'] : "Novo Veículo";
     });
 
     function tryParseInt(str, defaultValue) {
-  const parsed = parseInt(str, 10);
-  if (Number.isNaN(parsed)) {
-    return defaultValue;
-  }
-  return parsed;
-}
+      const parsed = parseInt(str, 10);
+      if (Number.isNaN(parsed)) {
+        return defaultValue;
+      }
+      return parsed;
+    }
 
     $(function() {
       function parseCurrency(value) {
@@ -505,7 +528,7 @@ $pageTitle = $vehicle ? "Editar Veículo #" . $vehicle['id'] : "Novo Veículo";
         if (year < 0) return;
 
         this.setCustomValidity('');
-        if (year > new Date().getFullYear()){
+        if (year > new Date().getFullYear()) {
           this.setCustomValidity('Falha: O ano não pode ser maior que o atual.');
           this.reportValidity();
         }
