@@ -5,8 +5,8 @@ $(function () {
             ["true"]: "EDITAR ACESSÓRIO"
         },
         ["cargos"]: {
-            ["false"]: "CRIAR ACESSÓRIO",
-            ["true"]: "EDITAR ACESSÓRIO"
+            ["false"]: "CRIAR CARGO",
+            ["true"]: "EDITAR CARGO"
         },
         ["marcas"]: {
             ["false"]: "CRIAR MARCA",

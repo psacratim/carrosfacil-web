@@ -31,6 +31,8 @@ if (isset($_POST["delete"])) {
 if (isset($_POST['actionSave'])) {
     $saleId = (int)$_POST['saleId'];
     $isEditing = ($saleId > 0);
+    if ($isEditing) return; // Fix: Não permita edição de vendas.
+
     $customerId = (int)$_POST['customerId'];
     $employeeId = (int)$_POST['employeeId'];
     $discountPercent = (int)($_POST['saleDiscount'] ?? 0); // Percentual (ex: 10)

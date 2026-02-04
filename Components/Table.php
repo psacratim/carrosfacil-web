@@ -7,8 +7,8 @@ class Table
         // $config: ['entity' => 'vendas', 'modalTarget' => '#vendasModal']
 
         if (mysqli_num_rows($query) > 0) {
-            ob_start(); 
-            ?> 
+            ob_start();
+?>
             <div class="card-body p-0">
                 <table class="table table-hover m-0">
                     <thead>
@@ -41,40 +41,40 @@ class Table
                                         }
                                         ?>
                                     </td>
-                                <?php endforeach; 
+                                <?php endforeach;
 
                                 if ($_SESSION['type'] == 1) {
                                 ?>
-                                <td class="text-end">
-                                    <?php
-                                    if (isset($config['modalTarget'])) {
-                                    ?>
-                                        <button type="button" class="btn btn-outline-success btn-sm open-edit-modal"
-                                            data-bs-toggle="modal" data-bs-target="<?= $config['modalTarget'] ?>"
-                                            data-entity="<?= $config['entity'] ?>"
-                                            <?php foreach ($row as $k => $v) {
-                                                echo 'data-' . $k . '="' . htmlspecialchars($v) . '" ';
-                                            } ?>>
-                                            <i class="bi bi-pencil-square"></i>
-                                        </button>
-                                    <?php
-                                    } else {
-                                    ?>
-                                        <a href="<?php echo $config['editUrl'] . $row['id'] ?>" class="btn btn-outline-success btn-sm" title="Editar">
-                                            <i class="bi bi-pencil-square"></i>
-                                        </a>
-                                    <?php
-                                    }
-                                    ?>
-                                                                            <form action="actions.php" method="post" class="d-inline">
+                                    <td class="text-end">
+                                        <?php
+                                        if (isset($config['modalTarget'])) {
+                                        ?>
+                                            <button type="button" class="btn btn-outline-success btn-sm open-edit-modal"
+                                                data-bs-toggle="modal" data-bs-target="<?= $config['modalTarget'] ?>"
+                                                data-entity="<?= $config['entity'] ?>"
+                                                <?php foreach ($row as $k => $v) {
+                                                    echo 'data-' . $k . '="' . htmlspecialchars($v) . '" ';
+                                                } ?>>
+                                                <i class="bi bi-pencil-square"></i>
+                                            </button>
+                                        <?php
+                                        } else {
+                                        ?>
+                                            <a href="<?php echo $config['editUrl'] . $row['id'] ?>" class="btn btn-outline-success btn-sm" title="Editar">
+                                                <i class="bi bi-pencil-square"></i>
+                                            </a>
+                                        <?php
+                                        }
+                                        ?>
+                                        <form action="actions.php" method="post" class="d-inline">
                                             <button type="submit" class="btn btn-outline-danger btn-sm" name="delete" value="<?= $row['id'] ?>" onclick="return confirm('Excluir?')">
                                                 <i class="bi bi-trash3"></i>
                                             </button>
                                         </form>
                                     <?php
-                                }   
+                                }
                                     ?>
-                                </td>
+                                    </td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>

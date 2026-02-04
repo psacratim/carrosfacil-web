@@ -235,7 +235,7 @@ $mockVehicles = mysqli_fetch_all(mysqli_query($connection, "SELECT v.id, m.nome,
                         </select>
                       </div>
                       <div class="col-md-3">
-                        <button type="button" id="btn-add-payment" class="btn btn-outline-dark w-100">Adicionar Pago</button>
+                        <button type="button" id="btn-add-payment" class="btn btn-outline-dark w-100">+ Adicionar</button>
                       </div>
                     </div>
 
@@ -285,8 +285,8 @@ $mockVehicles = mysqli_fetch_all(mysqli_query($connection, "SELECT v.id, m.nome,
                     <span id="view-difference">R$ 0,00</span>
                   </div>
 
-                  <button type="submit" name="actionSave" class="btn btn-primary w-100 py-3 shadow-sm">
-                    <i class="bi bi-shield-check"></i> <?php echo $isEditing ? 'ATUALIZAR' : 'FINALIZAR'; ?> VENDA
+                  <button type="submit" name="actionSave" class="btn btn-primary w-100 py-3 shadow-sm" <?php echo $isEditing ? 'disabled' : ''; ?>>
+                    <i class="bi bi-shield-check"></i> <?php echo $isEditing ? 'VISUALIZANDO' : 'FINALIZAR'; ?> VENDA
                   </button>
                 </div>
               </div>
@@ -412,10 +412,13 @@ function initSearch(inputId, resultsId, searchType) {
       }
     });
 
+    let counter = {}
     $('#btn-add-vehicle').click(function() {
       if (!currentVehicle) return alert("Por favor, selecione um veículo.");
+
+      let selectedAmount = counter[currentVehicle.id] ?? 0
       let amount = parseInt($('#input-amount').val());
-      if (amount > currentVehicle.stock) return alert("Estoque insuficiente.");
+      if (amount + selectedAmount > currentVehicle.stock) return alert("Estoque insuficiente.");
 
       // O push coloca um novo objeto dentro da lista (array)
       selectedItems.push({
@@ -424,6 +427,8 @@ function initSearch(inputId, resultsId, searchType) {
         price: currentVehicle.price,
         quantity: amount
       });
+
+      counter[currentVehicle.id] = selectedAmount + amount;
 
       renderItemsTable();
       currentVehicle = null;
