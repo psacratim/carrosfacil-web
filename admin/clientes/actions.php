@@ -89,7 +89,7 @@
     } catch (mysqli_sql_exception $e) {
         $_SESSION['messageType'] = 'error';
         if ($e->getCode() == 1062) {
-            $_SESSION['messageText'] = "Erro: CPF ou Usuário já cadastrado.";
+            $_SESSION['messageText'] = "Erro: CPF ou usuário já cadastrado.";
         } else {
             $_SESSION['messageText'] = "Erro ao processar cliente.";
         }

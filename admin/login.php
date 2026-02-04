@@ -7,6 +7,8 @@ if (!isset($_SESSION)) {
     session_start();
 }
 
+
+
 if (!empty($_POST['username']) && !empty($_POST['password'])) {
     $username = mysqli_escape_string($connection, $_POST['username']);
     $password = mysqli_escape_string($connection, $_POST['password']);

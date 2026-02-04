@@ -43,11 +43,11 @@ if (!isset($_SESSION)) {
             <div class="p-4 white-bg col-12 col-md-6 col-xl-4 mt-2">
                 <form action="login.php" method="post" id="auth-form">
                     <div class="form-group">
-                        <label for="auth-name" class="text-c1 fw-bold mb-1">Usuário ou e-mail</label>
+                        <label for="username" class="text-c1 fw-bold mb-1">Usuário ou e-mail</label>
 
                         <div class="input-group">
                             <div class="input-icon"><i class="bi bi-person-fill"></i></div>
-                            <input class="form-control" type="text" name="auth-name" id="auth-name" placeholder="ex: meu-email@email.com">
+                            <input class="form-control" type="text" name="username" id="username" placeholder="ex: meu-email@email.com">
                         </div>
                     </div>
 
@@ -55,7 +55,7 @@ if (!isset($_SESSION)) {
                         <label for="password" class="text-c1 fw-bold mb-1">Senha</label>
                         <div class="input-group position-relative">
                             <div class="input-icon"><i class="bi bi-lock"></i></div>
-                            <input class="form-control" type="password" name="input-password" id="input-password" placeholder="••••••••">
+                            <input class="form-control" type="password" name="password" id="password" placeholder="••••••••">
                             <button type="button" class="show-password" aria-label="Show password"><i class="bi bi-eye-slash"></i></button>
                         </div>
                         <a id="lost-password" class="form-text" href="#">Esqueceu a senha?</a>
@@ -74,7 +74,7 @@ if (!isset($_SESSION)) {
     <script>
         $(function() {
             $(".show-password").on('click', function() {
-                let passwordInput = $(this).parent().find('#input-password')[0];
+                let passwordInput = $(this).parent().find('#password')[0];
                 let isShowing = passwordInput.type == 'password'
 
                 passwordInput.type = isShowing ? "text" : "password"

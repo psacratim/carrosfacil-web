@@ -102,7 +102,7 @@
         }
     } catch (mysqli_sql_exception $e) {
         $_SESSION['messageType'] = 'error';
-        $_SESSION['messageText'] = ($e->getCode() == 1062) ? "Erro: Usuário ou CPF duplicado." : "Erro ao processar funcionário.";
+        $_SESSION['messageText'] = ($e->getCode() == 1062) ? "Erro: CPF ou usuário duplicado." : "Erro ao processar funcionário.";
     }
 
     header('Location: Index.php');
