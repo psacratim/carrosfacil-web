@@ -510,8 +510,12 @@ $pageTitle = $vehicle ? "Editar Veículo #" . $vehicle['id'] : "Novo Veículo";
 
         if (sellPrice < cost && cost > 0) {
           profitInput.setCustomValidity('Falha: O preço de venda não pode ser inferior ao preço de custo. Aumente a margem de lucro.');
+          profitInput.reportValidity();
+          
+        console.log('oi');
         } else if (discountedPrice < cost && cost > 0) {
           discountInput.setCustomValidity('Falha: O preço de desconto está abaixo do preço de custo, diminua o desconto ou aumente o lucro.');
+          discountInput.reportValidity();
         }
       }
 
